@@ -8,6 +8,7 @@
       <itemPath>../Processing.h</itemPath>
       <itemPath>../Effects.h</itemPath>
       <itemPath>../FoundAlgorithms.h</itemPath>
+      <itemPath>../MatlabDefs.h</itemPath>
     </logicalFolder>
     <logicalFolder name="LibraryFiles"
                    displayName="Library Files"

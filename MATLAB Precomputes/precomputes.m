@@ -65,7 +65,7 @@ cmMagResp(y,0,Fs, 'log');
 coefs = [a,b];
 dlmwrite('../MPLAB X Project/precomputes/hpfilter.dat',coefs);
 
-%Precomputes for modulators, chain position = 2
+%Precomputes for chain position = 2%%%
 
 Lchor = 300;
 Lfl = 30;
@@ -102,6 +102,25 @@ cmTimePlots(Lfl*frac_part/32768,int_part,Fs,'sec');
 s = [int_part, frac_part];
 dlmwrite('../MPLAB X Project/precomputes/flange.dat',s);
 
-
+%Precomputes for chain position = 3%%%
+mainDelayBufLen = 6000;
+%Delay
+delayTapCoef = 0.5;
+delayBufLen = mainDelayBufLen;
+s=[toDspicQ15(delayTapCoef), delayBufLen];
+dlmwrite('../MPLAB X Project/precomputes/delay.dat',s);
+%Echo
+echoTapCoef = 0.5;
+echoBufLen = mainDelayBufLen;
+s=[toDspicQ15(echoTapCoef), echoBufLen];
+dlmwrite('../MPLAB X Project/precomputes/echo.dat',s);
+%Reverb
+reverbTapCoefs = [0.7,0.5,0.3,0.22];
+reverbTapLens = [1521,2963,4497];
+reverbAPFiltersCoefs = [0.18,0.12];
+reverbAPFiltersLens = [357,129];
+echoBufLen = mainDelayBufLen - reverbAPFiltersLens(1) - reverbAPFiltersLens(2);
+s=[toDspicQ15(reverbTapCoefs), reverbTapLens, toDspicQ15(reverbAPFiltersCoefs),echoBufLen,reverbAPFiltersLens];
+dlmwrite('../MPLAB X Project/precomputes/reverb.dat',s);
 
 

@@ -14,7 +14,9 @@
 
 #include <libq.h>
 
+#include "MatlabDefs.h"
 #include "FoundAlgorithms.h"
+
 
 //LP filter coefs
 const float lp_filter_coefs[60]=
@@ -33,18 +35,6 @@ const float hp_filter_coefs[60]=
 {
     #include "precomputes\hpfilter.dat"
 };
-
-const int chorus_wave_table[6000]=  //0..2999 - integer part, 3000..5999 - fractional part
-{
-    #include "precomputes\chorus.dat"
-};
-const int flange_wave_table[6000]=
-{
-    #include "precomputes\flange.dat"
-};
-
-
-const _Q15 int_to_Q15[]={0,3276,6553,9830,13106,16383,19660,22936,26213,29490};
 
 static _Q15 delay_effects_buf[7000];
 static _Q15 mod_effects_buf[100];
@@ -219,33 +209,32 @@ _Q15 delay_coef;
 unsigned int delay_counter;
 _Q15 delay(_Q15 sample, unsigned int parameter_val)
 {
-    sample = sample + Q15mpy(delay_coef, delay_line(sample, delay_effects_buf, &delay_counter, 699*parameter_val + 1));
+    sample = sample + Q15mpy(DELAY_TAP_COEF, delay_line(sample, delay_effects_buf, &delay_counter, (DELAY_BUF_LEN/10)*parameter_val + 1));
 
     return sample;
 }
 
-_Q15 echo_coef0;
 _Q15 echo_fb_point;
 unsigned int echo_counter;
 _Q15 echo(_Q15 sample, unsigned int parameter_val)
 {
-    sample += Q15mpy(echo_coef0, delay_line(sample + Q15mpy(int_to_Q15[parameter_val],echo_fb_point), delay_effects_buf, &echo_counter, 7000));
+    sample += Q15mpy(ECHO_TAP_COEF, delay_line(sample + Q15mpy(int_to_Q15[parameter_val],echo_fb_point), delay_effects_buf, &echo_counter, ECHO_BUF_LEN));
     echo_fb_point = sample;
 
     return sample;
 }
 
-_Q15 reverb_coef[6];
 _Q15 reverb_fb_p;
 unsigned int reverb_counter[3];
 _Q15 reverb(_Q15 sample, unsigned int parameter_val)
-{
-    sample += Q15mpy(reverb_coef[0], delay_line(sample + Q15mpy(Q15mpy(15000,int_to_Q15[parameter_val]),reverb_fb_p), delay_effects_buf, &reverb_counter[0], 6500));
-    sample += Q15mpy(reverb_coef[1], delay_line_tap(1521, delay_effects_buf, reverb_counter[0], 6500));
-    sample += Q15mpy(reverb_coef[2], delay_line_tap(2963, delay_effects_buf, reverb_counter[0], 6500));
-    sample += Q15mpy(reverb_coef[3], delay_line_tap(4497, delay_effects_buf, reverb_counter[0], 6500));
-    sample = all_pass(sample, reverb_coef[4], &delay_effects_buf[6500], &reverb_counter[1], 357);
-    sample = all_pass(sample, reverb_coef[5], &delay_effects_buf[6500 + 357], &reverb_counter[2], 129);
+                                                                      //magic constant
+{                                                                     //       \/
+    sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line(sample + Q15mpy(Q15mpy(15000,int_to_Q15[parameter_val]),reverb_fb_p), delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(1), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(2), delay_line_tap(REVERB_TAP_LENS(1), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line_tap(REVERB_TAP_LENS(2), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    sample = all_pass(sample, REVERB_APF_COEFS(4), &delay_effects_buf[REVERB_BUF_LEN], &reverb_counter[1], REVERB_APF_LENS(0));
+    sample = all_pass(sample, REVERB_APF_COEFS(5), &delay_effects_buf[REVERB_BUF_LEN + REVERB_APF_LENS(0)], &reverb_counter[2], REVERB_APF_LENS(1));
     reverb_fb_p = sample;
 
     return sample;
@@ -308,17 +297,6 @@ void effects_precomputes(void)
     for(i = 20; i < 30; i++ )
        hp_filter_num[i] = _Q16ftoi(hp_filter_coefs[i + 30]);//b2
 
-    //delay
-    delay_coef = _Q15ftoi(0.5);
-    //echo
-    echo_coef0 = _Q15ftoi(0.5);
-    //reverb
-    reverb_coef[0] = _Q15ftoi(0.7);
-    reverb_coef[1] = _Q15ftoi(0.5);
-    reverb_coef[2] = _Q15ftoi(0.3);
-    reverb_coef[3] = _Q15ftoi(0.22);
-    reverb_coef[4] = _Q15ftoi(0.18);
-    reverb_coef[5] = _Q15ftoi(0.12);
 }
 
 
