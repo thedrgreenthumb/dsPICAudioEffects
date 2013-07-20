@@ -20,10 +20,10 @@ for n=1:length(x)
     end;
 
     if (x(n)>=0)
-        y(n) = fix(32768*(x(n)-fix(x(n))));   
+        y(n) = fix(32768*x(n));   
     else
         x(n) = -x(n);
-        y(n) = -1*fix(32768*(x(n)-fix(x(n))));  
+        y(n) = -1*fix(32768*x(n));  
     end
 
 end;

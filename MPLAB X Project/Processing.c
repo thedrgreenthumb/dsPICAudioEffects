@@ -30,7 +30,6 @@
 
 #define CHAIN_POSITIONS 4
 #define EFFECTS_IN_CHAIN_POSITION 4
-#define MAX_PARAMETER_VAL 9
 
 //Some characters difinitions for indication
 #define b_CHARACTER 0b01111100

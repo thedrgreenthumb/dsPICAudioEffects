@@ -73,8 +73,8 @@ int main(void){
     audio_dac_init();
     pins_init();
 
-    //Effects initialization
-    effects_init();
+    //Initialize effects
+    effects_precomputes();
 
     while(1){};
 }

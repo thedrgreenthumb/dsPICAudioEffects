@@ -1,16 +1,18 @@
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FileName:        cmTimePlots.m
-% FileVersion      1.01
-%
+% Dependencies:    -
+% 
 % MATLAB v:        8.0.0 (R2012b)
-%
-% Design by:       SAL
-% Feedback:
-%				   300213
-%
-% ADDITIONAL NOTES:
-% cmXxx - group of compute functions.
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% 
+% Organization:    SAL
+% Design by:       drgreenthumb
+% Feedback:                 
+%                  150812
+% 
+% 
+%  ADDITIONAL NOTES:
+%  cmXxx - group of compute functions.
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 function cmTimePlots(Y1,Y2,FS,type)
 %This function plots time depended data.
 %
@@ -30,6 +32,13 @@ grid(axes1,'on');
 hold(axes1,'all');
 
 %Vectors initialization
+if Y1 == 0
+    Y1(length(Y2))=0;    
+end;
+if Y2 == 0
+    Y2(length(Y1))=0;    
+end;
+
 if((strcmp(type,'samp') ~= 1) && (strcmp(type,'sec') ~= 1))
     error(['Unsupported x-axis type: ' type]);
 end;

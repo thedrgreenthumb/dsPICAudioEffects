@@ -1,6 +1,6 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % FileName:        cmMagResp.m
-% FileVersion      1.01
+% FileVersion      1.02
 %
 % MATLAB v:        8.0.0 (R2012b)
 %
@@ -19,8 +19,7 @@ function cmMagResp(Y1,Y2,FS, type)
 %FS - sample frequency.
 %If type = 'lin', plot in lin scales, if 'log' - in log scales.
 %
-%280212
-
+%130713
 
 N=length(Y1);
 if Y1== 0
@@ -37,8 +36,17 @@ end;
 
 %Calculating Magnitudes
 mxsz = size(Y1);
+if(mxsz(1) < mxsz(2))
+    Y1 = reshape(Y1,mxsz(2),mxsz(1));
+end;
+mxsz = size(Y1);
 for n=1:mxsz(2)
     [H1(:,n), F]=freqz(Y1(:,n),a,65536,FS);
+end;
+
+mxsz = size(Y2);
+if(mxsz(1) < mxsz(2))
+    Y2 = reshape(Y2,mxsz(2),mxsz(1));
 end;
 mxsz = size(Y2);
 for n=1:mxsz(2)
@@ -46,10 +54,8 @@ for n=1:mxsz(2)
 end;
 
 
-
 % Create figure
 figure1 = figure;
-
 
 if((strcmp(type,'lin') == 1))
 % Create lin axes
@@ -61,7 +67,6 @@ if((strcmp(type,'lin') == 1))
     plot(F,(abs(H1)));
     plot(F,(abs(H2)),'Color', [1 0 0]);
 end;
-
 
 if((strcmp(type,'log') == 1))
 % Create log axes

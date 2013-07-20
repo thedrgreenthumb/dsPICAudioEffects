@@ -14,6 +14,8 @@
 
 #include <libq.h>
 
+#define MAX_PARAMETER_VAL 9
+
 _Q15 dc_blocker(_Q15 sample);
 
 _Q15 hard_clipping(_Q15 sample, unsigned int parameter_val);

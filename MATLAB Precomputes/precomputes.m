@@ -9,7 +9,7 @@
 %				  
 %
 % ADDITIONAL NOTES:
-%                       dsPIC33 Project
+%                        dsPIC33 Pedal Project
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 clear all;
@@ -22,85 +22,100 @@ x(len) = 0;
 x(1) = 1;
 y(len,10) = 0;
 
-%Precomputes for filters, chain position = 1
+b0(3) = 0;
+a0(3) = 0;
+b(3,10) = 0;
+a(3,10) = 0;
+
+%Precomputes for chain position = 0%%%
+%Hard Clipping
+FHCFilter = 360;
+QHCFilter = 0.707;
+HCControlCoefs = [1,2,3,5,10,30,50,100,300,500];
+[b0, a0] = second_order_BP(FHCFilter, Fs, QHCFilter);
+s0 = [toDspicQ16(b0),toDspicQ16(a0),HCControlCoefs];
+dlmwrite('../MPLAB X Project/precomputes/hard_clipping.dat',s0,'precision', 10);
+cmMagResppz(b0,a0,Fs, 'log');%Figure 1
+%Soft Clipping
+FSCFilter = 360;
+QSCFilter = 0.707;
+SCControlCoefs = [1,2,3,5,10,30,50,100,300,500];
+[b0, a0] = second_order_BP(FSCFilter, Fs, QSCFilter);
+s0 = [toDspicQ16(b0),toDspicQ16(a0),SCControlCoefs];
+dlmwrite('../MPLAB X Project/precomputes/soft_clipping.dat',s0,'precision', 10);
+cmMagResppz(b0,a0,Fs, 'log');%Figure 2
+%Compression
+CompControlCoefs = [0.05,0.01,0.005,0.003,0.001,0.0005,0.0003,0.0001,0.00005,0.00003];
+s0 = [toDspicQ16(CompControlCoefs)];
+dlmwrite('../MPLAB X Project/precomputes/compression.dat',s0,'precision', 10);
+
+%Precomputes for chain position = 1%%%
+NumberOfCoefsSets = 10;
 Flp = 400;
 Fbp = [160,200,250,300,400,600,800,1200,1600,2000];
 Fhp = 400;
 Glp_hp = [0, -2, -4, -6,  -7, -8, -9, -10,-12, -14];
 Gpeak = 6;
-
-b(3,10) = 0;
-a(3,10) = 0;
-
 %LP filter
 for n = 1:length(Glp_hp)
     [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Treble_Shelf',Flp,Glp_hp(n),0.707,Fs);
     y(:,n) = filter(b(:,n),a(:,n),x); 
 end;
-
-%Figure1
-cmMagResp(y,0,Fs, 'log');
-coefs = [a,b];
-dlmwrite('../MPLAB X Project/precomputes/lpfilter.dat',coefs);
-
+coefs = [toDspicQ16(a(1,:)),toDspicQ16(a(2,:)),toDspicQ16(a(3,:)), ...
+    toDspicQ16(b(1,:)),toDspicQ16(b(2,:)),toDspicQ16(b(3,:)), ...
+    NumberOfCoefsSets];
+dlmwrite('../MPLAB X Project/precomputes/lpfilter.dat',coefs,'precision', 10);
+cmMagResp(y,0,Fs, 'log');%Figure 3
 %BP filter
 for n = 1:length(Fbp)
     [ b(:,n),a(:,n) ] = fltSO( 'peak', 0,Fbp(n),Gpeak,0.707,Fs);
     y(:,n) = filter(b(:,n),a(:,n),x); 
 end;
-
-%Figure2
-cmMagResp(y,0,Fs, 'log');
-coefs = [a,b];
-dlmwrite('../MPLAB X Project/precomputes/bpfilter.dat',coefs);
-
+coefs = [toDspicQ16(a(1,:)),toDspicQ16(a(2,:)),toDspicQ16(a(3,:)), ...
+    toDspicQ16(b(1,:)),toDspicQ16(b(2,:)),toDspicQ16(b(3,:)), ...
+    toDspicQ16(db2mag(Gpeak)),NumberOfCoefsSets];
+dlmwrite('../MPLAB X Project/precomputes/bpfilter.dat',coefs,'precision', 10);
+cmMagResp(y,0,Fs, 'log');%Figure 4
 %HP filter
 for n = 1:length(Glp_hp)
     [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Base_Shelf',Fhp,Glp_hp(n),0.707,Fs);
     y(:,n) = filter(b(:,n),a(:,n),x); 
 end;
-
-%Figure3
-cmMagResp(y,0,Fs, 'log');
-coefs = [a,b];
-dlmwrite('../MPLAB X Project/precomputes/hpfilter.dat',coefs);
+coefs = [toDspicQ16(a(1,:)),toDspicQ16(a(2,:)),toDspicQ16(a(3,:)), ...
+    toDspicQ16(b(1,:)),toDspicQ16(b(2,:)),toDspicQ16(b(3,:)), ...
+    NumberOfCoefsSets];
+dlmwrite('../MPLAB X Project/precomputes/hpfilter.dat',coefs,'precision', 10);
+cmMagResp(y,0,Fs, 'log');%Figure 5
 
 %Precomputes for chain position = 2%%%
-
-Lchor = 300;
-Lfl = 30;
-Nsamples = 3000;
-
+mainModBufLen = 600;
+WaveTableLength = 3000;
 %Chorus
-s1 = ifNoiseGen('lowpass', 30 ,200 ,Nsamples , Fs);
+Lchor = mainModBufLen/2;
+chorusInputCoefs = [0.7,0.5];
+chorusFeedbackCoefs = [0.5,0.5];
+chorusTapLens = [fix(Lchor/2),fix(Lchor/2)];
+s1 = ifNoiseGen('lowpass', 30 ,200 ,WaveTableLength , Fs);
 s1 = Lchor * s1;
-int_part=fix(s1);
-
-frac_part(length(s1))=0;
-for n=1:length(s1)
-    frac_part(n)=fix(32768*(s1(n)-fix(s1(n))));    
-end;
-
-%Figure 4
-cmTimePlots(Lchor*frac_part/32768,int_part,Fs,'sec');
-s = [int_part, frac_part];
+intPart = fix(s1);
+fracPart=toDspicQ15(s1-fix(s1));    
+s = [intPart, fracPart,Lchor,chorusTapLens,chorusInputCoefs,chorusFeedbackCoefs,WaveTableLength];
 dlmwrite('../MPLAB X Project/precomputes/chorus.dat',s);
-
-
+cmTimePlots(Lchor*fracPart/32768,intPart,Fs,'sec');%Figure 6
 %Flange
-s1 = ifOscillator('harm', [0,0], 1, Fs/Nsamples, Nsamples, Fs);
+Lfl = 30;
+flangeInputCoef = 0.5;
+flangeFeedForwardCoef = 0.7;
+flangeFeedbackCoef = 0.5;
+flangeTapLen = Lfl/2;
+s1 = ifOscillator('harm', [0,0], 1, Fs/WaveTableLength, WaveTableLength, Fs);
 s1 = Lfl * s1;
-int_part=fix(s1);
-
-frac_part(length(s1))=0;
-for n=1:length(s1)
-    frac_part(n)=fix(32768*(s1(n)-fix(s1(n))));    
-end;
-
-%Figure 5
-cmTimePlots(Lfl*frac_part/32768,int_part,Fs,'sec');
-s = [int_part, frac_part];
+intPart=fix(s1);
+s1 = s1 - fix(s1);
+fracPart = toDspicQ15(s1);    
+s = [intPart, fracPart,Lfl,flangeTapLen,flangeInputCoef,flangeFeedForwardCoef,flangeFeedbackCoef];
 dlmwrite('../MPLAB X Project/precomputes/flange.dat',s);
+cmTimePlots(Lfl*fracPart/32768,intPart,Fs,'sec');%Figure 7
 
 %Precomputes for chain position = 3%%%
 mainDelayBufLen = 6000;

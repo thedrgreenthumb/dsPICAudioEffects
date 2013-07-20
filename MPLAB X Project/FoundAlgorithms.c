@@ -25,6 +25,18 @@ inline _Q15 Q15mpy(_Q15 a, _Q15 b)
     return(result);
 }
 
+inline _Q16 Q16abs(_Q16 a)
+{
+    _Q16 b = 0;
+
+    if(a >= 0)
+        b = a;
+    else
+        b = _Q16neg(a);
+
+    return b;
+}
+
 inline _Q16 Q16mpy(_Q16 a, _Q16 b)
 {
     _Q16 c = 0;
@@ -54,6 +66,19 @@ inline _Q16 Q16mpy(_Q16 a, _Q16 b)
 
     return c;
 }
+
+inline _Q16 Q16pow(_Q16 x, unsigned int p)
+{
+    int i = 0;
+    _Q16 y = x;
+
+    if(p > 1)
+        for(i = 0; i < p - 1; i++)
+            y = Q16mpy(y,x);
+
+    return y;
+}
+
 inline int Q16toi(_Q16 x)
 {
     int y;
@@ -80,6 +105,21 @@ inline _Q15 Q16toQ15(_Q16 x)
     y = x >> 1;
 
    return y;
+}
+
+inline _Q15 Q15ftoi(float x)
+{
+    return _Q15ftoi(x);
+}
+
+inline _Q16 Q16ftoi(float x)
+{
+    return _Q16ftoi(x);
+}
+
+inline _Q15 Q15sinPI(_Q15 x)
+{
+    return _Q15sinPI(x);
 }
 
 _Q15 li_delay_line(_Q15 sample, _Q15 *buf, unsigned int* counter, int length, int intVal, _Q15 fracVal)
@@ -170,3 +210,4 @@ _Q16 DF2SOStructure(_Q16 in, _Q16 *numPtr, _Q16 *denumPtr, _Q16 *xh, _Q16 *yh)
 
     return(out);
 }
+
