@@ -79,11 +79,6 @@ static void seven_sigm_indicate(char in);
 static void indicate_effect_character(void);
 static void reset_all(void);
 
-void effects_init(void)
-{
-    effects_precomputes();
-}
-
 void controls_processing(void)
 {
     //Buttons polling
@@ -95,7 +90,7 @@ void controls_processing(void)
         if(current_chain_position > CHAIN_POSITIONS - 1)
         {
             current_chain_position = 0;
-            reset_all;
+            reset_all();
         }
         debounce_counter = 0;
     }
@@ -356,10 +351,10 @@ static void indicate_effect_character(void)
 static void reset_all(void)
 {
     int i = 0;
-    for(i = 0; i < CHAIN_POSITIONS - 1; i++)
+    for(i = 0; i < CHAIN_POSITIONS; i++)
         effects_nums_in_chain_positions[i] = 0;
 
-    for(i = 0; i < EFFECTS_IN_CHAIN_POSITION - 1; i++)
+    for(i = 0; i < EFFECTS_IN_CHAIN_POSITION; i++)
         effects_parameter_vals_in_chain_positions[i] = 0;
 
     current_effect_num = 0;

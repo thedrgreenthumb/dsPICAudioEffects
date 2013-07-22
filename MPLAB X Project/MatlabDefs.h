@@ -56,6 +56,9 @@ const int flange_dat[6005]=
 #define FLANGE_FEEDFORWARD_COEF flange_dat[6003]
 #define FLANGE_FEEDBACK_COEF flange_dat[6004]
 
+_Q15 delay_effects_buf[
+#include "precomputes\delay_effects_buf.dat"
+        ];
 //delay
 const int delay_dat[2] =
 {

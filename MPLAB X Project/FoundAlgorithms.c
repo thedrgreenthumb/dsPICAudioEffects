@@ -67,14 +67,9 @@ inline _Q16 Q16mpy(_Q16 a, _Q16 b)
     return c;
 }
 
-inline _Q16 Q16pow(_Q16 x, unsigned int p)
+inline _Q16 Q16pow(_Q16 x, _Q16 p)
 {
-    int i = 0;
-    _Q16 y = x;
-
-    if(p > 1)
-        for(i = 0; i < p - 1; i++)
-            y = Q16mpy(y,x);
+    _Q16 y = _Q16power(x, p);
 
     return y;
 }

@@ -36,6 +36,5 @@ _Q15 reverb(_Q15 sample, unsigned int parameter_val);
 
 void panoram_enhancer(_Q15 sample, _Q15* out_sample_L, _Q15* out_sample_R);
 
-void effects_precomputes(void);
 
 
