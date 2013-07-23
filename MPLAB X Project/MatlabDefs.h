@@ -9,10 +9,11 @@ const _Q16 soft_clipping_dat[16]=
     #include "precomputes\soft_clipping.dat"
 };
 //Compression
-const _Q16 compression_dat[10]=
+const _Q16 compression_dat[11]=
 {
     #include "precomputes\compression.dat"
 };
+#define COMPRESSION_TAV compression_dat[0]
 
 //LP filter
 const _Q16 lp_filter_dat[61]=
@@ -34,6 +35,9 @@ const _Q16 hp_filter_dat[61]=
 };
 #define HP_FILTER_COEFS_SETS_NUM hp_filter_dat[60]
 
+_Q15 mod_effects_buf[
+    #include "precomputes/mod_effects_buf.dat"
+    ];
 //chorus
 const int chorus_dat[6008]=  //0..2999 - integer part, 3000..5999 - fractional part
 {
@@ -57,8 +61,8 @@ const int flange_dat[6005]=
 #define FLANGE_FEEDBACK_COEF flange_dat[6004]
 
 _Q15 delay_effects_buf[
-#include "precomputes\delay_effects_buf.dat"
-        ];
+    #include "precomputes\delay_effects_buf.dat"
+    ];
 //delay
 const int delay_dat[2] =
 {

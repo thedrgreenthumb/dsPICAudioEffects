@@ -40,10 +40,10 @@ _Q15 hard_clipping(_Q15 sample, unsigned int parameter_val)
 
     in = Q16mpy(in, hard_clipping_dat[parameter_val + 6]);
 
-    if(in >= Q16ftoi(0.5))
-        in = Q16ftoi(0.5);
-    if(in < Q16ftoi(-0.5))
-        in =  Q16ftoi(-0.5);
+    if(in >= _Q16ftoi(0.5))
+        in = _Q16ftoi(0.5);
+    if(in < _Q16ftoi(-0.5))
+        in =  _Q16ftoi(-0.5);
 
     //post-filter
     in = DF2SOStructure(in, (_Q16*)&hard_clipping_dat[0], (_Q16*)&hard_clipping_dat[3], hard_clipping_prefilter_buf, &hard_clipping_prefilter_buf[2]);
@@ -58,21 +58,18 @@ _Q15 soft_clipping(_Q15 sample, unsigned int parameter_val)
     _Q16 in = Q15toQ16(sample);
     _Q16 out = 0;
 
-    if(in >= 0)
-    {
-        
-         in = Q16mpy(in, soft_clipping_dat[parameter_val + 6]);
+    in = Q16mpy(in, soft_clipping_dat[parameter_val + 6]);
   
-         if(in >= Q16ftoi(0.95))
-            out = Q16ftoi(0.95);
-         else
-            out = Q16pow(in,Q16ftoi(0.9));
-    }
-    else
-        out = in;
+    if((_Q16ftoi(-0.66666) <= in) && (in <= _Q16ftoi(0.66666)))
+                in = _Q16sin(Q16mpy(in,_Q16ftoi(0.9)));
+
+    if(in > _Q16ftoi(0.5521))
+        in = _Q16ftoi(0.5521);
+    if(in < _Q16ftoi(-0.5521))
+        in = _Q16ftoi(-0.5521);
 
     //post-filter
-    out = DF2SOStructure(out, (_Q16*)&soft_clipping_dat[0], (_Q16*)&soft_clipping_dat[3], soft_clipping_prefilter_buf, &soft_clipping_prefilter_buf[2]);
+    out = DF2SOStructure(in, (_Q16*)&soft_clipping_dat[0], (_Q16*)&soft_clipping_dat[3], soft_clipping_prefilter_buf, &soft_clipping_prefilter_buf[2]);
 
     return Q16toQ15(out);
 }
@@ -84,20 +81,22 @@ _Q15 compression(_Q15 sample, unsigned int parameter_val)
     _Q16 e = 0;
     _Q16 out = 0;
 
-    _Q16 TAV = Q16ftoi(0.0005);//!!!!!!
-
-    e = compression_buf + Q16mpy((Q16mpy(in, in) - compression_buf),TAV);
+    e = compression_buf + Q16mpy((Q16mpy(in, in) - compression_buf),COMPRESSION_TAV);
     compression_buf = e;
 
-    out = Q16mpy((Q16ftoi(1.0) - Q16mpy(compression_dat[parameter_val],e)),in);
+    out = Q16mpy((Q16ftoi(1.0) - Q16mpy(compression_dat[parameter_val + 1],e)),in);
+
+    if(in > _Q16ftoi(0.999))
+        in = _Q16ftoi(0.999);
+    if(in < _Q16ftoi(-0.999))
+        in = _Q16ftoi(-0.999);
 
     return Q16toQ15(out);
 }
 
-//_Q16 lp_filter_buf[4];
+_Q16 lp_filter_buf[4];
 _Q15 lp_filter(_Q15 sample, unsigned int parameter_val)
 {
-    /*
     _Q15 out = 0;
 
     _Q16 b[3];
@@ -115,14 +114,12 @@ _Q15 lp_filter(_Q15 sample, unsigned int parameter_val)
     out = Q16toQ15(DF2SOStructure(Q15toQ16(sample), b, a, lp_filter_buf, &lp_filter_buf[2]));
 
     return out;
-     * */
-    return sample;
 }
 
-//_Q16 bp_filter_buf[4];
+_Q16 bp_filter_buf[4];
 _Q15 bp_filter(_Q15 sample, unsigned int parameter_val)
 {
-    /*
+
     _Q15 out = 0;
 
     _Q16 b[3];
@@ -138,16 +135,16 @@ _Q15 bp_filter(_Q15 sample, unsigned int parameter_val)
 
     out = Q16toQ15(DF2SOStructure(Q16mpy(Q15toQ16(sample), BP_FILTER_INPUT_COEF), b, a, bp_filter_buf, &bp_filter_buf[2]));
 
-    return out
+    return out;
 
-     */
+
     return sample;
 }
 
-//_Q16 hp_filter_buf[4];
+_Q16 hp_filter_buf[4];
 _Q15 hp_filter(_Q15 sample, unsigned int parameter_val)
 {
-    /*
+
     _Q15 out = 0;
 
     _Q16 b[3];
@@ -164,7 +161,7 @@ _Q15 hp_filter(_Q15 sample, unsigned int parameter_val)
     out = Q16toQ15(DF2SOStructure(Q15toQ16(sample), b, a, hp_filter_buf, &hp_filter_buf[2]));
 
     return out;
-     */
+
     return sample;
 }
 
@@ -204,16 +201,16 @@ _Q15 chorus(_Q15 sample, unsigned int parameter_val)
     return sample;
 }
 
-////unsigned int flange_counter;
-//unsigned int flange_wt_counter0;
-//unsigned int flange_wt_counter1;
-//_Q15 flange_fb_point;
+unsigned int flange_counter;
+unsigned int flange_wt_counter0;
+unsigned int flange_wt_counter1;
+_Q15 flange_fb_point;
 _Q15 flange(_Q15 sample, unsigned int parameter_val)
 {
-    /*
+
     sample = Q15mpy(sample + flange_fb_point, FLANGE_INPUT_COEF) +
-                Q15mpy(FLANGE_FEEDFORWARD_COEF, li_delay_line(sample, &mod_effects_buf0[0], &flange_counter,30, flange_dat[flange_wt_counter1], flange_dat[flange_wt_counter1 + FLANGE_WAVE_TABLE_LEN]));
-    flange_fb_point = Q15mpy(FLANGE_FEEDBACK_COEF, delay_line_tap(FLANGE_TAP_LEN, &mod_effects_buf0[0], flange_counter, FLANGE_BUF_LEN));
+                Q15mpy(FLANGE_FEEDFORWARD_COEF, li_delay_line(sample, &mod_effects_buf[0], &flange_counter,FLANGE_BUF_LEN, flange_dat[flange_wt_counter1], flange_dat[flange_wt_counter1 + FLANGE_WAVE_TABLE_LEN]));
+    flange_fb_point = Q15mpy(FLANGE_FEEDBACK_COEF, delay_line_tap(FLANGE_TAP_LEN, &mod_effects_buf[0], flange_counter, FLANGE_BUF_LEN));
 
     flange_wt_counter0++;
     if (flange_wt_counter0 >= (1+(MAX_PARAMETER_VAL-parameter_val)))
@@ -223,20 +220,19 @@ _Q15 flange(_Q15 sample, unsigned int parameter_val)
             flange_wt_counter1 = 0;
         flange_wt_counter0 = 0;
     }
-    */
+
     return sample;
 }
 
-//_Q15 tremolo_counter;
+_Q15 tremolo_counter;
 _Q15 tremolo(_Q15 sample, unsigned int parameter_val)
 {
-    /*
     sample = Q15mpy(sample,Q15mpy(Q15ftoi(0.5), Q15sinPI(tremolo_counter)));
 
     tremolo_counter+=2*(parameter_val+1);
     if (tremolo_counter >= 32767)
         tremolo_counter = -32767;
-*/
+
     return sample;
 }
 

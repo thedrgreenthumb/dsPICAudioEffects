@@ -7,6 +7,7 @@ build/default/production/_ext/1472/Effects.o:  \
 ../precomputes/lpfilter.dat  \
 ../precomputes/bpfilter.dat  \
 ../precomputes/hpfilter.dat  \
+../precomputes/mod_effects_buf.dat  \
 ../precomputes/chorus.dat  \
 ../precomputes/flange.dat  \
 ../precomputes/delay_effects_buf.dat  \

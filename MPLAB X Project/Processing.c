@@ -150,13 +150,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = hard_clipping(current_sample, current_parameter_val);
+                current_sample = hard_clipping(current_sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
             case 2:
-                current_sample = soft_clipping(current_sample, current_parameter_val);
+                current_sample = soft_clipping(current_sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
             case 3:
-                current_sample = compression(current_sample, current_parameter_val);
+                current_sample = compression(current_sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
         }
 
@@ -166,13 +166,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = lp_filter(current_sample, current_parameter_val);
+                current_sample = lp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
             case 2:
-                current_sample = bp_filter(current_sample, current_parameter_val);
+                current_sample = bp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
             case 3:
-                current_sample = hp_filter(current_sample, current_parameter_val);
+                current_sample = hp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
         }
 
@@ -182,13 +182,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = chorus(current_sample, current_parameter_val);
+                current_sample = chorus(current_sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
             case 2:
-                current_sample = flange(current_sample, current_parameter_val);
+                current_sample = flange(current_sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
             case 3:
-                current_sample = tremolo(current_sample, current_parameter_val);
+                current_sample = tremolo(current_sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
         }
 
