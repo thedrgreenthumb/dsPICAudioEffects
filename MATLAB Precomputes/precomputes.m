@@ -92,18 +92,20 @@ cmMagResp(y,0,Fs, 'log');%Figure 5
 mainModBufLen = 600;
 dlmwrite('../MPLAB X Project/precomputes/mod_effects_buf.dat',mainModBufLen);
 WaveTableLength = 3000;
-% %Chorus
-% Lchor = mainModBufLen/2;
-% chorusInputCoefs = [0.7,0.5];
-% chorusFeedbackCoefs = [0.5,0.5];
-% chorusTapLens = [fix(Lchor/2),fix(Lchor/2)];
-% s1 = ifNoiseGen('lowpass', 30 ,200 ,WaveTableLength , Fs);
-% s1 = Lchor * s1;
-% intPart = fix(s1);
-% fracPart=toDspicQ15(s1-fix(s1));    
-% s = [intPart, fracPart,Lchor,chorusTapLens,chorusInputCoefs,chorusFeedbackCoefs,WaveTableLength];
-% dlmwrite('../MPLAB X Project/precomputes/chorus.dat',s);
-% cmTimePlots(Lchor*fracPart/32768,intPart,Fs,'sec');%Figure 6
+%Chorus
+Lchor = 298;
+chorusInputCoefs = [0.17,0.17];
+chorusFeedbackCoefs = [0.17,0.17];
+chorusFeedForwardCoefs = [0.22,0.22];
+chorusTapLens = [fix(Lchor/3),fix(Lchor/2)];
+s1 = ifNoiseGen('lowpass', 30 ,250,WaveTableLength , Fs);
+s1 = Lchor * s1;
+intPart = fix(s1);
+fracPart=toDspicQ15(s1-fix(s1));    
+s = [intPart, fracPart,Lchor,chorusTapLens,toDspicQ15(chorusInputCoefs), ...
+    toDspicQ15(chorusFeedbackCoefs),toDspicQ15(chorusFeedForwardCoefs),WaveTableLength];
+dlmwrite('../MPLAB X Project/precomputes/chorus.dat',s);
+cmTimePlots(Lchor*fracPart/32768,intPart,Fs,'sec');%Figure 6
 %Flange
 Lfl = 30;
 flangeInputCoef = 0.3;
@@ -118,27 +120,27 @@ s = [intPart, fracPart,Lfl,flangeTapLen,toDspicQ15(flangeInputCoef), ...
     toDspicQ15(flangeFeedForwardCoef),toDspicQ15(flangeFeedbackCoef)];
 dlmwrite('../MPLAB X Project/precomputes/flange.dat',s);
 cmTimePlots(Lfl*fracPart/32768,intPart,Fs,'sec');%Figure 7
-% 
-% %Precomputes for chain position = 3%%%
-% mainDelayBufLen = 6000;
-%dlmwrite('../MPLAB X Project/precomputes/delay_effects_buf.dat',mainDelayBufLen);
-% %Delay
-% delayTapCoef = 0.5;
-% delayBufLen = mainDelayBufLen;
-% s=[toDspicQ15(delayTapCoef), delayBufLen];
-% dlmwrite('../MPLAB X Project/precomputes/delay.dat',s);
-% %Echo
-% echoTapCoef = 0.5;
-% echoBufLen = mainDelayBufLen;
-% s=[toDspicQ15(echoTapCoef), echoBufLen];
-% dlmwrite('../MPLAB X Project/precomputes/echo.dat',s);
+
+%Precomputes for chain position = 3%%%
+mainDelayBufLen = 6000;
+dlmwrite('../MPLAB X Project/precomputes/delay_effects_buf.dat',mainDelayBufLen);
+%Delay
+delayTapCoef = 0.5;
+delayBufLen = mainDelayBufLen;
+s=[toDspicQ15(delayTapCoef), delayBufLen];
+dlmwrite('../MPLAB X Project/precomputes/delay.dat',s);
+%Echo
+echoTapCoef = 0.5;
+echoBufLen = mainDelayBufLen;
+s=[toDspicQ15(echoTapCoef), echoBufLen];
+dlmwrite('../MPLAB X Project/precomputes/echo.dat',s);
 % %Reverb
-% reverbTapCoefs = [0.7,0.5,0.3,0.22];
-% reverbTapLens = [1521,2963,4497];
-% reverbAPFiltersCoefs = [0.18,0.12];
-% reverbAPFiltersLens = [357,129];
-% echoBufLen = mainDelayBufLen - reverbAPFiltersLens(1) - reverbAPFiltersLens(2);
-% s=[toDspicQ15(reverbTapCoefs), reverbTapLens, toDspicQ15(reverbAPFiltersCoefs),echoBufLen,reverbAPFiltersLens];
-% dlmwrite('../MPLAB X Project/precomputes/reverb.dat',s);
+reverbTapCoefs = [0.5,0.3,0.2,0.12];
+reverbTapLens = [1521,2963,4497];
+reverbAPFiltersCoefs = [0.35,0.23];
+reverbAPFiltersLens = [357,129];
+echoBufLen = mainDelayBufLen - reverbAPFiltersLens(1) - reverbAPFiltersLens(2);
+s=[toDspicQ15(reverbTapCoefs), reverbTapLens, toDspicQ15(reverbAPFiltersCoefs),echoBufLen,reverbAPFiltersLens];
+dlmwrite('../MPLAB X Project/precomputes/reverb.dat',s);
 
 

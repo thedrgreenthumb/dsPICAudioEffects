@@ -208,7 +208,7 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 break;
         }
 
-        panoram_enhancer(current_sample, out_sample_L, out_sample_R);
+        signal_fork(current_sample, out_sample_L, out_sample_R);
     }
     else
     {

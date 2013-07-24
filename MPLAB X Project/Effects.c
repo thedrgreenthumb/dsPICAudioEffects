@@ -40,10 +40,10 @@ _Q15 hard_clipping(_Q15 sample, unsigned int parameter_val)
 
     in = Q16mpy(in, hard_clipping_dat[parameter_val + 6]);
 
-    if(in >= _Q16ftoi(0.5))
-        in = _Q16ftoi(0.5);
-    if(in < _Q16ftoi(-0.5))
-        in =  _Q16ftoi(-0.5);
+    if(in >= _Q16ftoi(0.3))
+        in = _Q16ftoi(0.3);
+    if(in < _Q16ftoi(-0.3))
+        in =  _Q16ftoi(-0.3);
 
     //post-filter
     in = DF2SOStructure(in, (_Q16*)&hard_clipping_dat[0], (_Q16*)&hard_clipping_dat[3], hard_clipping_prefilter_buf, &hard_clipping_prefilter_buf[2]);
@@ -60,13 +60,13 @@ _Q15 soft_clipping(_Q15 sample, unsigned int parameter_val)
 
     in = Q16mpy(in, soft_clipping_dat[parameter_val + 6]);
   
-    if((_Q16ftoi(-0.66666) <= in) && (in <= _Q16ftoi(0.66666)))
-                in = _Q16sin(Q16mpy(in,_Q16ftoi(0.9)));
+    if((_Q16ftoi(-0.35) <= in) && (in <= _Q16ftoi(0.35)))
+                in = _Q16sin(Q16mpy(in,_Q16ftoi(1.3)));
 
-    if(in > _Q16ftoi(0.5521))
-        in = _Q16ftoi(0.5521);
-    if(in < _Q16ftoi(-0.5521))
-        in = _Q16ftoi(-0.5521);
+    if(in > _Q16ftoi(0.35))
+        in = _Q16ftoi(0.35);
+    if(in < _Q16ftoi(-0.35))
+        in = _Q16ftoi(-0.35);
 
     //post-filter
     out = DF2SOStructure(in, (_Q16*)&soft_clipping_dat[0], (_Q16*)&soft_clipping_dat[3], soft_clipping_prefilter_buf, &soft_clipping_prefilter_buf[2]);
@@ -165,39 +165,37 @@ _Q15 hp_filter(_Q15 sample, unsigned int parameter_val)
     return sample;
 }
 
-//_Q15* mod_effects_buf0;
-//_Q15* mod_effects_buf1;
-////unsigned int chorus_counters[6] = {0,0,1500,1500,0,0};
-//_Q15 chorus_fb_point[2];
+unsigned int chorus_counters[6] = {0,0,1500,1500,0,0};
+_Q15 chorus_fb_point[2];
 _Q15 chorus(_Q15 sample, unsigned int parameter_val)
 {
-    /*
-    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(0));
-    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(1))
-        +li_delay_line(sample + chorus_fb_point[0], &mod_effects_buf0[0], &chorus_counters[0], CHORUS_BUF_LEN, chorus_dat[chorus_counters[1]], chorus_dat[chorus_counters[1]+CHORUS_WAVE_TABLE_LEN]);
-        +li_delay_line(sample + chorus_fb_point[1], &mod_effects_buf1[0], &chorus_counters[1], CHORUS_BUF_LEN, chorus_dat[chorus_counters[3]], chorus_dat[chorus_counters[3]]+CHORUS_WAVE_TABLE_LEN);
 
-    chorus_fb_point[0] = Q15mpy(CHORUS_FEEDBACK_COEFS(0), delay_line_tap(150, &mod_effects_buf0[0], chorus_counters[4], CHORUS_BUF_LEN));
-    chorus_fb_point[1] = Q15mpy(CHORUS_FEEDBACK_COEFS(1), delay_line_tap(150, &mod_effects_buf1[0], chorus_counters[5], CHORUS_BUF_LEN));
+    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(0))
+        + Q15mpy(CHORUS_FEEDFORWARD_COEFS(0),li_delay_line(sample + chorus_fb_point[0] , &mod_effects_buf[0], &chorus_counters[0], CHORUS_BUF_LEN, chorus_dat[chorus_counters[3]], chorus_dat[chorus_counters[3]+CHORUS_WAVE_TABLE_LEN]))
+        + Q15mpy(CHORUS_FEEDFORWARD_COEFS(1),li_delay_line(sample + chorus_fb_point[1], &mod_effects_buf[CHORUS_BUF_LEN], &chorus_counters[1], CHORUS_BUF_LEN, chorus_dat[chorus_counters[5]], chorus_dat[chorus_counters[5]]+CHORUS_WAVE_TABLE_LEN));
+
+    chorus_fb_point[0] = Q15mpy(CHORUS_FEEDBACK_COEFS(0), delay_line_tap(CHORUS_TAP_LENS(0), &mod_effects_buf[0], chorus_counters[0], CHORUS_BUF_LEN));
+    chorus_fb_point[1] = Q15mpy(CHORUS_FEEDBACK_COEFS(1), delay_line_tap(CHORUS_TAP_LENS(1), &mod_effects_buf[CHORUS_BUF_LEN], chorus_counters[1], CHORUS_BUF_LEN));
 
     //Chorus counters update
-    chorus_counters[0]++;
-    if (chorus_counters[0] >= (1+2*(MAX_PARAMETER_VAL-parameter_val)))
-    {
-        chorus_counters[1]++;
-        if (chorus_counters[1] >= CHORUS_WAVE_TABLE_LEN)
-            chorus_counters[1]=0;
-        chorus_counters[0]=0;
-    }
     chorus_counters[2]++;
-    if (chorus_counters[2] >= (1+1*(MAX_PARAMETER_VAL-parameter_val)))
+    if (chorus_counters[2] >= (13*(1+MAX_PARAMETER_VAL-parameter_val)))
     {
         chorus_counters[3]++;
         if (chorus_counters[3] >= CHORUS_WAVE_TABLE_LEN)
-            chorus_counters[3] = 0;
+            chorus_counters[3]=0;
         chorus_counters[2]=0;
     }
-*/
+
+    chorus_counters[4]++;
+    if (chorus_counters[4] >= (7*(1+MAX_PARAMETER_VAL-parameter_val)))
+    {
+        chorus_counters[5]++;
+        if (chorus_counters[5] >= CHORUS_WAVE_TABLE_LEN)
+            chorus_counters[5] = 0;
+        chorus_counters[4]=0;
+    }
+
     return sample;
 }
 
@@ -248,41 +246,30 @@ _Q15 echo_fb_point;
 unsigned int echo_counter;
 _Q15 echo(_Q15 sample, unsigned int parameter_val)
 {
-    /*
-    sample += Q15mpy(ECHO_TAP_COEF, delay_line(sample + Q15mpy(int_to_Q15[parameter_val],echo_fb_point), delay_effects_buf, &echo_counter, ECHO_BUF_LEN));
+
+    sample += Q15mpy(ECHO_TAP_COEF, delay_line(sample + Q15mpy(Q15mpy(int_to_Q15[parameter_val],_Q15ftoi(0.5)),echo_fb_point), delay_effects_buf, &echo_counter, ECHO_BUF_LEN));
     echo_fb_point = sample;
-*/
+
     return sample;
 }
 
 _Q15 reverb_fb_p;
 unsigned int reverb_counter[3];
 _Q15 reverb(_Q15 sample, unsigned int parameter_val)                                                                  
-{   /*
+{   
     sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line(sample + Q15mpy(Q15mpy(15000,int_to_Q15[parameter_val]),reverb_fb_p), delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
     sample += Q15mpy(REVERB_TAP_COEFS(1), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
     sample += Q15mpy(REVERB_TAP_COEFS(2), delay_line_tap(REVERB_TAP_LENS(1), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
     sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line_tap(REVERB_TAP_LENS(2), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    //sample = all_pass(sample, REVERB_APF_COEFS(4), &delay_effects_buf[REVERB_BUF_LEN], &reverb_counter[1], REVERB_APF_LENS(0));
-    //sample = all_pass(sample, REVERB_APF_COEFS(5), &delay_effects_buf[REVERB_BUF_LEN + REVERB_APF_LENS(0)], &reverb_counter[2], REVERB_APF_LENS(1));
+    sample = all_pass(sample, REVERB_APF_COEFS(0), &delay_effects_buf[REVERB_BUF_LEN], &reverb_counter[1], REVERB_APF_LENS(0));
+    sample = all_pass(sample, REVERB_APF_COEFS(1), &delay_effects_buf[REVERB_BUF_LEN + REVERB_APF_LENS(0)], &reverb_counter[2], REVERB_APF_LENS(1));
     reverb_fb_p = sample;
-    */
+
     return sample;
 }
 
-//_Q15* panoram_buf;
-//unsigned int panoram_counters[2];
-// panoram_fb_pL;
-//_Q15 panoram_fb_pR;
-void panoram_enhancer(_Q15 sample, _Q15* out_sample_L, _Q15* out_sample_R)
+void signal_fork(_Q15 sample, _Q15* out_sample_L, _Q15* out_sample_R)
 {
-    /*
-    *out_sample_L = all_pass(sample + Q15mpy(Q15ftoi(0.45),panoram_fb_pR), Q15ftoi(0.5), &panoram_buf[0], &panoram_counters[0], 157);
-    *out_sample_R = all_pass(sample + Q15mpy(Q15ftoi(0.5),panoram_fb_pL), Q15ftoi(0.45), &panoram_buf[157], &panoram_counters[1], 243);
-
-    panoram_fb_pL = *out_sample_L;
-    panoram_fb_pR = *out_sample_R;
-     */
      *out_sample_L = sample;
      *out_sample_R = sample;
 }

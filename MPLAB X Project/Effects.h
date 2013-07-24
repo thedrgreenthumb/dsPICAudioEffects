@@ -34,7 +34,7 @@ _Q15 delay(_Q15 sample, unsigned int parameter_val);
 _Q15 echo(_Q15 sample, unsigned int parameter_val);
 _Q15 reverb(_Q15 sample, unsigned int parameter_val);
 
-void panoram_enhancer(_Q15 sample, _Q15* out_sample_L, _Q15* out_sample_R);
+void signal_fork(_Q15 sample, _Q15* out_sample_L, _Q15* out_sample_R);
 
 
 

@@ -39,7 +39,7 @@ _Q15 mod_effects_buf[
     #include "precomputes/mod_effects_buf.dat"
     ];
 //chorus
-const int chorus_dat[6008]=  //0..2999 - integer part, 3000..5999 - fractional part
+const int chorus_dat[6010]=  //0..2999 - integer part, 3000..5999 - fractional part
 {
     #include "precomputes\chorus.dat"
 };
@@ -47,7 +47,8 @@ const int chorus_dat[6008]=  //0..2999 - integer part, 3000..5999 - fractional p
 #define CHORUS_TAP_LENS(x) chorus_dat[(x)+6001]
 #define CHORUS_INPUT_COEFS(x) chorus_dat[(x)+6003]
 #define CHORUS_FEEDBACK_COEFS(x) chorus_dat[(x)+6005]
-#define CHORUS_WAVE_TABLE_LEN chorus_dat[6007]
+#define CHORUS_FEEDFORWARD_COEFS(x) chorus_dat[(x)+6007]
+#define CHORUS_WAVE_TABLE_LEN chorus_dat[6009]
 //flange
 const int flange_dat[6005]=
 {
