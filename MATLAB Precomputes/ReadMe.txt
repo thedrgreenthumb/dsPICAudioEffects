@@ -1,3 +1,6 @@
-Open wave_tables_gen.m in Editor, press button RUN. You can find in current directory couple of files int_part.dat è frac_part.dat.
+Open and run precomputes.m script. It the files with data for effects configuration will appear at folder ../MPLAB X Project/precomputes.
 
-If you need to generate other waveforms you can invesigate lfo.m script.
+MATLAB v8.0.0
+
+Last update:
+280713
