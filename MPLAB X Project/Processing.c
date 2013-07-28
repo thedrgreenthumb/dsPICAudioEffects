@@ -138,9 +138,8 @@ void controls_processing(void)
 
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R)
 {
-    _Q15 current_sample = 0;
-
-    current_sample = dc_blocker(input_sample);
+    _Q15 sample = 0;
+    sample = dc_blocker(input_sample);
 
     if(!is_bypass)
     {
@@ -150,13 +149,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = hard_clipping(current_sample, effects_parameter_vals_in_chain_positions[0]);
+                sample = hard_clipping(sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
             case 2:
-                current_sample = soft_clipping(current_sample, effects_parameter_vals_in_chain_positions[0]);
+                sample = soft_clipping(sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
             case 3:
-                current_sample = compression(current_sample, effects_parameter_vals_in_chain_positions[0]);
+                sample = compression(sample, effects_parameter_vals_in_chain_positions[0]);
                 break;
         }
 
@@ -166,13 +165,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = lp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
+                sample = lp_filter(sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
             case 2:
-                current_sample = bp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
+                sample = bp_filter(sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
             case 3:
-                current_sample = hp_filter(current_sample, effects_parameter_vals_in_chain_positions[1]);
+                sample = hp_filter(sample, effects_parameter_vals_in_chain_positions[1]);
                 break;
         }
 
@@ -182,13 +181,13 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = chorus(current_sample, effects_parameter_vals_in_chain_positions[2]);
+                sample = chorus(sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
             case 2:
-                current_sample = flange(current_sample, effects_parameter_vals_in_chain_positions[2]);
+                sample = flange(sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
             case 3:
-                current_sample = tremolo(current_sample, effects_parameter_vals_in_chain_positions[2]);
+                sample = tremolo(sample, effects_parameter_vals_in_chain_positions[2]);
                 break;
         }
 
@@ -198,22 +197,22 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 asm volatile ("NOP");
                 break;
             case 1:
-                current_sample = delay(current_sample, effects_parameter_vals_in_chain_positions[3]);
+                sample = delay(sample, effects_parameter_vals_in_chain_positions[3]);
                 break;
             case 2:
-                current_sample = echo(current_sample, effects_parameter_vals_in_chain_positions[3]);
+                sample = echo(sample, effects_parameter_vals_in_chain_positions[3]);
                 break;
             case 3:
-                current_sample = reverb(current_sample, effects_parameter_vals_in_chain_positions[3]);
+                sample = reverb(sample, effects_parameter_vals_in_chain_positions[3]);
                 break;
         }
 
-        signal_fork(current_sample, out_sample_L, out_sample_R);
+        signal_fork(sample, out_sample_L, out_sample_R);
     }
     else
     {
-        *out_sample_L = input_sample;
-        *out_sample_R = input_sample;
+        *out_sample_L = sample;
+        *out_sample_R = sample;
     }
 }
 

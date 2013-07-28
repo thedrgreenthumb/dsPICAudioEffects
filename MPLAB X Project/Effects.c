@@ -119,7 +119,6 @@ _Q15 lp_filter(_Q15 sample, unsigned int parameter_val)
 _Q16 bp_filter_buf[4];
 _Q15 bp_filter(_Q15 sample, unsigned int parameter_val)
 {
-
     _Q15 out = 0;
 
     _Q16 b[3];
@@ -136,9 +135,6 @@ _Q15 bp_filter(_Q15 sample, unsigned int parameter_val)
     out = Q16toQ15(DF2SOStructure(Q16mpy(Q15toQ16(sample), BP_FILTER_INPUT_COEF), b, a, bp_filter_buf, &bp_filter_buf[2]));
 
     return out;
-
-
-    return sample;
 }
 
 _Q16 hp_filter_buf[4];
@@ -161,8 +157,6 @@ _Q15 hp_filter(_Q15 sample, unsigned int parameter_val)
     out = Q16toQ15(DF2SOStructure(Q15toQ16(sample), b, a, hp_filter_buf, &hp_filter_buf[2]));
 
     return out;
-
-    return sample;
 }
 
 unsigned int chorus_counters[6] = {0,0,1500,1500,0,0};
@@ -170,8 +164,9 @@ _Q15 chorus_fb_point[2];
 _Q15 chorus(_Q15 sample, unsigned int parameter_val)
 {
 
-    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(0))
-        + Q15mpy(CHORUS_FEEDFORWARD_COEFS(0),li_delay_line(sample + chorus_fb_point[0] , &mod_effects_buf[0], &chorus_counters[0], CHORUS_BUF_LEN, chorus_dat[chorus_counters[3]], chorus_dat[chorus_counters[3]+CHORUS_WAVE_TABLE_LEN]))
+    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(0));
+    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(1))
+        + Q15mpy(CHORUS_FEEDFORWARD_COEFS(0),li_delay_line(sample + chorus_fb_point[0] , &mod_effects_buf[0], &chorus_counters[0], CHORUS_BUF_LEN, chorus_dat[chorus_counters[3]], chorus_dat[chorus_counters[3]+CHORUS_WAVE_TABLE_LEN]));
         + Q15mpy(CHORUS_FEEDFORWARD_COEFS(1),li_delay_line(sample + chorus_fb_point[1], &mod_effects_buf[CHORUS_BUF_LEN], &chorus_counters[1], CHORUS_BUF_LEN, chorus_dat[chorus_counters[5]], chorus_dat[chorus_counters[5]]+CHORUS_WAVE_TABLE_LEN));
 
     chorus_fb_point[0] = Q15mpy(CHORUS_FEEDBACK_COEFS(0), delay_line_tap(CHORUS_TAP_LENS(0), &mod_effects_buf[0], chorus_counters[0], CHORUS_BUF_LEN));
@@ -225,7 +220,7 @@ _Q15 flange(_Q15 sample, unsigned int parameter_val)
 _Q15 tremolo_counter;
 _Q15 tremolo(_Q15 sample, unsigned int parameter_val)
 {
-    sample = Q15mpy(sample,Q15mpy(Q15ftoi(0.5), Q15sinPI(tremolo_counter)));
+    sample = Q15mpy(sample,Q15mpy(_Q15ftoi(0.5), _Q15sinPI(tremolo_counter)));
 
     tremolo_counter+=2*(parameter_val+1);
     if (tremolo_counter >= 32767)
@@ -237,7 +232,7 @@ _Q15 tremolo(_Q15 sample, unsigned int parameter_val)
 unsigned int delay_counter;
 _Q15 delay(_Q15 sample, unsigned int parameter_val)
 {
-    sample = sample + Q15mpy(DELAY_TAP_COEF, delay_line(sample, delay_effects_buf, &delay_counter, (DELAY_BUF_LEN/10)*parameter_val + 1));
+    sample = Q15mpy(DELAY_FF_COEF,sample) + Q15mpy(DELAY_TAP_COEF, delay_line(sample, delay_effects_buf, &delay_counter, (DELAY_BUF_LEN/10)*parameter_val + 1));
 
     return sample;
 }
@@ -246,9 +241,15 @@ _Q15 echo_fb_point;
 unsigned int echo_counter;
 _Q15 echo(_Q15 sample, unsigned int parameter_val)
 {
+    _Q15 p0 = 0;
+    _Q15 p1 = 0;
+    
+    p0 = sample + Q15mpy(ECHO_FB_COEF, Q15mpy(int_to_Q15[parameter_val],echo_fb_point));
+    p1 = Q15mpy(int_to_Q15[parameter_val],Q15mpy(ECHO_TAP_COEF, delay_line(p0, delay_effects_buf, &echo_counter, ECHO_BUF_LEN)));
 
-    sample += Q15mpy(ECHO_TAP_COEF, delay_line(sample + Q15mpy(Q15mpy(int_to_Q15[parameter_val],_Q15ftoi(0.5)),echo_fb_point), delay_effects_buf, &echo_counter, ECHO_BUF_LEN));
-    echo_fb_point = sample;
+    sample = Q15mpy(ECHO_FF_COEF, p0) + p1;
+
+    echo_fb_point = p1;
 
     return sample;
 }
@@ -256,15 +257,16 @@ _Q15 echo(_Q15 sample, unsigned int parameter_val)
 _Q15 reverb_fb_p;
 unsigned int reverb_counter[3];
 _Q15 reverb(_Q15 sample, unsigned int parameter_val)                                                                  
-{   
-    sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line(sample + Q15mpy(Q15mpy(15000,int_to_Q15[parameter_val]),reverb_fb_p), delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(1), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(2), delay_line_tap(REVERB_TAP_LENS(1), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line_tap(REVERB_TAP_LENS(2), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+{
+    sample = Q15mpy(REVERB_FF_COEF, sample) + Q15mpy(Q15mpy(REVERB_FB_COEF,int_to_Q15[parameter_val]),reverb_fb_p);
+    sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line(sample, delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(1), delay_line_tap(REVERB_TAP_LENS(1), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    sample += Q15mpy(REVERB_TAP_COEFS(2), delay_line_tap(REVERB_TAP_LENS(2), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
+    reverb_fb_p = sample;
     sample = all_pass(sample, REVERB_APF_COEFS(0), &delay_effects_buf[REVERB_BUF_LEN], &reverb_counter[1], REVERB_APF_LENS(0));
     sample = all_pass(sample, REVERB_APF_COEFS(1), &delay_effects_buf[REVERB_BUF_LEN + REVERB_APF_LENS(0)], &reverb_counter[2], REVERB_APF_LENS(1));
-    reverb_fb_p = sample;
-
+    
     return sample;
 }
 

@@ -76,7 +76,7 @@ coefs = [toDspicQ16(a(1,:)),toDspicQ16(a(2,:)),toDspicQ16(a(3,:)), ...
     toDspicQ16(b(1,:)),toDspicQ16(b(2,:)),toDspicQ16(b(3,:)), ...
     toDspicQ16(1/db2mag(Gpeak)),NumberOfCoefsSets];
 dlmwrite('../MPLAB X Project/precomputes/bpfilter.dat',coefs,'precision', 10);
-cmMagResp(y,0,Fs, 'log');%Figure 4
+cmMagResp(y/db2mag(Gpeak),0,Fs, 'log');%Figure 4
 %HP filter
 for n = 1:length(Glp_hp)
     [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Base_Shelf',Fhp,Glp_hp(n),0.707,Fs);
@@ -94,9 +94,9 @@ dlmwrite('../MPLAB X Project/precomputes/mod_effects_buf.dat',mainModBufLen);
 WaveTableLength = 3000;
 %Chorus
 Lchor = 298;
-chorusInputCoefs = [0.17,0.17];
-chorusFeedbackCoefs = [0.17,0.17];
-chorusFeedForwardCoefs = [0.22,0.22];
+chorusInputCoefs = [0.7,0.3];
+chorusFeedbackCoefs = [0.17,0.15];
+chorusFeedForwardCoefs = [0.15,0.17];
 chorusTapLens = [fix(Lchor/3),fix(Lchor/2)];
 s1 = ifNoiseGen('lowpass', 30 ,250,WaveTableLength , Fs);
 s1 = Lchor * s1;
@@ -125,22 +125,28 @@ cmTimePlots(Lfl*fracPart/32768,intPart,Fs,'sec');%Figure 7
 mainDelayBufLen = 6000;
 dlmwrite('../MPLAB X Project/precomputes/delay_effects_buf.dat',mainDelayBufLen);
 %Delay
+delayFFCoef = 0.5;
 delayTapCoef = 0.5;
 delayBufLen = mainDelayBufLen;
-s=[toDspicQ15(delayTapCoef), delayBufLen];
+s=[toDspicQ15(delayFFCoef),toDspicQ15(delayTapCoef), delayBufLen];
 dlmwrite('../MPLAB X Project/precomputes/delay.dat',s);
 %Echo
-echoTapCoef = 0.5;
+echoFFCoef = 0.3;
+echoFBCoef = 0.3;
+echoTapCoef = 0.3;
 echoBufLen = mainDelayBufLen;
-s=[toDspicQ15(echoTapCoef), echoBufLen];
+s=[toDspicQ15(echoFFCoef),toDspicQ15(echoFBCoef),toDspicQ15(echoTapCoef), echoBufLen];
 dlmwrite('../MPLAB X Project/precomputes/echo.dat',s);
 % %Reverb
-reverbTapCoefs = [0.5,0.3,0.2,0.12];
-reverbTapLens = [1521,2963,4497];
-reverbAPFiltersCoefs = [0.35,0.23];
+reverbFFCoef = 0.5;
+reverbFBCoef = 0.25;
+reverbTapCoefs = [0.20,-0.25,0.15,-0.11];
+reverbTapLens = [1521,2963,3859];
+reverbAPFiltersCoefs = [0.23,0.17];
 reverbAPFiltersLens = [357,129];
 echoBufLen = mainDelayBufLen - reverbAPFiltersLens(1) - reverbAPFiltersLens(2);
-s=[toDspicQ15(reverbTapCoefs), reverbTapLens, toDspicQ15(reverbAPFiltersCoefs),echoBufLen,reverbAPFiltersLens];
+s=[toDspicQ15(reverbFFCoef), toDspicQ15(reverbFBCoef),toDspicQ15(reverbTapCoefs), ...
+    reverbTapLens, toDspicQ15(reverbAPFiltersCoefs),echoBufLen,reverbAPFiltersLens];
 dlmwrite('../MPLAB X Project/precomputes/reverb.dat',s);
 
 
