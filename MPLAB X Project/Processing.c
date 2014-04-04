@@ -136,14 +136,24 @@ void controls_processing(void)
         is_parameter_displays = 0;
 }
 
+//Define four runner structures for every chain position
+algoRunner_t runners[4];
+
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R)
 {
     _Q15 sample = 0;
     sample = dc_blocker(input_sample);
 
     if(!is_bypass)
-    {
-        switch(effects_nums_in_chain_positions[0])
+    {	
+		//Swap to loop of runners
+        for(unsigned int i = 0; i < 4; i++)
+		{
+			AlgosRunnerSetParam(runners[i], 0, effects_parameter_vals_in_chain_positions[i]);
+			AlgoSampleProcess(runners[i], &input_sample, &sample);
+		}
+		/*
+		switch(effects_nums_in_chain_positions[0])
         {
             case 0:
                 asm volatile ("NOP");
@@ -206,7 +216,7 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
                 sample = reverb(sample, effects_parameter_vals_in_chain_positions[3]);
                 break;
         }
-
+		*/
         signal_fork(sample, out_sample_L, out_sample_R);
     }
     else

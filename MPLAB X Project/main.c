@@ -28,6 +28,8 @@ _FWDT(FWDTEN_OFF);
  _Q15 sample;
  _Q15 out_sample_L;
  _Q15 out_sample_R;
+ 
+ _Q15 algorithms_buffer[some_number];
 
 //Audio DAC interrupt, sampling frequency = 19,3426513671875 KHz
 void __attribute__((interrupt, no_auto_psv))_DAC1LInterrupt(void)
@@ -72,6 +74,8 @@ int main(void){
     adc_init();
     audio_dac_init();
     pins_init();
+	//Allocate global memory buffer here as an automatic variable 
+	runners_init(sample_t* buf, unsigned int* gaps, unsigned int number_of_gaps)
 
     while(1){};
 }

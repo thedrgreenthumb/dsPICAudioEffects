@@ -16,21 +16,23 @@
 #include <libq.h>
 
 #include "MatlabDefs.h"
+//Here will be included all matlab related data
+
 #include "FoundAlgorithms.h"
 
 #include "Effects.h"
 
-_Q15 dc_blocker_buf[2];
-_Q15 dc_blocker(_Q15 sample)
+error_t bypass_init(bypass *bp, pBuffer_t buf, initialization_t identificationType)
 {
-    
-    _Q15 bypass_sample = 0;
-    bypass_sample = sample;
-    sample = sample - dc_blocker_buf[0]+Q15mpy(Q15ftoi(0.98),dc_blocker_buf[1]);
-    dc_blocker_buf[0] = bypass_sample;
-    dc_blocker_buf[1] = sample;
-
-    return sample;
+	return ERROR_OK;
+}
+error_t bypass_set_params(void* str, paramNum_t paramNumber, unsigned int val)
+{
+	return ERROR_OK;
+}
+error_t bypass_process(void* str, pBuffer_t in, pBuffer_t out)
+{
+	*out = *in;
 }
 
 _Q16 hard_clipping_prefilter_buf[4];
@@ -54,7 +56,7 @@ _Q15 hard_clipping(_Q15 sample, unsigned int parameter_val)
 _Q16 soft_clipping_prefilter_buf[4];
 _Q15 soft_clipping(_Q15 sample, unsigned int parameter_val)
 {
- 
+	//Try to swap to hiperbolic sinus if exists
     _Q16 in = Q15toQ16(sample);
     _Q16 out = 0;
 
@@ -77,6 +79,7 @@ _Q15 soft_clipping(_Q15 sample, unsigned int parameter_val)
 _Q16 compression_buf;
 _Q15 compression(_Q15 sample, unsigned int parameter_val)
 {
+	//ПЕРЕДЕЛАТЬ НАХУЙ, add envelope follower
     _Q16 in = Q15toQ16(sample);
     _Q16 e = 0;
     _Q16 out = 0;
@@ -97,6 +100,7 @@ _Q15 compression(_Q15 sample, unsigned int parameter_val)
 _Q16 lp_filter_buf[4];
 _Q15 lp_filter(_Q15 sample, unsigned int parameter_val)
 {
+	//Integrate MATLAB data saver
     _Q15 out = 0;
 
     _Q16 b[3];
@@ -229,6 +233,10 @@ _Q15 tremolo(_Q15 sample, unsigned int parameter_val)
     return sample;
 }
 
+
+
+
+
 unsigned int delay_counter;
 _Q15 delay(_Q15 sample, unsigned int parameter_val)
 {
@@ -258,6 +266,7 @@ _Q15 reverb_fb_p;
 unsigned int reverb_counter[3];
 _Q15 reverb(_Q15 sample, unsigned int parameter_val)                                                                  
 {
+	//Implement something like Schoeders 1
     sample = Q15mpy(REVERB_FF_COEF, sample) + Q15mpy(Q15mpy(REVERB_FB_COEF,int_to_Q15[parameter_val]),reverb_fb_p);
     sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line(sample, delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
     sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
