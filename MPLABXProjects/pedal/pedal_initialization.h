@@ -16,4 +16,4 @@ void adc_init(void);
 void audio_dac_init(void);
 void pins_init(void);
 
-int runners_init(_Q15* algorithms_buffer, unsigned int* gaps, unsigned int number_of_gaps);
+int runners_init(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps);

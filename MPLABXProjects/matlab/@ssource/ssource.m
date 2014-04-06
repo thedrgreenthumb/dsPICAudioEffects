@@ -93,7 +93,7 @@ classdef ssource < handle
         
             amps = obj.interpolateData(amps);
             % 0.5 - remove dc 
-            obj.dataBuf = obj.filteredNoiseSource('bandpass', 100, fmax , length(obj.dataBuf), obj.sampleRate) - 0.5;
+            obj.dataBuf = obj.filteredNoiseSource('bandpass', 20, fmax , length(obj.dataBuf), obj.sampleRate) - 0.5;
             
             %Apply amplitudes
             for(n = 1:length(obj.dataBuf))

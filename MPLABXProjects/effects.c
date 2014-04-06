@@ -16,7 +16,8 @@
 
 //Matlab
 #include "matlab/@fsaver/fsaver.h"
-//Declare fsaver functions for Q16
+//Declare fsaver functions for Q formats
+fsaver_plane_data_declare(_Q15)
 fsaver_plane_data_declare(_Q16)
 fsaver_iir_declare(_Q16)
 
@@ -95,7 +96,9 @@ error_t hard_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
             (_Q16*)&hc->filter_coefs[0], (_Q16*)&hc->filter_coefs[3],
             hc->filter_buf, &hc->filter_buf[2]);
 
-    return Q16toQ15(sample);
+    *out = Q16toQ15(sample);
+
+    return ERROR_OK;
 }
 
 _Q16 soft_clipping_gain_coefs[] = {
@@ -136,8 +139,6 @@ error_t soft_clipping_set_params(void* dat, unsigned int num, unsigned int val)
 }
 error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
 {
-    //(_*9:_+1:log10(_)),(_*-1:_*9:_+1:log10(_)
- 
     soft_clipping* sc = dat;
 
     _Q16 sample = Q15toQ16(*in);
@@ -173,7 +174,9 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
             (_Q16*)&sc->filter_coefs[0], (_Q16*)&sc->filter_coefs[3],
             sc->filter_buf, &sc->filter_buf[2]);
 
-    return Q16toQ15(sample);
+    *out = Q16toQ15(sample);
+
+    return ERROR_OK;
 }
 
 error_t compression_init(compression *c, p_buffer_t buf)
@@ -218,79 +221,197 @@ error_t compression_process(void *dat, p_buffer_t in, p_buffer_t out)
     return ERROR_OK;
 }
 
-_Q16 lp_filter_buf[4];
-_Q15 lp_filter(_Q15 sample, unsigned int parameter_val)
+_Q16 low_pass_filter_coefs[] = {
+#include "./precomputes/lp_filter_coefs.dat"
+};
+error_t lp_filter_init(lp_filter *lp, p_buffer_t buf)
 {
-	//Integrate MATLAB data saver
-    _Q15 out = 0;
+    lp->freq = 0;
 
-    _Q16 b[3];
-    _Q16 a[3];
+    unsigned int i = 0;
+    for(i = 0; i < 4; i++)
+        lp->filter_buf[i] = 0;
 
-    //Coefs order:a0,a1,a2,b0,b1,b2
-    a[0] = lp_filter_dat[parameter_val];
-    a[1] = lp_filter_dat[parameter_val + 1*LP_FILTER_COEFS_SETS_NUM];
-    a[2] = lp_filter_dat[parameter_val + 2*LP_FILTER_COEFS_SETS_NUM];
+    return ERROR_OK;
+}
+error_t lp_filter_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    lp_filter* lp = dat;
 
-    b[0] = lp_filter_dat[parameter_val + 3*LP_FILTER_COEFS_SETS_NUM];
-    b[1] = lp_filter_dat[parameter_val + 4*LP_FILTER_COEFS_SETS_NUM];
-    b[2] = lp_filter_dat[parameter_val + 5*LP_FILTER_COEFS_SETS_NUM];
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
 
-    out = Q16toQ15(DF2SOStructure(Q15toQ16(sample), b, a, lp_filter_buf, &lp_filter_buf[2]));
+    lp->freq = val;
 
-    return out;
+    return ERROR_OK;
+}
+error_t lp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
+{
+    lp_filter* lp = dat;
+
+    _Q16 sample = Q15toQ16(*in);
+
+    fsaver_result fsr = no_error;
+    const _Q16* coefs = iir_get__Q16(low_pass_filter_coefs, lp->freq, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
+
+    sample = DF2SOStructure(sample, coefs, &coefs[3],
+            lp->filter_buf, &lp->filter_buf[2]);
+
+    *out = Q16toQ15(sample);
+
+    return ERROR_OK;
 }
 
-_Q16 bp_filter_buf[4];
-_Q15 bp_filter(_Q15 sample, unsigned int parameter_val)
+_Q16 band_pass_filter_coefs[] = {
+#include "./precomputes/bp_filter_coefs.dat"
+};
+_Q16 band_pass_gain_coefs[] = {
+#include "./precomputes/bp_filter_gain_coefs.dat"
+};
+error_t bp_filter_init(bp_filter *bp, p_buffer_t buf)
 {
-    _Q15 out = 0;
+    bp->freq = 0;
 
-    _Q16 b[3];
-    _Q16 a[3];
+    fsaver_result fsr = no_error;
+    bp->gain_coef = *plane_data_get__Q16(band_pass_gain_coefs, 0, &fsr);
+    if(fsr)
+        return ALGORITHM_INITIALIZATION_ERROR;
 
-    a[0] = bp_filter_dat[parameter_val];
-    a[1] = bp_filter_dat[parameter_val + 1*BP_FILTER_COEFS_SETS_NUM];
-    a[2] = bp_filter_dat[parameter_val + 2*BP_FILTER_COEFS_SETS_NUM];
+    unsigned int i = 0;
+    for(i = 0; i < 4; i++)
+        bp->filter_buf[i] = 0;
 
-    b[0] = bp_filter_dat[parameter_val + 3*BP_FILTER_COEFS_SETS_NUM];
-    b[1] = bp_filter_dat[parameter_val + 4*BP_FILTER_COEFS_SETS_NUM];
-    b[2] = bp_filter_dat[parameter_val + 5*BP_FILTER_COEFS_SETS_NUM];
+    return ERROR_OK;
+}
+error_t bp_filter_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    bp_filter* bp = dat;
 
-    out = Q16toQ15(DF2SOStructure(Q16mpy(Q15toQ16(sample), BP_FILTER_INPUT_COEF), b, a, bp_filter_buf, &bp_filter_buf[2]));
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
 
-    return out;
+    bp->freq = val;
+
+    return ERROR_OK;
+}
+error_t bp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
+{
+    bp_filter* bp = dat;
+
+    _Q16 sample = Q15toQ16(*in);
+
+    fsaver_result fsr = no_error;
+    const _Q16* coefs = iir_get__Q16(band_pass_filter_coefs, bp->freq, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
+
+    sample = DF2SOStructure(sample, coefs, &coefs[3],
+            bp->filter_buf, &bp->filter_buf[2]);
+
+    sample = Q16mpy(sample, bp->gain_coef);
+
+    *out = Q16toQ15(sample);
+
+    return ERROR_OK;
 }
 
-_Q16 hp_filter_buf[4];
-_Q15 hp_filter(_Q15 sample, unsigned int parameter_val)
+_Q16 high_pass_filter_coefs[] = {
+#include "./precomputes/hp_filter_coefs.dat"
+};
+error_t hp_filter_init(hp_filter *hp, p_buffer_t buf)
 {
+    hp->freq = 0;
 
-    _Q15 out = 0;
+    unsigned int i = 0;
+    for(i = 0; i < 4; i++)
+        hp->filter_buf[i] = 0;
 
-    _Q16 b[3];
-    _Q16 a[3];
-
-    a[0] = hp_filter_dat[parameter_val];
-    a[1] = hp_filter_dat[parameter_val + 1*HP_FILTER_COEFS_SETS_NUM];
-    a[2] = hp_filter_dat[parameter_val + 2*HP_FILTER_COEFS_SETS_NUM];
-
-    b[0] = hp_filter_dat[parameter_val + 3*HP_FILTER_COEFS_SETS_NUM];
-    b[1] = hp_filter_dat[parameter_val + 4*HP_FILTER_COEFS_SETS_NUM];
-    b[2] = hp_filter_dat[parameter_val + 5*HP_FILTER_COEFS_SETS_NUM];
-
-    out = Q16toQ15(DF2SOStructure(Q15toQ16(sample), b, a, hp_filter_buf, &hp_filter_buf[2]));
-
-    return out;
+    return ERROR_OK;
 }
-/*
-unsigned int chorus_counters[6] = {0,0,1500,1500,0,0};
-_Q15 chorus_fb_point[2];
-_Q15 chorus(_Q15 sample, unsigned int parameter_val)
+error_t hp_filter_set_params(void* dat, unsigned int num, unsigned int val)
 {
+    hp_filter* hp = dat;
 
-    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(0));
-    sample = Q15mpy(sample,CHORUS_INPUT_COEFS(1))
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
+
+    hp->freq = val;
+
+    return ERROR_OK;
+}
+error_t hp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
+{
+    hp_filter* hp = dat;
+
+    _Q16 sample = Q15toQ16(*in);
+
+    fsaver_result fsr = no_error;
+    const _Q16* coefs = iir_get__Q16(low_pass_filter_coefs, hp->freq, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
+
+    sample = DF2SOStructure(sample, coefs, &coefs[3],
+            hp->filter_buf, &hp->filter_buf[2]);
+
+    *out = Q16toQ15(sample);
+
+    return ERROR_OK;
+}
+
+_Q15 chorus_coefs[] = {
+#include "./precomputes/chorus_coefs.dat"
+};
+_Q15 chorus_wave_table[] = {
+#include "./precomputes/chorus_wave_table.dat"
+};
+error_t chorus_init(chorus *ch, p_buffer_t buf)
+{
+    ch->buf = buf;
+    ch->buf_len = buf[0];
+    
+    fsaver_result fsr = no_error;
+    ch->w_int_part = (unsigned int*)plane_data_get__Q15(chorus_wave_table, 0, &fsr);
+    ch->w_frac_part = plane_data_get__Q15(chorus_wave_table, 1, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
+    
+    unsigned int i = 0;
+    for(i = 0; i < 6; i++)
+        ch->counters[i] = 0;
+    
+    ch->fb_points[0] = 0;
+    ch->fb_points[1] = 0;
+
+    ch->in_coefs = plane_data_get__Q15(chorus_coefs, 0, &fsr);
+    ch->fb_coefs = plane_data_get__Q15(chorus_coefs, 1, &fsr);
+    ch->ff_coefs = plane_data_get__Q15(chorus_coefs, 2, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
+
+    return ERROR_OK;
+}
+error_t chorus_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    chorus* ch = dat;
+
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
+
+    ch->ctr = val;
+
+    return ERROR_OK;
+}
+error_t chorus_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    chorus* ch = dat;
+    _Q15 sample = *in;
+
+    /*
+    sample = Q15mpy(sample, ch->in_coefs[0]);
+    sample = Q15mpy(sample, ch->in_coefs[1]);
+    sample = _Q15add(sample, )
         + Q15mpy(CHORUS_FEEDFORWARD_COEFS(0),li_delay_line(sample + chorus_fb_point[0] , &mod_effects_buf[0], &chorus_counters[0], CHORUS_BUF_LEN, chorus_dat[chorus_counters[3]], chorus_dat[chorus_counters[3]+CHORUS_WAVE_TABLE_LEN]));
         + Q15mpy(CHORUS_FEEDFORWARD_COEFS(1),li_delay_line(sample + chorus_fb_point[1], &mod_effects_buf[CHORUS_BUF_LEN], &chorus_counters[1], CHORUS_BUF_LEN, chorus_dat[chorus_counters[5]], chorus_dat[chorus_counters[5]]+CHORUS_WAVE_TABLE_LEN));
 
@@ -315,9 +436,28 @@ _Q15 chorus(_Q15 sample, unsigned int parameter_val)
             chorus_counters[5] = 0;
         chorus_counters[4]=0;
     }
+    */
+   *out = sample;
 
-    return sample;
+
+
+    return ERROR_OK;
 }
+
+error_t flange_init(flange *bp, p_buffer_t buf)
+{
+    return ERROR_OK;
+}
+error_t flange_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    return ERROR_OK;
+}
+error_t flange_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    *out = *in;
+    return ERROR_OK;
+}
+/*
 
 unsigned int flange_counter;
 unsigned int flange_wt_counter0;
@@ -341,66 +481,203 @@ _Q15 flange(_Q15 sample, unsigned int parameter_val)
 
     return sample;
 }
+*/
 
-_Q15 tremolo_counter;
-_Q15 tremolo(_Q15 sample, unsigned int parameter_val)
+
+error_t tremolo_init(tremolo *tr, p_buffer_t buf)
 {
-    sample = Q15mpy(sample,Q15mpy(_Q15ftoi(0.5), _Q15sinPI(tremolo_counter)));
+    tr->tremolo_counter = 0;
+    tr->freq = 0;
+    return ERROR_OK;
+}
+error_t tremolo_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    tremolo* hp = dat;
 
-    tremolo_counter+=2*(parameter_val+1);
-    if (tremolo_counter >= 32767)
-        tremolo_counter = -32767;
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
 
-    return sample;
+    hp->freq = val;
+
+    return ERROR_OK;
+}
+error_t tremolo_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    tremolo *tr = dat;
+
+    _Q15 sample = Q15mpy(*in, Q15mpy(_Q15ftoi(0.5), _Q15sinPI(tr->tremolo_counter)));
+
+    tr->tremolo_counter += 2*(tr->freq + 1);
+    if (tr->tremolo_counter >= 32767)
+        tr->tremolo_counter = -32767;
+
+    *out = sample;
+
+    return ERROR_OK;
 }
 
-
-
-
-
-unsigned int delay_counter;
-_Q15 delay(_Q15 sample, unsigned int parameter_val)
+error_t delay_init(delay *dl, p_buffer_t buf)
 {
-    sample = Q15mpy(DELAY_FF_COEF,sample) + Q15mpy(DELAY_TAP_COEF, delay_line(sample, delay_effects_buf, &delay_counter, (DELAY_BUF_LEN/10)*parameter_val + 1));
+    dl->time = 0;
+    dl->counter = 0;
 
-    return sample;
+    dl->ff_coef = Q15ftoi(0.7);
+    dl->tap_coef = Q15ftoi(0.3);
+
+    dl->buf = buf;
+    dl->buf_len = buf[0];
+
+    return ERROR_OK;
+}
+error_t delay_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    delay* dl = dat;
+
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
+
+    dl->time = val;
+
+    return ERROR_OK;
+}
+error_t delay_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    delay *dl = dat;
+
+    _Q15 sample = *in;
+
+    *out = Q15mpy(dl->ff_coef,*in)
+            + Q15mpy(dl->tap_coef, //Add one to parameter to avoid delay line with zero length
+            delay_line(sample, dl->buf, &dl->counter, (dl->buf_len/10)*dl->time + 1));
+
+    *out = sample;
+
+    return ERROR_OK;
 }
 
-_Q15 echo_fb_point;
-unsigned int echo_counter;
-_Q15 echo(_Q15 sample, unsigned int parameter_val)
+error_t echo_init(echo *ech, p_buffer_t buf)
 {
+    ech->time = 0;
+    ech->counter = 0;
+
+    ech->fb_point = 0;
+
+    ech->buf = buf;
+    ech->buf_len = buf[0];
+
+    ech->ff_coef = Q15ftoi(0.3);
+    ech->fb_coef = Q15ftoi(0.3);
+    ech->tap_coef = Q15ftoi(0.3);
+
+    return ERROR_OK;
+}
+error_t echo_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    echo* ech = dat;
+
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
+
+    ech->time = val;
+
+    return ERROR_OK;
+}
+error_t echo_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    echo* ech = dat;
+
+    _Q15 sample = *in;
     _Q15 p0 = 0;
     _Q15 p1 = 0;
     
-    p0 = sample + Q15mpy(ECHO_FB_COEF, Q15mpy(int_to_Q15[parameter_val],echo_fb_point));
-    p1 = Q15mpy(int_to_Q15[parameter_val],Q15mpy(ECHO_TAP_COEF, delay_line(p0, delay_effects_buf, &echo_counter, ECHO_BUF_LEN)));
+    p0 = _Q15add(sample, Q15mpy(ech->fb_coef, Q15mpy(itoQ15div10(ech->time), ech->fb_point)));
+    p1 = Q15mpy(itoQ15div10(ech->time),Q15mpy(ech->tap_coef, delay_line(p0, ech->buf, &ech->counter, ech->buf_len)));
 
-    sample = Q15mpy(ECHO_FF_COEF, p0) + p1;
+    sample = _Q15add(Q15mpy(ech->ff_coef, p0), p1);
 
-    echo_fb_point = p1;
+    ech->fb_point = p1;
 
-    return sample;
-}void *dat,
+    *out = sample;
 
-_Q15 reverb_fb_p;
-unsigned int reverb_counter[3];
-_Q15 reverb(_Q15 sample, unsigned int parameter_val)                                                                  
-{
-	//Implement something like Schoeders 1
-    sample = Q15mpy(REVERB_FF_COEF, sample) + Q15mpy(Q15mpy(REVERB_FB_COEF,int_to_Q15[parameter_val]),reverb_fb_p);
-    sample += Q15mpy(REVERB_TAP_COEFS(3), delay_line(sample, delay_effects_buf, &reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(0), delay_line_tap(REVERB_TAP_LENS(0), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(1), delay_line_tap(REVERB_TAP_LENS(1), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    sample += Q15mpy(REVERB_TAP_COEFS(2), delay_line_tap(REVERB_TAP_LENS(2), delay_effects_buf, reverb_counter[0], REVERB_BUF_LEN));
-    reverb_fb_p = sample;
-    sample = all_pass(sample, REVERB_APF_COEFS(0), &delay_effects_buf[REVERB_BUF_LEN], &reverb_counter[1], REVERB_APF_LENS(0));
-    sample = all_pass(sample, REVERB_APF_COEFS(1), &delay_effects_buf[REVERB_BUF_LEN + REVERB_APF_LENS(0)], &reverb_counter[2], REVERB_APF_LENS(1));
-    
-    return sample;
+    return ERROR_OK;
 }
 
-*/
+error_t reverb_init(reverb *rev, p_buffer_t buf)
+{
+    rev->rt = 0;
+
+    rev->buf = buf;
+
+    rev->fb_point = 0;
+
+    rev->early_counter = 0;
+    rev->ap_counters[0] = 0;
+    rev->ap_counters[1] = 0;
+
+    rev->ff_coef = Q15ftoi(0.5);
+    rev->fb_coef = Q15ftoi(0.25);
+
+    rev->tap_coefs[0] = Q15ftoi(0.2);
+    rev->tap_coefs[1] = Q15ftoi(-0.25);
+    rev->tap_coefs[2] = Q15ftoi(0.15);
+    rev->tap_coefs[3] = Q15ftoi(0.11);
+
+    rev->tap_sizes[0] = 1521;
+    rev->tap_sizes[1] = 2963;
+    rev->tap_sizes[2] = 3859;
+
+    rev->ap_coefs[0] = Q15ftoi(0.23);
+    rev->ap_coefs[1] = Q15ftoi(0.17);
+
+    rev->ap_sizes[0] = 357;
+    rev->ap_sizes[1] = 129;
+
+    //Provide early buf size,
+    //full buf szie passed thru first element of array
+    rev->buf_len = rev->buf[0] - rev->ap_sizes[0] - rev->ap_sizes[1];
+
+    return ERROR_OK;
+}
+error_t reverb_set_params(void* dat, unsigned int num, unsigned int val)
+{
+    reverb* rev = dat;
+
+    if(val <= MAX_PARAMETER_VAL)
+        return PARAMS_SET_ERROR;
+
+    rev->rt = val;
+
+    return ERROR_OK;
+}
+error_t reverb_process(void* dat, p_buffer_t in, p_buffer_t out)
+{
+    reverb* rev = dat;
+
+    _Q15 sample = *in;
+
+    sample = _Q15add(Q15mpy(rev->ff_coef, sample),
+            Q15mpy(Q15mpy(rev->fb_coef,itoQ15div10(rev->rt)),rev->fb_point));
+    //Del line
+    sample = _Q15add(sample, Q15mpy(rev->tap_coefs[0],
+            delay_line(sample, rev->buf, &rev->early_counter, rev->buf_len)));
+    //Taps
+    unsigned int i = 0;
+    for(i = 0; i < 3; i++)
+        sample = _Q15add(sample, Q15mpy(rev->tap_coefs[i+1],
+                delay_line_tap(rev->tap_sizes[i], rev->buf, rev->early_counter, rev->buf_len)));
+  
+    rev->fb_point = sample;
+
+    //Allpass filters
+    sample = all_pass(sample, rev->ap_coefs[0], &rev->buf[rev->buf_len], &rev->ap_counters[0], rev->ap_sizes[0]);
+    sample = all_pass(sample, rev->ap_coefs[1], &rev->buf[rev->buf_len + rev->ap_sizes[0]], &rev->ap_counters[1], rev->ap_sizes[1]);
+
+    *out = sample;
+
+    return ERROR_OK;
+}
+
+
 
 
 

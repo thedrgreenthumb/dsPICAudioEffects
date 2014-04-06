@@ -57,7 +57,6 @@ fa.freqRespCoefs(b0,a0,'log','soft clipping post filter');%Figure 2
 % dlmwrite('../MPLAB X Project/precomputes/compression.dat',s0,'precision', 10);
 
 % %Precomputes for chain position = 1%%%
-% NumberOfCoefsSets = 10;
 lp_cut_freq = 440;
 bp_freqs = [160,200,250,300,400,600,1000,1200,1600,2300];
 hp_cut_freq = 400;
@@ -95,25 +94,28 @@ end;
 fsaver.saveIIR('../precomputes/hp_filter_coefs.dat', b, a, 2, 10, 'high pass filter coefs');
 fa.freqResp(y, 'log','high pass filter');%Figure 5
 
-% 
 % % %Precomputes for chain position = 2%%%
-% mainModBufLen = 600;
-% dlmwrite('../MPLAB X Project/precomputes/mod_effects_buf.dat',mainModBufLen);
-% WaveTableLength = 3000;
-% %Chorus
-% Lchor = 298;
-% chorusInputCoefs = [0.7,0.3];
-% chorusFeedbackCoefs = [0.17,0.15];
-% chorusFeedForwardCoefs = [0.15,0.17];
-% chorusTapLens = [fix(Lchor/3),fix(Lchor/2)];
-% s1 = ifNoiseGen('lowpass', 30 ,250,WaveTableLength , Fs);
-% s1 = Lchor * s1;
-% intPart = fix(s1);
-% fracPart=toDspicQ15(s1-fix(s1));    
-% s = [intPart, fracPart,Lchor,chorusTapLens,toDspicQ15(chorusInputCoefs), ...
-%     toDspicQ15(chorusFeedbackCoefs),toDspicQ15(chorusFeedForwardCoefs),WaveTableLength];
-% dlmwrite('../MPLAB X Project/precomputes/chorus.dat',s);
-% cmTimePlots(Lchor*fracPart/32768,intPart,Fs,'sec');%Figure 6
+mod_buf_sz = 600;
+dlmwrite('../precomputes/mod_effects_buf_sz.dat',mod_buf_sz);
+wave_table_sz = 3000;
+
+%Chorus
+chorus_del_line_sz = 298;
+chorus_in_coefs = [0.7,0.3];
+chorus_fb_coefs = [0.17,0.15];
+chorus_ff_coefs = [0.15,0.17];
+chorus_tap_szs = [fix(chorus_del_line_sz/3),fix(chorus_del_line_sz/2)];
+ss_noise = ssource(wave_table_sz, Fs);
+ss_noise.noise(chorus_del_line_sz, 55);
+ss_noise.plotData();%Figure 6
+s1 = ss_noise.getData();
+chorus_int_part = fix(s1);
+chorus_frac_part=toDspicQ15(s1-fix(s1));
+chorus_coefs = [chorus_in_coefs, chorus_fb_coefs, chorus_ff_coefs];
+fsaver.savePlaneData('../precomputes/chorus_coefs.dat',toDspicQ15(chorus_coefs), 3,'chorus alpass filters coefs');
+chorus_wave_table = [chorus_int_part, chorus_frac_part];
+fsaver.savePlaneData('../precomputes/chorus_wave_table.dat',chorus_wave_table, 2,'chorus wave table');
+
 % %Flange
 % Lfl = 30;
 % flangeInputCoef = 0.3;

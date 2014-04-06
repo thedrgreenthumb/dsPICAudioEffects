@@ -19,3 +19,6 @@
 
 void controls_processing(void);
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R);
+
+void seven_sigm_indicate(char in);
+void seven_sigm_indicate_num(unsigned int i);

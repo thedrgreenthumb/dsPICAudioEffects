@@ -131,6 +131,16 @@ inline _Q15 Q15sinPI(_Q15 x)
     return _Q15sinPI(x);
 }
 
+inline _Q15 itoQ15div10(unsigned int x)
+{
+    const _Q15 conv_arr[10]={0,3276,6553,9830,13106,16383,19660,22936,26213,29490};
+    
+    if(x >= 9)
+        return 0;
+    
+    return conv_arr[x];
+}
+
 _Q15 li_delay_line(_Q15 sample, _Q15 *buf, unsigned int* counter, int length, int intVal, _Q15 fracVal)
 {
     _Q15 out = 0;
@@ -207,9 +217,9 @@ _Q15 all_pass(_Q15 sample, _Q15 coef, _Q15 *buf, unsigned int *count, unsigned i
     return(out);
 }
 
-_Q16 DF2SOStructure(_Q16 in, _Q16 *numPtr, _Q16 *denumPtr, _Q16 *xh, _Q16 *yh)
+_Q16 DF2SOStructure(_Q16 in, const _Q16 *numPtr, const _Q16 *denumPtr, _Q16 *xh, _Q16 *yh)
 {
-    _Q16 out;
+    _Q16 out = 0;
 
     out = Q16mpy(numPtr[0],in) + Q16mpy(numPtr[1],xh[0]) + Q16mpy(numPtr[2],xh[1])
             - Q16mpy(denumPtr[1],yh[0]) - Q16mpy(denumPtr[2], yh[1]);

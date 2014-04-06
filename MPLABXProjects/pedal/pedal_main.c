@@ -14,6 +14,8 @@
 
 #include <p33FJ128GP802.h>
 
+#include <stdio.h>
+
 #include <libq.h>
 
 #include "pedal_initialization.h"
@@ -30,13 +32,11 @@ _Q15 out_sample_L;
 _Q15 out_sample_R;
 
 //Global algorithms buffer for runners
-// and their gaps
-unsigned int gaps[2] =
-{
-    600,  //Modulation effects
-    6400  //Delay and reverberation
+#define EFFECTS_MEMORY_SIZE (7000)
+_Q15 algorithms_buffer[EFFECTS_MEMORY_SIZE];
+unsigned int mod_buf_size[] = {
+#include "../precomputes/mod_effects_buf_sz.dat"
 };
-_Q15 algorithms_buffer[7000];
 
 //Audio DAC interrupt, sampling frequency = 19,3426513671875 KHz
 void __attribute__((interrupt, no_auto_psv))_DAC1LInterrupt(void)
@@ -82,12 +82,17 @@ int main(void){
     audio_dac_init();
     pins_init();
 
+    //Divide effects bufer to two buffers for modulation and delays
+    unsigned int sub_bufs_sizes[2];
+    sub_bufs_sizes[0] = mod_buf_size[0];
+    sub_bufs_sizes[2] = EFFECTS_MEMORY_SIZE - mod_buf_size[0];
+
     //Effects initialization
-    if(runners_init(algorithms_buffer, gaps, 2))
+    if(runners_init(algorithms_buffer, sub_bufs_sizes, 2))
         return 1;
     else
         while(1){};
-
+    
     return 0;
 }
 

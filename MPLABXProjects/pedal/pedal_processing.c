@@ -42,8 +42,12 @@
 #define t_CHARACTER 0b01111000
 #define BYPASS_CHARACTER 0b01000000
 
-//0          1         2          3          4          5          6          7          8          9
-const char seven_sigm_digits[10]={0b00111111,0b00000110,0b01011011,0b01001111,0b01100110,0b01101101,0b01111101,0b00000111,0b01111111,0b01101111};
+
+static int is_button_pressed(int button_num);
+static int is_debounce_protection(void);
+static void indicate_effect_character(void);
+static void reset_all(void);
+static char i_to_seven_dig(unsigned int);
 
 unsigned int effects_nums_in_chain_positions[CHAIN_POSITIONS];
 //effects_in_chain_positions[0]=0; - bypass for chain position 0
@@ -72,12 +76,6 @@ int is_parameter_displays;
 unsigned int debounce_counter;
 
 extern runner_t runners[];
-
-static int is_button_pressed(int button_num);
-static int is_debounce_protection(void);
-static void seven_sigm_indicate(char in);
-static void indicate_effect_character(void);
-static void reset_all(void);
 
 void controls_processing(void)
 {
@@ -127,7 +125,7 @@ void controls_processing(void)
     if(is_bypass)
         seven_sigm_indicate(BYPASS_CHARACTER);
     else if(is_parameter_displays)
-        seven_sigm_indicate(seven_sigm_digits[current_parameter_val]);
+        seven_sigm_indicate(i_to_seven_dig(current_parameter_val));
     else
         indicate_effect_character();
 
@@ -203,9 +201,9 @@ static int is_debounce_protection(void)
     return is_protected;
 }
 
-static void seven_sigm_indicate(char in)
+void seven_sigm_indicate(char in)
 {
-   int out;
+   int out = 0;
    
    out =(in&0b0000001)<<4;//A
    out|=(in&0b0000010)<<2;//B
@@ -218,6 +216,11 @@ static void seven_sigm_indicate(char in)
    INDICATION_PORT = 0xFFFF^(out<<5);
 }
 
+void seven_sigm_indicate_num(unsigned int i)
+{
+    seven_sigm_indicate(i_to_seven_dig(i));
+}
+
 static void indicate_effect_character(void)
 {
     switch (current_chain_position)
@@ -226,7 +229,7 @@ static void indicate_effect_character(void)
             switch (current_effect_num)
             {
                 case 0:
-                    seven_sigm_indicate(seven_sigm_digits[0]);
+                    seven_sigm_indicate(i_to_seven_dig(0));
                     break;
                 case 1:
                     seven_sigm_indicate(H_CHARACTER);
@@ -243,7 +246,7 @@ static void indicate_effect_character(void)
             switch (current_effect_num)
             {
                 case 0:
-                    seven_sigm_indicate(seven_sigm_digits[1]);
+                    seven_sigm_indicate(i_to_seven_dig(1));
                     break;
                 case 1:
                     seven_sigm_indicate(L_CHARACTER);
@@ -260,7 +263,7 @@ static void indicate_effect_character(void)
             switch (current_effect_num)
             {
                 case 0:
-                    seven_sigm_indicate(seven_sigm_digits[2]);
+                    seven_sigm_indicate(i_to_seven_dig(2));
                     break;
                 case 1:
                     seven_sigm_indicate(C_CHARACTER);
@@ -277,7 +280,7 @@ static void indicate_effect_character(void)
             switch (current_effect_num)
             {
                 case 0:
-                    seven_sigm_indicate(seven_sigm_digits[3]);
+                    seven_sigm_indicate(i_to_seven_dig(3));
                     break;
                 case 1:
                     seven_sigm_indicate(d_CHARACTER);
@@ -304,4 +307,12 @@ static void reset_all(void)
 
     current_effect_num = 0;
     current_parameter_val = 0;
+}
+
+static char i_to_seven_dig(unsigned int i)
+{
+    //0         1         2          3          4          5          6          7          8          9
+    const char seven_sigm_digits[10]={0b00111111,0b00000110,0b01011011,0b01001111,0b01100110,0b01101101,0b01111101,0b00000111,0b01111111,0b01101111};
+
+    return seven_sigm_digits[i];
 }

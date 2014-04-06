@@ -29,6 +29,8 @@ typedef struct _bypass
 } bypass;
 declare_algo_funcs(bypass)
 
+
+//Amplitude based
 typedef struct _hard_clipping
 {
     _Q16 gain;
@@ -54,25 +56,19 @@ typedef struct _compression
 } compression;
 declare_algo_funcs(compression)
 
-//FILTERS !!!!!!!!!!!!!!!!!!!!!!!!!!
-/*
+//Filtering
 typedef struct _lp_filter
 {
     unsigned int freq;
     _Q16 filter_buf[4];
-
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
 } lp_filter;
 declare_algo_funcs(lp_filter)
 
 typedef struct _bp_filter
 {
     unsigned int freq;
+    _Q16 gain_coef;
     _Q16 filter_buf[4];
-
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
 } bp_filter;
 declare_algo_funcs(bp_filter)
 
@@ -80,23 +76,28 @@ typedef struct _hp_filter
 {
     unsigned int freq;
     _Q16 filter_buf[4];
-
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t	(*p_process)(p_buffer_t in, p_buffer_t out);
 } hp_filter;
 declare_algo_funcs(hp_filter)
 
-//MODULATORS
-
+//Modulation
 typedef struct _chorus
 {
     unsigned  int ctr;
-    _Q15* op_buf;
-    unsigned int chorus_counters[6];
-    _Q15 chorus_fb_point[2];
 
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
+    _Q15* buf;
+    unsigned int buf_len;
+
+    //Wave table
+    unsigned int* w_int_part;
+    _Q15* w_frac_part;
+
+    unsigned int counters[6];
+
+    _Q15 fb_points[2];
+
+    _Q15* in_coefs;
+    _Q15* fb_coefs;
+    _Q15* ff_coefs;
 } chorus;
 declare_algo_funcs(chorus)
 
@@ -118,46 +119,64 @@ typedef struct _tremolo
 {
     unsigned  int freq;
     _Q15 tremolo_counter;
-
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
 } tremolo;
 declare_algo_funcs(tremolo)
 
-//DELAYS!!!!!!!!!
-
+//Delay effects
 typedef struct _delay
 {
     unsigned  int time;
-    unsigned int delay_counter;
 
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
+    _Q15* buf;
+    unsigned int buf_len;
+
+    unsigned int counter;
+
+    _Q15 ff_coef;
+    _Q15 tap_coef;
 } delay;
 declare_algo_funcs(delay)
 
 typedef struct _echo
 {
     unsigned  int time;
-    _Q15 echo_fb_point;
-    unsigned int echo_counter;
 
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
+    _Q15* buf;
+    unsigned int counter;
+    unsigned int buf_len;
+
+    _Q15 fb_point;
+
+    _Q15 ff_coef;
+    _Q15 fb_coef;
+    _Q15 tap_coef;
+    
 } echo;
 declare_algo_funcs(echo)
 
 typedef struct _reverb
 {
-    unsigned  int rt;
-    _Q15 reverb_fb_p;
-    unsigned int reverb_counter[3];
+    unsigned int rt;
 
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
+    _Q15* buf;
+    unsigned int buf_len;
+
+    _Q15 fb_point;
+
+    unsigned int early_counter;
+    unsigned int ap_counters[2];
+
+    //Initialization data
+    _Q15 ff_coef;
+    _Q15 fb_coef;
+
+    _Q15 tap_coefs[4];
+    unsigned int tap_sizes[3];
+    _Q15 ap_coefs[2];
+    unsigned int ap_sizes[2];
 } reverb;
 declare_algo_funcs(reverb)
-*/
+
 
 
 
