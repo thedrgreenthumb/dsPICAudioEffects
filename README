@@ -1,1 +1,4 @@
 !!!Currently the state of stuff from this repository is not valid.
+
+Projects description:
+	foundation_test.X - foundation library testing project. Compile and run simulator. See UART1 output.

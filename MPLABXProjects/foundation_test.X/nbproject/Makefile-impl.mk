@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=foudation_test.X
+PROJECTNAME=foundation_test.X
 
 # Active Configuration
 DEFAULTCONF=default

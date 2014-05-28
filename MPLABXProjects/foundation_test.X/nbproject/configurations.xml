@@ -41,7 +41,6 @@
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>/opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a</linkerLibFileItem>
             <linkerLibFileItem>/opt/microchip/xc16/v1.20/lib/libq-coff.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
@@ -185,7 +184,7 @@
         <property key="tracecontrol.timestamp" value="2"/>
         <property key="tracecontrol.tracebufmax" value="546000"/>
         <property key="tracecontrol.tracefile"
-                  value="/home/drgreenthumb/MPLABXProjects/dsPICEffects/MPLABXProjects/foudation_test.X/defmplabxtrace.log"/>
+                  value="/home/drgreenthumb/MICROCHIP_WF/dsPICAudioEffects/MPLABXProjects/foundation_test.X/defmplabxtrace.log"/>
         <property key="tracecontrol.traceresetonrun" value="false"/>
         <property key="uart10io.output" value="window"/>
         <property key="uart10io.outputfile" value=""/>
