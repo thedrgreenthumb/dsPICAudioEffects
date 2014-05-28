@@ -61,10 +61,10 @@ int main(void)
     int intermid_print = 0;
     
     int test_state = 0;
-    test_state = test_Q15mpy(0.1, intermid_print);
-    test_state = test_Q16mpy(1.0, intermid_print);
-    test_state = test_Q15andQ16_conversions(1.0, intermid_print);
-    test_state = test_Q16toi(1.5, 1);
+    test_state += test_Q15mpy(0.1, intermid_print);
+    test_state += test_Q16mpy(1.0, intermid_print);
+    test_state += test_Q15andQ16_conversions(1.0, intermid_print);
+    test_state += test_Q16toi(1.5, 1);
 
     if (test_state)
         printf("Tests FAILED.\n");

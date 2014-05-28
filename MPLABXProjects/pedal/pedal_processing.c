@@ -19,30 +19,6 @@
 #include "../effects.h"
 #include "pedal_processing.h"
 
-#define INDICATION_PORT LATB
-
-#define BUTTON0 PORTAbits.RA3 //Chain num
-#define BUTTON1 PORTBbits.RB4 //Effect parameter
-#define BUTTON2 PORTAbits.RA4 //Effect type
-#define BUTTON3 PORTAbits.RA2 //Bypass
-
-
-#define DEBOUNCE_PROTECTION_VALUE (7000) //~0.3 s
-
-//Some characters difinitions for indication
-#define b_CHARACTER 0b01111100
-#define C_CHARACTER 0b00111001
-#define d_CHARACTER 0b01011110
-#define E_CHARACTER 0b01111001
-#define F_CHARACTER 0b01110001
-#define H_CHARACTER 0b01110110
-#define L_CHARACTER 0b00111000
-#define r_CHARACTER 0b01010000
-#define S_CHARACTER 0b01101101
-#define t_CHARACTER 0b01111000
-#define BYPASS_CHARACTER 0b01000000
-
-
 static int is_button_pressed(int button_num);
 static int is_debounce_protection(void);
 static void indicate_effect_character(void);

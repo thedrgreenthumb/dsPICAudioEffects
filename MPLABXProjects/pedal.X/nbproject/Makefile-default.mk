@@ -45,17 +45,17 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Source Files Quoted if spaced
-SOURCEFILES_QUOTED_IF_SPACED=../foundation.c ../pedal/pedal_initialization.c ../pedal/pedal_main.c ../pedal/pedal_processing.c ../effects.c ../runner/runner.c
+SOURCEFILES_QUOTED_IF_SPACED=../runner/runner.c ../foundation.c ../pedal/pedal_initialization.c ../pedal/pedal_main.c ../pedal/pedal_processing.c ../effects.c
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/1472/foundation.o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ${OBJECTDIR}/_ext/1472/effects.o ${OBJECTDIR}/_ext/835468705/runner.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/1472/foundation.o.d ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d ${OBJECTDIR}/_ext/2107494293/pedal_main.o.d ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d ${OBJECTDIR}/_ext/1472/effects.o.d ${OBJECTDIR}/_ext/835468705/runner.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/_ext/835468705/runner.o ${OBJECTDIR}/_ext/1472/foundation.o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ${OBJECTDIR}/_ext/1472/effects.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/_ext/835468705/runner.o.d ${OBJECTDIR}/_ext/1472/foundation.o.d ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d ${OBJECTDIR}/_ext/2107494293/pedal_main.o.d ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d ${OBJECTDIR}/_ext/1472/effects.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/_ext/1472/foundation.o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ${OBJECTDIR}/_ext/1472/effects.o ${OBJECTDIR}/_ext/835468705/runner.o
+OBJECTFILES=${OBJECTDIR}/_ext/835468705/runner.o ${OBJECTDIR}/_ext/1472/foundation.o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ${OBJECTDIR}/_ext/1472/effects.o
 
 # Source Files
-SOURCEFILES=../foundation.c ../pedal/pedal_initialization.c ../pedal/pedal_main.c ../pedal/pedal_processing.c ../effects.c ../runner/runner.c
+SOURCEFILES=../runner/runner.c ../foundation.c ../pedal/pedal_initialization.c ../pedal/pedal_main.c ../pedal/pedal_processing.c ../effects.c
 
 
 CFLAGS=
@@ -79,6 +79,13 @@ MP_LINKER_FILE_OPTION=,--script=p33FJ128GP802.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"      -g -D__DEBUG     -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
+	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
+	
 ${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
@@ -114,14 +121,14 @@ ${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.m
 	${MP_CC} $(MP_EXTRA_CC_PRE)  ../effects.c  -o ${OBJECTDIR}/_ext/1472/effects.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d"      -g -D__DEBUG     -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
+else
 ${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"      -g -D__DEBUG     -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
+	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
-else
 ${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
@@ -156,13 +163,6 @@ ${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.m
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
 	${MP_CC} $(MP_EXTRA_CC_PRE)  ../effects.c  -o ${OBJECTDIR}/_ext/1472/effects.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
 	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -menable-large-arrays -O3 -funroll-loops -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
 	
 endif
 
