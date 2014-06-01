@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=mkdir -p
+MKDIR=gnumkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -72,44 +72,10 @@ LDLIBSOPTIONS=
 FIXDEPS=fixDeps
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
 MP_PROCESSOR_OPTION=33FJ128GP802
-MP_LINKER_FILE_OPTION=,--script=p33FJ128GP802.gld
-# ------------------------------------------------------------------------------------
-# Rules for buildStep: compile
-ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation.c  -o ${OBJECTDIR}/_ext/1472/foundation.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d"      -g -D__DEBUG     -omf=coff -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/foundation_test.o: ../foundation_test.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation_test.c  -o ${OBJECTDIR}/_ext/1472/foundation_test.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation_test.o.d"      -g -D__DEBUG     -omf=coff -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation_test.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-else
-${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation.c  -o ${OBJECTDIR}/_ext/1472/foundation.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d"        -g -omf=coff -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/foundation_test.o: ../foundation_test.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation_test.c  -o ${OBJECTDIR}/_ext/1472/foundation_test.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation_test.o.d"        -g -omf=coff -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation_test.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-endif
-
+MP_LINKER_FILE_OPTION=,-Tp33FJ128GP802.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
@@ -117,24 +83,56 @@ else
 endif
 
 # ------------------------------------------------------------------------------------
-# Rules for buildStep: assemblePreproc
+# Rules for buildStep: assembleWithPreprocess
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 else
 endif
 
 # ------------------------------------------------------------------------------------
-# Rules for buildStep: link
+# Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  /opt/microchip/xc16/v1.20/lib/libq-coff.a  
-	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    /opt/microchip/xc16/v1.20/lib/libq-coff.a  -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG   -omf=coff -Wl,,--defsym=__MPLAB_BUILD=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
+${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG  -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    
+	
+${OBJECTDIR}/_ext/1472/foundation_test.o: ../foundation_test.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.ok ${OBJECTDIR}/_ext/1472/foundation_test.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation_test.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG  -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/_ext/1472/foundation_test.o.d" -o ${OBJECTDIR}/_ext/1472/foundation_test.o ../foundation_test.c    
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  /opt/microchip/xc16/v1.20/lib/libq-coff.a 
-	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    /opt/microchip/xc16/v1.20/lib/libq-coff.a  -mcpu=$(MP_PROCESSOR_OPTION)        -omf=coff -Wl,,--defsym=__MPLAB_BUILD=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
-	${MP_CC_DIR}/xc16-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -a  -omf=coff 
+${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    
 	
+${OBJECTDIR}/_ext/1472/foundation_test.o: ../foundation_test.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o.ok ${OBJECTDIR}/_ext/1472/foundation_test.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation_test.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation_test.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -Wall -MMD -MF "${OBJECTDIR}/_ext/1472/foundation_test.o.d" -o ${OBJECTDIR}/_ext/1472/foundation_test.o ../foundation_test.c    
+	
+endif
+
+# ------------------------------------------------------------------------------------
+# Rules for buildStep: link
+ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a  
+	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG  -o dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"      -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1
+else
+dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a 
+	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"      -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION)
+	${MP_CC_DIR}\\pic30-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/foundation_test.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -omf=coff
 endif
 
 
@@ -153,7 +151,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif
