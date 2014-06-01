@@ -1,4 +1,12 @@
 !!!Currently the state of stuff from this repository is not valid.
 
+Building configuration:
+	Win XP, MPLAB X 2.10, MPLAB C30 v3.31.
+
+Building notes:
+	The libq-coff.a library from C30 compiller needed.
+
 Projects description:
 	foundation_test.X - foundation library testing project. Compile and run simulator. See UART1 output.
+	pedal_selftest.X - hardware testing project. Tests indicator, buttons, ADC - DAC loop.
+	pedal.X - main DSPIC Guitar Pedal project.
