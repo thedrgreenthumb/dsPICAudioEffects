@@ -39,6 +39,8 @@
 #define t_CHARACTER 0b01111000
 #define BYPASS_CHARACTER 0b01000000
 
+int runners_init(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps);
+
 void controls_processing(void);
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R);
 

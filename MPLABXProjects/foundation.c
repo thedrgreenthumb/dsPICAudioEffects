@@ -22,7 +22,7 @@
 inline _Q15 Q15mpy(_Q15 a, _Q15 b)
 {	
     signed int result = 0;
-    volatile register int accA asm("A");
+    register int accA asm("A");
 
     accA = __builtin_mpy(a, b, 0, 0, 0, 0, 0, 0);
     result = __builtin_sac(accA ,0);

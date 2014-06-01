@@ -77,21 +77,26 @@ int main(void){
     while (OSCCONbits.COSC != 0b01);	/*	Wait for Clock switch to occur	*/
     while(!OSCCONbits.LOCK);
 
+    //Divide effects bufer to two buffers for modulation and delays
+    unsigned int sub_bufs_sizes[2];
+    sub_bufs_sizes[0] = mod_buf_size[0];
+    sub_bufs_sizes[1] = EFFECTS_MEMORY_SIZE - mod_buf_size[0];
+
+    //Effects initialization
+    if(runners_init(algorithms_buffer, sub_bufs_sizes, 2))
+    {
+        //Indicate error
+        seven_sigm_indicate(E_CHARACTER);
+        //Forbid interrupts
+        SR = SR | 0x00E0;
+    }
+
     //HW initialization
     adc_init();
     audio_dac_init();
     pins_init();
 
-    //Divide effects bufer to two buffers for modulation and delays
-    unsigned int sub_bufs_sizes[2];
-    sub_bufs_sizes[0] = mod_buf_size[0];
-    sub_bufs_sizes[2] = EFFECTS_MEMORY_SIZE - mod_buf_size[0];
-
-    //Effects initialization
-    if(runners_init(algorithms_buffer, sub_bufs_sizes, 2))
-        return 1;
-    else
-        while(1){};
+    while(1){};
     
     return 0;
 }

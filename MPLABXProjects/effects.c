@@ -368,6 +368,7 @@ _Q15 chorus_wave_table[] = {
 };
 error_t chorus_init(chorus *ch, p_buffer_t buf)
 {
+    /*
     ch->buf = buf;
     ch->buf_len = buf[0];
     
@@ -389,7 +390,7 @@ error_t chorus_init(chorus *ch, p_buffer_t buf)
     ch->ff_coefs = plane_data_get__Q15(chorus_coefs, 2, &fsr);
     if(fsr)
         return PARAMS_SET_ERROR;
-
+    */
     return ERROR_OK;
 }
 error_t chorus_set_params(void* dat, unsigned int num, unsigned int val)
@@ -405,7 +406,7 @@ error_t chorus_set_params(void* dat, unsigned int num, unsigned int val)
 }
 error_t chorus_process(void* dat, p_buffer_t in, p_buffer_t out)
 {
-    chorus* ch = dat;
+    //chorus* ch = dat;
     _Q15 sample = *in;
 
     /*
