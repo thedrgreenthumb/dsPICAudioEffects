@@ -53,9 +53,9 @@ void __attribute__((interrupt, no_auto_psv))_DAC1RInterrupt(void)
     IFS4bits.DAC1RIF = 0; // Clear Right Channel Interrupt Flag
 }
 
-void delay(long int i)
+void delay(unsigned long int i)
 {
-    volatile long int j = 0;
+    volatile unsigned long int j = 0;
     for(j = 0; j < i; j++)
         ;
 }
@@ -84,17 +84,30 @@ int main(void){
     pins_init();
 
     TRISB = 0;
-    //seven_sigm_indicate_num(1);
 
+    int is_button_indication = 0;
+    int i = 0;
+    int j = 0;
     while(1)
     {
-        //Change numbers on indicator
-        //If some button pressed, indicate their number
         delay(1000000);
-        LATB = 0xFFFF;
-        delay(1000000);
-        LATB = 0;
+        is_button_indication = 0;
+        //If any button pressed, indicate it
+        for(i = 0; i < 4; i++)
+            if(is_button_pressed(i))
+            {
+                seven_sigm_indicate_num(i);
+                is_button_indication = 1;
+            }
 
+        //Indicate numbers from 0 to 9
+        if(!is_button_indication)
+        {
+            seven_sigm_indicate_num(j);
+            j++;
+            if(j > 9)
+                j = 0;
+        }
     };
     
     return 0;

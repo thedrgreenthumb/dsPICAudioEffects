@@ -19,7 +19,6 @@
 #include "../effects.h"
 #include "pedal_processing.h"
 
-static int is_button_pressed(int button_num);
 static int is_debounce_protection(void);
 static void indicate_effect_character(void);
 static void reset_all(void);
@@ -136,7 +135,7 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
     }
 }
 
-static int is_button_pressed(int button_num)
+int is_button_pressed(int button_num)
 {
     int is_pressed = 0;
 

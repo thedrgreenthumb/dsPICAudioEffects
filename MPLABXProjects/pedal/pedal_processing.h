@@ -44,3 +44,4 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
 
 void seven_sigm_indicate(char in);
 void seven_sigm_indicate_num(unsigned int i);
+int is_button_pressed(int button_num);
