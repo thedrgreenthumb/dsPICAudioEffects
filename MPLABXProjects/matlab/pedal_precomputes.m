@@ -48,18 +48,18 @@ sc_gain_coefs = [1;3;5;10;20;30;50;70;85;100];
 for n=1:length(sc_gain_coefs) sc_gain_coefs(n) = toDspicQ16(sc_gain_coefs(n)); end;
 sc_gain_coefs_sz =  size(sc_gain_coefs);
 fsaver.savePlaneData('../precomputes/sc_gain_coefs.dat',sc_gain_coefs, sc_gain_coefs_sz(1),'soft clipping gain coefs');
-sc_filter_cut_freq = 340;
+sc_filter_cut_freq = 560;
 sc_filter_q = 1;
 [b0, a0] = second_order_BP(sc_filter_cut_freq, Fs, sc_filter_q);
 fsaver.saveIIR('../precomputes/sc_filter_coefs.dat', toDspicQ16(b0), toDspicQ16(a0), 2, 1, 'soft clipping filter coefs');
 fa.freqRespCoefs(b0,a0,'log','soft clipping post filter');%Figure 2
 
-% % %Compression
-% % TAV = 0.0005;
-% % CompControlCoefs = [1.0,2.0,25,3,3.5,4,4.5,5,5.5,6];
-% % s0 = [toDspicQ16(TAV),toDspicQ16(CompControlCoefs)];
-% % dlmwrite('../MPLAB X Project/precomputes/compression.dat',s0,'precision', 10);
-% 
+%Compression
+comp_coefs = [1.0;2.0;2.5;3;3.5;4;4.5;5;5.5;6];
+for n=1:length(comp_coefs) comp_coefs(n) = toDspicQ16(comp_coefs(n)); end;
+comp_coefs_sz =  size(comp_coefs);
+fsaver.savePlaneData('../precomputes/comp_coefs.dat', comp_coefs, comp_coefs_sz(1),'simple compressor coefs');
+
 % % %Precomputes for chain position = 1%%%
 % lp_cut_freq = 440;
 % bp_freqs = [160,200,250,300,400,600,1000,1200,1600,2300];
