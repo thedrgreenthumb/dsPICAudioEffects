@@ -48,8 +48,8 @@ sc_gain_coefs = [1;3;5;10;20;30;50;70;85;100];
 for n=1:length(sc_gain_coefs) sc_gain_coefs(n) = toDspicQ16(sc_gain_coefs(n)); end;
 sc_gain_coefs_sz =  size(sc_gain_coefs);
 fsaver.savePlaneData('../precomputes/sc_gain_coefs.dat',sc_gain_coefs, sc_gain_coefs_sz(1),'soft clipping gain coefs');
-sc_filter_cut_freq = 560;
-sc_filter_q = 1;
+sc_filter_cut_freq = 780;
+sc_filter_q = 0.5;
 [b0, a0] = second_order_BP(sc_filter_cut_freq, Fs, sc_filter_q);
 fsaver.saveIIR('../precomputes/sc_filter_coefs.dat', toDspicQ16(b0), toDspicQ16(a0), 2, 1, 'soft clipping filter coefs');
 fa.freqRespCoefs(b0,a0,'log','soft clipping post filter');%Figure 2
