@@ -11,6 +11,7 @@
 * Project:         dsPIC33 Audio Effects Pedal project.
 * Project version: 1.01
 **********************************************************************/
+#include <p33FJ128GP802.h> //!!!Remove it, only for debug purposes
 
 #include <libq.h>
 
@@ -24,6 +25,12 @@ fsaver_iir_declare(_Q16)
 #include "foundation.h"
 #include "runner/runner.h"
 #include "effects.h"
+
+_Q15 dc_blocker_buf[2];
+_Q15 w_dc_blocker(_Q15 sample)
+{
+    return dc_blocker(sample, _Q15ftoi(0.005), dc_blocker_buf);
+}
 
 error_t bypass_init(bypass *bp, p_buffer_t buf)
 {
@@ -65,14 +72,14 @@ error_t hard_clipping_set_params(void* dat, unsigned int num, unsigned int val)
 {
     hard_clipping* hc = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
     fsaver_result fsr = no_error;
     hc->gain = *plane_data_get__Q16(hard_clipping_gain_coefs, val, &fsr);
     if(fsr)
         return PARAMS_SET_ERROR;
-
+    
     return ERROR_OK;
 }
 
@@ -86,10 +93,10 @@ error_t hard_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     sample = Q16mpy(sample, hc->gain);
 
     //Clip
-    if(sample >= _Q16ftoi(0.7))
-        sample = _Q16ftoi(0.7);
-    if(sample < _Q16ftoi(-0.7))
-        sample =  _Q16ftoi(-0.7);
+    if(sample >= _Q16ftoi(0.15))
+        sample = _Q16ftoi(0.15);
+    if(sample < _Q16ftoi(-0.15))
+        sample =  _Q16ftoi(-0.15);
 
     //Post-filter
     sample = DF2SOStructure(sample,
@@ -127,7 +134,7 @@ error_t soft_clipping_set_params(void* dat, unsigned int num, unsigned int val)
 {
     soft_clipping* sc = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
     fsaver_result fsr = no_error;
@@ -150,7 +157,7 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     if(sample >= 0)
     {
         sample = Q16mpy(sample,_Q16ftoi(9.0));
-        sample += 1.0;
+        sample += _Q16ftoi(1.0);
         sample = _Q16log10(sample);
 
     }
@@ -158,7 +165,7 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     {
         sample = Q16mpy(sample,_Q16ftoi(-1.0));
         sample = Q16mpy(sample,_Q16ftoi(9.0));
-        sample += 1.0;
+        sample += _Q16ftoi(1.0);
         sample = _Q16log10(sample);
         sample = Q16mpy(sample,_Q16ftoi(-1.0));
     }
@@ -169,6 +176,9 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     if(sample < _Q16ftoi(-0.99))
         sample =  _Q16ftoi(-0.99);
 
+    //Decrease amplitude to match with bypass mode
+    sample = Q16mpy(sample,_Q16ftoi(0.15));
+    
     //Post-filter
     sample = DF2SOStructure(sample,
             (_Q16*)&sc->filter_coefs[0], (_Q16*)&sc->filter_coefs[3],
@@ -179,10 +189,13 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     return ERROR_OK;
 }
 
+_Q16 compressor_gain_coefs[] = {
+#include "./precomputes/comp_coefs.dat"
+};
+
 error_t compression_init(compression *c, p_buffer_t buf)
 {
     c->ctr = 0;
-    c->env_buf = 0;
 
     return ERROR_OK;
 }
@@ -190,34 +203,51 @@ error_t compression_set_params(void* dat, unsigned int num, unsigned int val)
 {
     compression* c = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
-    c->ctr = val;
+    fsaver_result fsr = no_error;
+    c->ctr = *plane_data_get__Q16(compressor_gain_coefs, val, &fsr);
+    if(fsr)
+        return PARAMS_SET_ERROR;
 
     return ERROR_OK;
 }
 error_t compression_process(void *dat, p_buffer_t in, p_buffer_t out)
 {
-    /*
-    _Q16 in = Q15toQ16(sample);
-    _Q16 e = 0;
-    _Q16 out = 0;
+    compression* c = dat;
+    _Q16 sample = Q15toQ16(*in);
 
-    e = compression_buf + Q16mpy((Q16mpy(in, in) - compression_buf),COMPRESSION_TAV);
-    compression_buf = e;
+    //Applay gain
+    sample = Q16mpy(sample, c->ctr);
 
-    out = Q16mpy((Q16ftoi(1.0) - Q16mpy(compression_dat[parameter_val + 1],e)),in);
+    //Try logarithmic compression
+    if(sample >= 0)
+    {
+        sample = Q16mpy(sample,_Q16ftoi(9.0));
+        sample += _Q16ftoi(1.0);
+        sample = _Q16log10(sample);
+    }
+    else
+    {
+        sample = Q16mpy(sample,_Q16ftoi(-1.0));
+        sample = Q16mpy(sample,_Q16ftoi(9.0));
+        sample += _Q16ftoi(1.0);
+        sample = _Q16log10(sample);
+        sample = Q16mpy(sample,_Q16ftoi(-1.0));
+    }
 
-    if(in > _Q16ftoi(0.999))
-        in = _Q16ftoi(0.999);
-    if(in < _Q16ftoi(-0.999))
-        in = _Q16ftoi(-0.999);
+    //Then - hard clipping
+    if(sample >= _Q16ftoi(0.99))
+        sample = _Q16ftoi(0.99);
+    if(sample < _Q16ftoi(-0.99))
+        sample =  _Q16ftoi(-0.99);
 
-    return Q16toQ15(out);
-     */
+    //Decrease amplitude to match with bypass mode
+    sample = Q16mpy(sample,_Q16ftoi(0.15));
 
-    *out = *in;
+    *out = Q16toQ15(sample);
+
     return ERROR_OK;
 }
 

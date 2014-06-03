@@ -20,7 +20,7 @@ error_t NAME##_init(NAME *data, p_buffer_t buf); \
 error_t NAME##_set_params(void *dat, unsigned int num, unsigned int val); \
 error_t NAME##_process(void *dat, p_buffer_t in, p_buffer_t out);
 
-_Q15 dc_blocker(_Q15 sample);
+_Q15 w_dc_blocker(_Q15 sample);
 
 typedef struct _bypass
 {
@@ -50,9 +50,7 @@ declare_algo_funcs(soft_clipping)
 
 typedef struct _compression
 {
-    unsigned int ctr;
-    _Q15 env_buf;
-
+    _Q16 ctr;
 } compression;
 declare_algo_funcs(compression)
 

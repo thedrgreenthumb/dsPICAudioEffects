@@ -30,4 +30,5 @@ _Q15 delay_line(_Q15 sample, _Q15 *buf, unsigned int *counter, unsigned int leng
 _Q15 delay_line_tap(unsigned int read_position, _Q15* buf, unsigned int counter, unsigned int length);
 _Q15 all_pass(_Q15 sample, _Q15 coef, _Q15 *buf, unsigned int *count, unsigned int length);
 _Q16 DF2SOStructure(_Q16 in, const _Q16 *numPtr, const _Q16 *denumPtr, _Q16 *xh, _Q16 *yh);
-inline _Q15 envelope_follower(_Q15 sample, _Q15 attack, _Q15 release);
+_Q15 dc_blocker(_Q15 sample, _Q15 coef, _Q15* dc_blocker_buf);
+inline _Q15 envelope_follower(_Q16 in, _Q16 attack, _Q16 release, _Q16* envelope_buf);
