@@ -60,48 +60,48 @@ for n=1:length(comp_coefs) comp_coefs(n) = toDspicQ16(comp_coefs(n)); end;
 comp_coefs_sz =  size(comp_coefs);
 fsaver.savePlaneData('../precomputes/comp_coefs.dat', comp_coefs, comp_coefs_sz(1),'simple compressor coefs');
 
-% % %Precomputes for chain position = 1%%%
-% lp_cut_freq = 440;
-% bp_freqs = [160,200,250,300,400,600,1000,1200,1600,2300];
-% hp_cut_freq = 400;
-% lp_hp_gain = [0, -2, -4, -6,  -8, -10, -12, -14, -16, -18];
-% bp_peak_gain = 10;
-% 
-% %LP filter
-% for n = 1:length(lp_hp_gain)
-%     [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Treble_Shelf',lp_cut_freq,lp_hp_gain(n),0.707,Fs);
-%     y(n,:) = filter(b(:,n),a(:,n),x); 
-%     b(:,n) = toDspicQ16(b(:,n));
-%     a(:,n) = toDspicQ16(a(:,n));    
-% end;
-% fsaver.saveIIR('../precomputes/lp_filter_coefs.dat', b, a, 2, 10, 'low pass filter coefs');
-% fa.freqResp(y, 'log','low pass filter');%Figure 3
-% 
-% %BP filter
-% fsaver.savePlaneData('../precomputes/bp_filter_gain_coefs.dat',toDspicQ16(1/db2mag(bp_peak_gain)), 1,'band pass filter gain coef');
-% for n = 1:length(bp_freqs)
-%     [ b(:,n),a(:,n) ] = fltSO( 'peak', 0,bp_freqs(n),bp_peak_gain,0.707,Fs);
-%     y(n,:) = filter(b(:,n),a(:,n),x); 
-%     b(:,n) = toDspicQ16(b(:,n));
-%     a(:,n) = toDspicQ16(a(:,n)); 
-% end;
-% fsaver.saveIIR('../precomputes/bp_filter_coefs.dat', b, a, 2, 10, 'band pass filter coefs');
-% fa.freqResp(y, 'log','band pass filter');%Figure 4
-% 
-% %HP filter
-% for n = 1:length(lp_hp_gain)
-%     [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Base_Shelf',hp_cut_freq,lp_hp_gain(n),0.707,Fs);
-%     y(n,:) = filter(b(:,n),a(:,n),x); 
-%     b(:,n) = toDspicQ16(b(:,n));
-%     a(:,n) = toDspicQ16(a(:,n)); 
-% end;
-% fsaver.saveIIR('../precomputes/hp_filter_coefs.dat', b, a, 2, 10, 'high pass filter coefs');
-% fa.freqResp(y, 'log','high pass filter');%Figure 5
-% 
-% % % %Precomputes for chain position = 2%%%
-% mod_buf_sz = 600;
-% dlmwrite('../precomputes/mod_effects_buf_sz.dat',mod_buf_sz);
-% wave_table_sz = 3000;
+% %Precomputes for chain position = 1%%%
+lp_cut_freq = 440;
+bp_freqs = [160,200,250,300,400,600,1000,1200,1600,2300];
+hp_cut_freq = 400;
+lp_hp_gain = [0, -2, -4, -6,  -8, -10, -12, -14, -16, -18];
+bp_peak_gain = 10;
+
+%LP filter
+for n = 1:length(lp_hp_gain)
+    [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Treble_Shelf',lp_cut_freq,lp_hp_gain(n),0.707,Fs);
+    y(n,:) = filter(b(:,n),a(:,n),x); 
+    b(:,n) = toDspicQ16(b(:,n));
+    a(:,n) = toDspicQ16(a(:,n));    
+end;
+fsaver.saveIIR('../precomputes/lp_filter_coefs.dat', b, a, 2, 10, 'low pass filter coefs');
+fa.freqResp(y, 'log','low pass filter');%Figure 3
+
+%BP filter
+fsaver.savePlaneData('../precomputes/bp_filter_gain_coefs.dat',toDspicQ16(1/db2mag(bp_peak_gain)), 1,'band pass filter gain coef');
+for n = 1:length(bp_freqs)
+    [ b(:,n),a(:,n) ] = fltSO( 'peak', 0,bp_freqs(n),bp_peak_gain,0.707,Fs);
+    y(n,:) = filter(b(:,n),a(:,n),x); 
+    b(:,n) = toDspicQ16(b(:,n));
+    a(:,n) = toDspicQ16(a(:,n)); 
+end;
+fsaver.saveIIR('../precomputes/bp_filter_coefs.dat', b, a, 2, 10, 'band pass filter coefs');
+fa.freqResp(y, 'log','band pass filter');%Figure 4
+
+%HP filter
+for n = 1:length(lp_hp_gain)
+    [ b(:,n),a(:,n) ] = fltSO( 'shelving', 'Base_Shelf',hp_cut_freq,lp_hp_gain(n),0.707,Fs);
+    y(n,:) = filter(b(:,n),a(:,n),x); 
+    b(:,n) = toDspicQ16(b(:,n));
+    a(:,n) = toDspicQ16(a(:,n)); 
+end;
+fsaver.saveIIR('../precomputes/hp_filter_coefs.dat', b, a, 2, 10, 'high pass filter coefs');
+fa.freqResp(y, 'log','high pass filter');%Figure 5
+
+% % %Precomputes for chain position = 2%%%
+mod_buf_sz = 600;
+dlmwrite('../precomputes/mod_effects_buf_sz.dat',mod_buf_sz);
+wave_table_sz = 3000;
 % 
 % %Chorus
 % chorus_del_line_sz = 298;
