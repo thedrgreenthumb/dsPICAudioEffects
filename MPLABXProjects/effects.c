@@ -268,7 +268,7 @@ error_t lp_filter_set_params(void* dat, unsigned int num, unsigned int val)
 {
     lp_filter* lp = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
     lp->freq = val;
@@ -319,7 +319,7 @@ error_t bp_filter_set_params(void* dat, unsigned int num, unsigned int val)
 {
     bp_filter* bp = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
     bp->freq = val;
@@ -364,7 +364,7 @@ error_t hp_filter_set_params(void* dat, unsigned int num, unsigned int val)
 {
     hp_filter* hp = dat;
 
-    if(val <= MAX_PARAMETER_VAL)
+    if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
     hp->freq = val;
@@ -378,7 +378,7 @@ error_t hp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
     _Q16 sample = Q15toQ16(*in);
 
     fsaver_result fsr = no_error;
-    const _Q16* coefs = iir_get__Q16(low_pass_filter_coefs, hp->freq, &fsr);
+    const _Q16* coefs = iir_get__Q16(high_pass_filter_coefs, hp->freq, &fsr);
     if(fsr)
         return PARAMS_SET_ERROR;
 
