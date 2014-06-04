@@ -39,7 +39,8 @@
 #define t_CHARACTER 0b01111000
 #define BYPASS_CHARACTER 0b01000000
 
-int runners_init(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps);
+int runners_init(_Q15* mod_buf, unsigned int mod_buf_sz,
+        _Q15* delays_buf, unsigned int delays_buf_sz);
 
 void controls_processing(void);
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R);
@@ -47,3 +48,4 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
 void seven_sigm_indicate(char in);
 void seven_sigm_indicate_num(unsigned int i);
 int is_button_pressed(int button_num);
+

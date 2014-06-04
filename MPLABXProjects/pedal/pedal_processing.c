@@ -73,67 +73,72 @@ delay del;
 echo ech;
 reverb rev;
 
-int runners_init(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps)
+int runners_init(_Q15* mod_buf, unsigned int mod_buf_sz,
+        _Q15* delays_buf, unsigned int delays_buf_sz)
 {
     error_t err = ERROR_OK;
 
     //Runner 0
-    err = bypass_init(&bp0, algorithms_buffer);
-    err = runner_add_effect(&runners[0], &bp0, bypass_set_params, bypass_process);
+    err += bypass_init(&bp0, NULL);
+    err += runner_add_effect(&runners[0], &bp0, bypass_set_params, bypass_process);
 
-    err = hard_clipping_init(&hc, algorithms_buffer);
-    err = runner_add_effect(&runners[0], &hc, hard_clipping_set_params, hard_clipping_process);
+    err += hard_clipping_init(&hc, NULL);
+    err += runner_add_effect(&runners[0], &hc, hard_clipping_set_params, hard_clipping_process);
 
-    err = soft_clipping_init(&sc, algorithms_buffer);
-    err = runner_add_effect(&runners[0], &sc, soft_clipping_set_params, soft_clipping_process);
+    err += soft_clipping_init(&sc, NULL);
+    err += runner_add_effect(&runners[0], &sc, soft_clipping_set_params, soft_clipping_process);
 
-    err = compression_init(&comp, algorithms_buffer);
-    err = runner_add_effect(&runners[0], &comp, compression_set_params, compression_process);
+    err += compression_init(&comp, NULL);
+    err += runner_add_effect(&runners[0], &comp, compression_set_params, compression_process);
  
     //Runner 1
-    err = bypass_init(&bp1, algorithms_buffer);
-    err = runner_add_effect(&runners[1], &bp1, bypass_set_params, bypass_process);
+    err += bypass_init(&bp1, NULL);
+    err += runner_add_effect(&runners[1], &bp1, bypass_set_params, bypass_process);
 
-    err = lp_filter_init(&lp, algorithms_buffer);
-    err = runner_add_effect(&runners[1], &lp, lp_filter_set_params, lp_filter_process);
+    err += lp_filter_init(&lp, NULL);
+    err += runner_add_effect(&runners[1], &lp, lp_filter_set_params, lp_filter_process);
 
-    err = bp_filter_init(&bp, algorithms_buffer);
-    err = runner_add_effect(&runners[1], &bp, bp_filter_set_params, bp_filter_process);
+    err += bp_filter_init(&bp, NULL);
+    err += runner_add_effect(&runners[1], &bp, bp_filter_set_params, bp_filter_process);
 
-    err = hp_filter_init(&hp, algorithms_buffer);
-    err = runner_add_effect(&runners[1], &hp, hp_filter_set_params, hp_filter_process);
+    err += hp_filter_init(&hp, NULL);
+    err += runner_add_effect(&runners[1], &hp, hp_filter_set_params, hp_filter_process);
 
     //Runner 2
-    err = bypass_init(&bp2, algorithms_buffer);
-    err = runner_add_effect(&runners[2], &bp2, bypass_set_params, bypass_process);
+    err += bypass_init(&bp2, NULL);
+    err += runner_add_effect(&runners[2], &bp2, bypass_set_params, bypass_process);
 
-    //Path buffer size thru first buf element
-    algorithms_buffer[0] = sub_bufs_sizes[0];
+    //Pass buffer size thru first buf element
+    mod_buf[0] = mod_buf_sz;
 
-    err = chorus_init(&chor, algorithms_buffer);
-    err = runner_add_effect(&runners[2], &chor, chorus_set_params, chorus_process);
+    err += chorus_init(&chor, mod_buf);
+    err += runner_add_effect(&runners[2], &chor, chorus_set_params, chorus_process);
 
-    err = flange_init(&fl, algorithms_buffer);
-    err = runner_add_effect(&runners[2], &fl, flange_set_params, flange_process);
+    err += flange_init(&fl, mod_buf);
+    err += runner_add_effect(&runners[2], &fl, flange_set_params, flange_process);
 
-    err = tremolo_init(&tr, algorithms_buffer);
-    err = runner_add_effect(&runners[2], &tr, tremolo_set_params, tremolo_process);
+    err += tremolo_init(&tr, NULL);
+    err += runner_add_effect(&runners[2], &tr, tremolo_set_params, tremolo_process);
+
+    mod_buf[0] = 0;
 
     //Runner 3
-    err = bypass_init(&bp3, algorithms_buffer);
-    err = runner_add_effect(&runners[3], &bp3, bypass_set_params, bypass_process);
+    err += bypass_init(&bp3, NULL);
+    err += runner_add_effect(&runners[3], &bp3, bypass_set_params, bypass_process);
 
-    //Apply buffer gap for delay effects and path buffer size thru first buf element
-    algorithms_buffer[sub_bufs_sizes[0]] = sub_bufs_sizes[1];
+    //Path buffer size thru first buf element
+    delays_buf[0] = delays_buf_sz;
 
-    err = delay_init(&del, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runners[3], &del, delay_set_params, delay_process);
+    err += delay_init(&del, delays_buf);
+    err += runner_add_effect(&runners[3], &del, delay_set_params, delay_process);
 
-    err = echo_init(&ech, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runners[3], &ech, echo_set_params, echo_process);
+    err += echo_init(&ech, delays_buf);
+    err += runner_add_effect(&runners[3], &ech, echo_set_params, echo_process);
 
-    err = reverb_init(&rev, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runners[3], &rev, reverb_set_params, reverb_process);
+    err += reverb_init(&rev, delays_buf);
+    err += runner_add_effect(&runners[3], &rev, reverb_set_params, reverb_process);
+
+    delays_buf[0] = 0;
 
     return err;
 }
@@ -198,7 +203,7 @@ void controls_processing(void)
 void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_R)
 {
     _Q15 sample = 0;
-    sample = dc_blocker(input_sample);
+    sample = w_dc_blocker(input_sample);
 
     if(!is_bypass)
     {
@@ -211,12 +216,6 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
             runner_sbs_process(&runners[i], &sample, &sample);
         }
 	
-        /*
-        runner_set_effect_num(&runners, 0);
-        runner_set_param(&runners, 0, 1);
-        runner_sbs_process(&runners, &sample, &sample);
-        */
-        
         *out_sample_L = sample;
         *out_sample_R = sample;
     }
@@ -383,3 +382,4 @@ static char i_to_seven_dig(unsigned int i)
 
     return seven_sigm_digits[i];
 }
+

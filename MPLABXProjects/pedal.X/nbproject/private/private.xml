@@ -7,9 +7,13 @@
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/pedal/pedal_initialization.h</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/pedal/pedal_initialization.c</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/runner/runner_errors.h</file>
+        <file>file:/E:/dsPICAudioEffects/MPLABXProjects/effects.h</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/effects.c</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/runner/runner.c</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/runner/runner.h</file>
         <file>file:/E:/dsPICAudioEffects/MPLABXProjects/foundation.c</file>
+        <file>file:/E:/dsPICAudioEffects/MPLABXProjects/foundation.h</file>
+        <file>file:/E:/dsPICAudioEffects/MPLABXProjects/matlab/@fsaver/fsaver.h</file>
+        <file>file:/E:/dsPICAudioEffects/MPLABXProjects/global_def.h</file>
     </open-files>
 </project-private>

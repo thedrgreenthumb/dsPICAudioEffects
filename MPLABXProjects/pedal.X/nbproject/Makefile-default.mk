@@ -96,42 +96,42 @@ ${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${C
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.ok ${OBJECTDIR}/_ext/835468705/runner.o.err 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o: ../pedal/pedal_initialization.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ../pedal/pedal_initialization.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ../pedal/pedal_initialization.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_main.o: ../pedal/pedal_main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_main.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ../pedal/pedal_main.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ../pedal/pedal_main.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_processing.o: ../pedal/pedal_processing.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ../pedal/pedal_processing.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ../pedal/pedal_processing.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.ok ${OBJECTDIR}/_ext/1472/effects.o.err 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
 	
 else
 ${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
@@ -139,42 +139,42 @@ ${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${C
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.ok ${OBJECTDIR}/_ext/835468705/runner.o.err 
 	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
 	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o: ../pedal/pedal_initialization.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ../pedal/pedal_initialization.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_initialization.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_initialization.o ../pedal/pedal_initialization.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_main.o: ../pedal/pedal_main.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_main.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_main.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ../pedal/pedal_main.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_main.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_main.o ../pedal/pedal_main.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/2107494293/pedal_processing.o: ../pedal/pedal_processing.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/2107494293 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.ok ${OBJECTDIR}/_ext/2107494293/pedal_processing.o.err 
 	@${RM} ${OBJECTDIR}/_ext/2107494293/pedal_processing.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ../pedal/pedal_processing.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/2107494293/pedal_processing.o.d" -o ${OBJECTDIR}/_ext/2107494293/pedal_processing.o ../pedal/pedal_processing.c    -fast-math -legacy-libc
 	
 ${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR}/_ext/1472 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.ok ${OBJECTDIR}/_ext/1472/effects.o.err 
 	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-code -mlarge-data -mlarge-scalar -mconst-in-code -O3 -funroll-loops -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -mlarge-arrays -mlarge-data -mconst-in-code -O3 -funroll-loops -fschedule-insns -fschedule-insns2 -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
 	
 endif
 
@@ -183,11 +183,11 @@ endif
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a  
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -o dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PICKIT2=1
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -o dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PICKIT2=1
 else
 dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a 
 	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION)
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map"$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION)
 	${MP_CC_DIR}\\pic30-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/pedal.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -omf=coff
 endif
 

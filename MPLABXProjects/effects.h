@@ -82,34 +82,53 @@ typedef struct _chorus
 {
     unsigned  int ctr;
 
-    _Q15* buf;
-    unsigned int buf_len;
+    _Q15* op_buf;
+    int op_buf_sz;
+
+    _Q15* dl1_buf;
+    _Q15* dl2_buf;
+    int dl1_buf_sz;
+    int dl2_buf_sz;
 
     //Wave table
-    unsigned int* w_int_part;
-    _Q15* w_frac_part;
+    const int* w_int_part;
+    const _Q15* w_frac_part;
+    unsigned int wt_size;
+    unsigned int depth;
 
     unsigned int counters[6];
 
-    _Q15 fb_points[2];
+    _Q15 in_coefs[2];
+    _Q15 fb_coefs[2];
+    _Q15 ff_coefs[2];
 
-    _Q15* in_coefs;
-    _Q15* fb_coefs;
-    _Q15* ff_coefs;
+    unsigned int tap_szs[2];
+
+    _Q15 fb_points[2];
 } chorus;
 declare_algo_funcs(chorus)
 
 typedef struct _flange
 {
-    unsigned  int ctr;
-    _Q15* op_buf;
-    unsigned int flange_counter;
-    unsigned int flange_wt_counter0;
-    unsigned int flange_wt_counter1;
-    _Q15 flange_fb_point;
+    unsigned int ctr;
 
-    error_t (*p_set_params)(unsigned int paramNumber, unsigned int val);
-    error_t (*p_process)(p_buffer_t in, p_buffer_t out);
+    _Q15* op_buf;
+    unsigned int op_buf_sz;
+
+    const int* wt_data_int;
+    const _Q15* wt_data_fract;
+    unsigned int wt_size;
+    unsigned int depth;
+
+    _Q15 in_coef;
+    _Q15 ff_coef;
+    _Q15 fb_coef;
+
+    unsigned int counter;
+    unsigned int wt_counter0;
+    unsigned int wt_counter1;
+
+    _Q15 fb_point;
 } flange;
 declare_algo_funcs(flange)
 
@@ -123,7 +142,7 @@ declare_algo_funcs(tremolo)
 //Delay effects
 typedef struct _delay
 {
-    unsigned  int time;
+    unsigned int time;
 
     _Q15* buf;
     unsigned int buf_len;

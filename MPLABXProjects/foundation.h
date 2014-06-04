@@ -18,6 +18,7 @@ inline _Q15 Q15mpy(_Q15 a, _Q15 b);
 inline int Q16toi(_Q16 x);
 inline _Q16 Q15toQ16(_Q15 x);
 inline _Q15 Q16toQ15(_Q16 x);
+inline _Q15 Q16toQ15sat(_Q16 x);
 inline _Q16 Q16abs(_Q16 a);
 inline _Q16 Q16pow(_Q16 x, _Q16 p);
 inline _Q16 Q16mpy(_Q16 x, _Q16 y);

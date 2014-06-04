@@ -31,13 +31,6 @@ _Q15 sample;
 _Q15 out_sample_L;
 _Q15 out_sample_R;
 
-//Global algorithms buffer for runners
-#define EFFECTS_MEMORY_SIZE (7000)
-_Q15 algorithms_buffer[EFFECTS_MEMORY_SIZE];
-unsigned int mod_buf_size[] = {
-#include "../precomputes/mod_effects_buf_sz.dat"
-};
-
 //Audio DAC interrupt, sampling frequency = 19,3426513671875 KHz
 void __attribute__((interrupt, no_auto_psv))_DAC1LInterrupt(void)
 {
@@ -60,6 +53,12 @@ void __attribute__((interrupt, no_auto_psv))_DAC1RInterrupt(void)
     IFS4bits.DAC1RIF = 0; // Clear Right Channel Interrupt Flag
 }
 
+//Global algorithms buffers for runners
+#define MOD_MEMORY_SIZE (600)
+_Q15 mod_buffer[MOD_MEMORY_SIZE];
+#define DELAYS_MEMORY_SIZE (7000)
+_Q15 delays_buffer[DELAYS_MEMORY_SIZE];
+
 int main(void){
 
     /* Configure Oscillator to operate the device at 40MHz.
@@ -77,13 +76,8 @@ int main(void){
     while (OSCCONbits.COSC != 0b01);	/*	Wait for Clock switch to occur	*/
     while(!OSCCONbits.LOCK);
 
-    //Divide effects bufer to two buffers for modulation and delays
-    unsigned int sub_bufs_sizes[2];
-    sub_bufs_sizes[0] = mod_buf_size[0];
-    sub_bufs_sizes[1] = EFFECTS_MEMORY_SIZE - mod_buf_size[0];
-
     //Effects initialization
-    if(runners_init(algorithms_buffer, sub_bufs_sizes, 2))
+    if(runners_init(mod_buffer, MOD_MEMORY_SIZE, delays_buffer, DELAYS_MEMORY_SIZE))
     {
         //Indicate error
         seven_sigm_indicate(E_CHARACTER);
