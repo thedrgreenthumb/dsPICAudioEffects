@@ -23,5 +23,3 @@ void INTxIOInit(void);
 void LM4811PinsInit(void);
 void LM4811SetVolUP(int VolVal);
 void LM4811SetVolDOWN(int VolVal);
-
-int effects_init(_Q15* algorithms_buffer, unsigned int sub_bufs_size);

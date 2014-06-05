@@ -43,23 +43,23 @@
     <conf name="default" type="2">
       <toolsSet>
         <developmentServer>localhost</developmentServer>
-        <targetDevice>dsPIC33FJ256GP506</targetDevice>
+        <targetDevice>dsPIC33FJ128GP706</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
         <platformTool>PICkit2PlatformTool</platformTool>
-        <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>1.20</languageToolchainVersion>
-        <platform>2</platform>
+        <languageToolchain>C30</languageToolchain>
+        <languageToolchainVersion>3_31</languageToolchainVersion>
+        <platform>3</platform>
       </toolsSet>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>/opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a</linkerLibFileItem>
-            <linkerLibFileItem>/opt/microchip/xc16/v1.20/lib/libq-coff.a</linkerLibFileItem>
+            <linkerLibFileItem>../../../Program Files/Microchip/MPLAB C30/lib/libq-coff.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
         <loading>
           <useAlternateLoadableFile>false</useAlternateLoadableFile>
+          <parseOnProdLoad>false</parseOnProdLoad>
           <alternateLoadableFile></alternateLoadableFile>
         </loading>
       </compileType>
@@ -111,6 +111,9 @@
         <property key="use-cci" value="false"/>
         <property key="use-iar" value="false"/>
       </C30>
+      <C30-AR>
+        <property key="additional-options-chop-files" value="false"/>
+      </C30-AR>
       <C30-AS>
         <property key="assembler-symbols" value=""/>
         <property key="expand-macros" value="false"/>
@@ -177,12 +180,8 @@
       </C30-LD>
       <C30Global>
         <property key="fast-math" value="true"/>
-        <property key="generic-16-bit" value="false"/>
         <property key="legacy-libc" value="true"/>
-        <property key="oXC16glb-macros" value=""/>
         <property key="output-file-format" value="coff"/>
-        <property key="relaxed-math" value="false"/>
-        <property key="save-temps" value="false"/>
       </C30Global>
       <PICkit2PlatformTool>
         <property key="pk2settings.3state" value="false"/>

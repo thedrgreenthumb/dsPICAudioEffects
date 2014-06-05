@@ -16,12 +16,6 @@
 **********************************************************************/
 #include "./sk1_Initializtion.h"
 
-//Runner and effects
-#include "../runner/runner.h"
-#include "../runner/runner_errors.h"
-#include "../foundation.h"
-#include "../effects.h"
-
 void InitLEDsAndBUTs(void)
 {
     //Buttons
@@ -99,49 +93,4 @@ void LM4811SetVolDOWN(int volVal)
     }
 }
 
-runner_t runner;
 
-bypass bp;
-hard_clipping hc;
-bp_filter bpf;
-flange fl;
-tremolo tr;
-delay del;
-echo ech;
-reverb rev;
-
-int effects_init(_Q15* algorithms_buffer, unsigned int sub_bufs_size)
-{
-    error_t err = ERROR_OK;
-
-    err += bypass_init(&bp, NULL);
-    err += runner_add_effect(&runner, &bp, bypass_set_params, bypass_process);
-
-    err += hard_clipping_init(&hc, NULL);
-    err += runner_add_effect(&runner, &hc, hard_clipping_set_params, hard_clipping_process);
-
-    err += bp_filter_init(&bpf, NULL);
-    err += runner_add_effect(&runner, &bpf, bp_filter_set_params, bp_filter_process);
-
-    err += flange_init(&fl, algorithms_buffer);
-    err += runner_add_effect(&runner, &fl, flange_set_params, flange_process);
-
-    err += tremolo_init(&tr, NULL);
-    err += runner_add_effect(&runner, &tr, tremolo_set_params, tremolo_process);
-
-    //Pasbuffer size thru first element
-    algorithms_buffer[0] = sub_bufs_size;
-
-    err += delay_init(&del, algorithms_buffer);
-    err += runner_add_effect(&runner, &del, delay_set_params, delay_process);
-
-    err += echo_init(&ech, algorithms_buffer);
-    err += runner_add_effect(&runner, &ech, echo_set_params, echo_process);
-
-    err += reverb_init(&rev, algorithms_buffer);
-    err += runner_add_effect(&runner, &rev, reverb_set_params, reverb_process);
-
-     algorithms_buffer[0] = 0;
-
-    return err;
-}

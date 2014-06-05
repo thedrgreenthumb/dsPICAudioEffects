@@ -19,7 +19,7 @@ endif
 endif
 
 # Environment
-MKDIR=mkdir -p
+MKDIR=gnumkdir -p
 RM=rm -f 
 MV=mv 
 CP=cp 
@@ -72,100 +72,10 @@ LDLIBSOPTIONS=
 FIXDEPS=fixDeps
 
 .build-conf:  ${BUILD_SUBPROJECTS}
-	${MAKE}  -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
+	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
-MP_PROCESSOR_OPTION=33FJ256GP506
-MP_LINKER_FILE_OPTION=,--script=p33FJ256GP506.gld
-# ------------------------------------------------------------------------------------
-# Rules for buildStep: compile
-ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o: ../dspic33_dsc_sk1/WM8510CodecDrv.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/WM8510CodecDrv.c  -o ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/sk1_Initialization.o: ../dspic33_dsc_sk1/sk1_Initialization.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/sk1_Initialization.c  -o ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/sk1_main.o: ../dspic33_dsc_sk1/sk1_main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/sk1_main.c  -o ${OBJECTDIR}/_ext/354150267/sk1_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_main.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../effects.c  -o ${OBJECTDIR}/_ext/1472/effects.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation.c  -o ${OBJECTDIR}/_ext/1472/foundation.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d"      -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1    -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-else
-${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
-	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../runner/runner.c  -o ${OBJECTDIR}/_ext/835468705/runner.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o: ../dspic33_dsc_sk1/WM8510CodecDrv.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/WM8510CodecDrv.c  -o ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/sk1_Initialization.o: ../dspic33_dsc_sk1/sk1_Initialization.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/sk1_Initialization.c  -o ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/354150267/sk1_main.o: ../dspic33_dsc_sk1/sk1_main.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.d 
-	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../dspic33_dsc_sk1/sk1_main.c  -o ${OBJECTDIR}/_ext/354150267/sk1_main.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_main.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../effects.c  -o ${OBJECTDIR}/_ext/1472/effects.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR}/_ext/1472 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
-	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
-	${MP_CC} $(MP_EXTRA_CC_PRE)  ../foundation.c  -o ${OBJECTDIR}/_ext/1472/foundation.o  -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d"        -g -omf=coff -legacy-libc -fast-math -ffunction-sections -fdata-sections -msmall-code -mlarge-data -mconst-in-code -O0 -msmart-io=1 -Wall -msfr-warn=off
-	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT)  -rsi ${MP_CC_DIR}../ 
-	
-endif
-
+MP_PROCESSOR_OPTION=33FJ128GP706
+MP_LINKER_FILE_OPTION=,-Tp33FJ128GP706.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
@@ -173,24 +83,112 @@ else
 endif
 
 # ------------------------------------------------------------------------------------
-# Rules for buildStep: assemblePreproc
+# Rules for buildStep: assembleWithPreprocess
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
 else
 endif
 
 # ------------------------------------------------------------------------------------
-# Rules for buildStep: link
+# Rules for buildStep: compile
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)
-dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  /opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a /opt/microchip/xc16/v1.20/lib/libq-coff.a  
-	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    /opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a /opt/microchip/xc16/v1.20/lib/libq-coff.a  -mcpu=$(MP_PROCESSOR_OPTION)        -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1  -omf=coff -legacy-libc -fast-math -Wl,,--defsym=__MPLAB_BUILD=1,--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PICKIT2=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
+${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.ok ${OBJECTDIR}/_ext/835468705/runner.o.err 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o: ../dspic33_dsc_sk1/WM8510CodecDrv.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.ok ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" -o ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o ../dspic33_dsc_sk1/WM8510CodecDrv.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/354150267/sk1_Initialization.o: ../dspic33_dsc_sk1/sk1_Initialization.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.ok ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" -o ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o ../dspic33_dsc_sk1/sk1_Initialization.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/354150267/sk1_main.o: ../dspic33_dsc_sk1/sk1_main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.ok ${OBJECTDIR}/_ext/354150267/sk1_main.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" -o ${OBJECTDIR}/_ext/354150267/sk1_main.o ../dspic33_dsc_sk1/sk1_main.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.ok ${OBJECTDIR}/_ext/1472/effects.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
 	
 else
-dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  /opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a /opt/microchip/xc16/v1.20/lib/libq-coff.a 
-	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
-	${MP_CC} $(MP_EXTRA_LD_PRE)  -o dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX}  ${OBJECTFILES_QUOTED_IF_SPACED}    /opt/microchip/xc16/v1.20/lib/libq-dsp-coff.a /opt/microchip/xc16/v1.20/lib/libq-coff.a  -mcpu=$(MP_PROCESSOR_OPTION)        -omf=coff -legacy-libc -fast-math -Wl,,--defsym=__MPLAB_BUILD=1,$(MP_LINKER_FILE_OPTION),--stack=16,--check-sections,--data-init,--pack-data,--handles,--isr,--no-gc-sections,--fill-upper=0,--stackguard=16,--no-force-link,--smart-io,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST) 
-	${MP_CC_DIR}/xc16-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -a  -omf=coff 
+${OBJECTDIR}/_ext/835468705/runner.o: ../runner/runner.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/835468705 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.d 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o.ok ${OBJECTDIR}/_ext/835468705/runner.o.err 
+	@${RM} ${OBJECTDIR}/_ext/835468705/runner.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/835468705/runner.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/835468705/runner.o.d" -o ${OBJECTDIR}/_ext/835468705/runner.o ../runner/runner.c    -fast-math -legacy-libc
 	
+${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o: ../dspic33_dsc_sk1/WM8510CodecDrv.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.ok ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o.d" -o ${OBJECTDIR}/_ext/354150267/WM8510CodecDrv.o ../dspic33_dsc_sk1/WM8510CodecDrv.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/354150267/sk1_Initialization.o: ../dspic33_dsc_sk1/sk1_Initialization.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.ok ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_Initialization.o.d" -o ${OBJECTDIR}/_ext/354150267/sk1_Initialization.o ../dspic33_dsc_sk1/sk1_Initialization.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/354150267/sk1_main.o: ../dspic33_dsc_sk1/sk1_main.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/354150267 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.d 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o.ok ${OBJECTDIR}/_ext/354150267/sk1_main.o.err 
+	@${RM} ${OBJECTDIR}/_ext/354150267/sk1_main.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/354150267/sk1_main.o.d" -o ${OBJECTDIR}/_ext/354150267/sk1_main.o ../dspic33_dsc_sk1/sk1_main.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/1472/effects.o: ../effects.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o.ok ${OBJECTDIR}/_ext/1472/effects.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/effects.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/effects.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/1472/effects.o.d" -o ${OBJECTDIR}/_ext/1472/effects.o ../effects.c    -fast-math -legacy-libc
+	
+${OBJECTDIR}/_ext/1472/foundation.o: ../foundation.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR}/_ext/1472 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.d 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o.ok ${OBJECTDIR}/_ext/1472/foundation.o.err 
+	@${RM} ${OBJECTDIR}/_ext/1472/foundation.o 
+	@${FIXDEPS} "${OBJECTDIR}/_ext/1472/foundation.o.d" $(SILENT) -rsi ${MP_CC_DIR}../ -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=coff -x c -c -mcpu=$(MP_PROCESSOR_OPTION) -ffunction-sections -Wall -msmall-code -mlarge-data -mconst-in-code -MMD -MF "${OBJECTDIR}/_ext/1472/foundation.o.d" -o ${OBJECTDIR}/_ext/1472/foundation.o ../foundation.c    -fast-math -legacy-libc
+	
+endif
+
+# ------------------------------------------------------------------------------------
+# Rules for buildStep: link
+ifeq ($(TYPE_IMAGE), DEBUG_RUN)
+dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a  
+	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -D__DEBUG -D__MPLAB_DEBUGGER_PICKIT2=1 -o dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION),--defsym=__ICD2RAM=1,--defsym=__MPLAB_DEBUG=1,--defsym=__DEBUG=1,--defsym=__MPLAB_DEBUGGER_PICKIT2=1
+else
+dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}: ${OBJECTFILES}  nbproject/Makefile-${CND_CONF}.mk  ../../../Program\ Files/Microchip/MPLAB\ C30/lib/libq-coff.a 
+	@${MKDIR} dist/${CND_CONF}/${IMAGE_TYPE} 
+	${MP_CC} $(MP_EXTRA_LD_PRE)  -omf=coff -mcpu=$(MP_PROCESSOR_OPTION)  -o dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} ${OBJECTFILES_QUOTED_IF_SPACED}   "..\..\..\Program Files\Microchip\MPLAB C30\lib\libq-coff.a"     -fast-math -legacy-libc -Wl,--defsym=__MPLAB_BUILD=1,--stack=16,-Map="${DISTDIR}/${PROJECTNAME}.${IMAGE_TYPE}.map",--report-mem$(MP_EXTRA_LD_POST)$(MP_LINKER_FILE_OPTION)
+	${MP_CC_DIR}\\pic30-bin2hex dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${DEBUGGABLE_SUFFIX} -omf=coff
 endif
 
 
@@ -209,7 +207,7 @@ endif
 # Enable dependency checking
 .dep.inc: .depcheck-impl
 
-DEPFILES=$(shell "${PATH_TO_IDE_BIN}"mplabwildcard ${POSSIBLE_DEPFILES})
+DEPFILES=$(shell mplabwildcard ${POSSIBLE_DEPFILES})
 ifneq (${DEPFILES},)
 include ${DEPFILES}
 endif

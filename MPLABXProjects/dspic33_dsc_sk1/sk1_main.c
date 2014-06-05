@@ -1,9 +1,11 @@
 /**********************************************************************
-* FileName:        main.ñ
+* FileName:        main.c
 * FileVersion      1.01
 * Dependencies:
 * Processor:       dsPIC33FJ256GP506
 * Compiler:        C30 v3.21
+*
+* License:         MIT
 *
 * Design in:       SAL
 * Design by:
@@ -37,7 +39,11 @@
 #include "./sk1_Initializtion.h"
 #include "WM8510CodecDrv.h"
 
+//Runner and effects
 #include "../runner/runner.h"
+#include "../runner/runner_errors.h"
+#include "../foundation.h"
+#include "../effects.h"
 
 //Configuration bits
 _FGS(GWRP_OFF & GCP_OFF);
@@ -78,7 +84,7 @@ void __attribute__((interrupt, no_auto_psv)) _INT2Interrupt(void)
     IFS1bits.INT2IF = 0;
 }
 
-extern runner_t runner;
+runner_t runner;
 //DCI interrupt (sample by sample processing)
 void __attribute__((__interrupt__,no_auto_psv)) _DCIInterrupt(void)
 {
@@ -97,11 +103,53 @@ void __attribute__((__interrupt__,no_auto_psv)) _DCIInterrupt(void)
 }					
 
 //Global algorithms buffer for runners
-#define EFFECTS_MEMORY_SIZE (7000)
-_Q15 algorithms_buffer[EFFECTS_MEMORY_SIZE];
-unsigned int mod_buf_size[] = {
-#include "../precomputes/mod_effects_buf_sz.dat"
-};
+#define DELAYS_MEMORY_SIZE (7000)
+_Q15 delays_buffer[DELAYS_MEMORY_SIZE];
+
+bypass bp;
+hard_clipping hc;
+bp_filter bpf;
+flange fl;
+tremolo tr;
+delay del;
+echo ech;
+reverb rev;
+
+int effects_init(runner_t* runner, _Q15* algorithms_buffer, unsigned int sub_bufs_size)
+{
+    error_t err = ERROR_OK;
+
+    err += bypass_init(&bp, NULL);
+    err += runner_add_effect(runner, &bp, bypass_set_params, bypass_process);
+
+    err += hard_clipping_init(&hc, NULL);
+    err += runner_add_effect(runner, &hc, hard_clipping_set_params, hard_clipping_process);
+
+    err += bp_filter_init(&bpf, NULL);
+    err += runner_add_effect(runner, &bpf, bp_filter_set_params, bp_filter_process);
+
+    err += flange_init(&fl, algorithms_buffer);
+    err += runner_add_effect(runner, &fl, flange_set_params, flange_process);
+
+    err += tremolo_init(&tr, NULL);
+    err += runner_add_effect(runner, &tr, tremolo_set_params, tremolo_process);
+
+    //Pasbuffer size thru first element
+    algorithms_buffer[0] = sub_bufs_size;
+
+    err += delay_init(&del, algorithms_buffer);
+    err += runner_add_effect(runner, &del, delay_set_params, delay_process);
+
+    err += echo_init(&ech, algorithms_buffer);
+    err += runner_add_effect(runner, &ech, echo_set_params, echo_process);
+
+    err += reverb_init(&rev, algorithms_buffer);
+    err += runner_add_effect(runner, &rev, reverb_set_params, reverb_process);
+
+    algorithms_buffer[0] = 0;
+
+    return err;
+}
 
 int main(void)
 {
@@ -120,28 +168,28 @@ int main(void)
     while (OSCCONbits.COSC != 0b01);	/*	Wait for Clock switch to occur	*/
     while(!OSCCONbits.LOCK);
 
+    if(effects_init(&runner, delays_buffer, DELAYS_MEMORY_SIZE))
+    {
+        int disp = 7;
+        //Indicate initialization error
+        LATC = (~disp) << 13;
+        return 1;
+    }
+    
     //Ext. int 1
     IPC5=0b0000000000000010;
     //Ext. int 2 
     IPC7=0b0000001100100000;
-    //Codec initialization
-    WM8510Init();
-    WM8510Start();
-    WM8510SampleRate16KConfig();
-    
+ 
     //Output amplifier control pins initialization
     LM4811PinsInit();
     LM4811SetVolDOWN(32); //Set Volume of LM4811 to min value
     InitLEDsAndBUTs();
-    
-    //Divide effects bufer to two buffers for modulation and delays
-    unsigned int sub_bufs_sizes[2];
-    sub_bufs_sizes[0] = mod_buf_size[0];
-    sub_bufs_sizes[2] = EFFECTS_MEMORY_SIZE - mod_buf_size[0];
 
-    if(EffectsInit(algorithms_buffer, sub_bufs_sizes, 2))
-        return 1;
-    else
-        //Main loop
-        while(1){}
+    //Codec initialization
+    WM8510Init();
+    WM8510Start();
+    WM8510SampleRate16KConfig();
+
+    while(1){}
 }
