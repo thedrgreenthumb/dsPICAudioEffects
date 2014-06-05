@@ -23,7 +23,7 @@ inline _Q15 Q15mpy(_Q15 a, _Q15 b)
 {	
     _Q15 result = 0;
     register int accA asm("A");
-
+    asm("clr A");
     accA = __builtin_mpy(a, b, 0, 0, 0, 0, 0, 0);
     result = __builtin_sac(accA ,0);
 

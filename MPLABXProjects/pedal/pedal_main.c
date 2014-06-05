@@ -41,7 +41,10 @@ void __attribute__((interrupt, no_auto_psv))_DAC1LInterrupt(void)
     controls_processing();
     samples_processing(sample, &out_sample_L, &out_sample_R);
 
-    DAC1LDAT=out_sample_L;
+    //!!!Here I had a problem with  Left channel of Audio DAC,
+    //the analog signal from here was hissed,
+    //so pass output thru right DAC channel
+    DAC1LDAT = 0;
 
     IFS4bits.DAC1LIF = 0; // Clear Left Channel Interrupt Flag
 }
@@ -90,8 +93,32 @@ int main(void){
     audio_dac_init();
     pins_init();
 
-    while(1){};
-    
+    while(1){}
+
+    /*
+    //Input data
+    float in_data[12] = {1, 1, 1, -1, -1, -1, 1, 1, -1, -1, 1, -1};
+    _Q15 input[12];
+    int i = 0;
+    for(i = 0; i < 12; i++) input[i] = Q15ftoi(in_data[i]);
+
+
+    _Q15 out1[12];
+    _Q15 out2;
+    for(i = 0; i < 12; i++)
+    {
+
+        samples_processing(input[i], &out1[i], &out2);
+
+    };
+
+    float out[12];
+    for(i = 0; i < 12;)
+    {
+        out[i] = _itofQ15(out1[i]);
+        i++;
+    }
+    */
     return 0;
 }
 

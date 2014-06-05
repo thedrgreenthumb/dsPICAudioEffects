@@ -56,7 +56,7 @@ void audio_dac_init(void){
 
     //Audio DAC configuration
     DAC1STATbits.LOEN = 1;   //Left Channel DAC Output Enabled
-    DAC1STATbits.ROEN = 1;   //Right Channel DAC Output Enabled
+    DAC1STATbits.ROEN = 1;   //Right Channel DAC Output Enable  d
     DAC1STATbits.LMVOEN=1;   //Midpoint enable for left channel
     DAC1STATbits.RMVOEN=1;   //Midpoint enable for right channel
     DAC1STATbits.LITYPE = 0; //Left Channel Interrupt if FIFO is not Full

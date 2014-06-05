@@ -10,3 +10,6 @@ Projects description:
 	foundation_test.X - foundation library testing project. Compile and run simulator. See UART1 output.
 	pedal_selftest.X - hardware testing project. Tests indicator, buttons, ADC - DAC loop.
 	pedal.X - main DSPIC Guitar Pedal project.
+
+Notes:
+	The problem with audio DAC channel was found, describe deeply!!!

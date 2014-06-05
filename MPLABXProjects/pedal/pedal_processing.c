@@ -215,7 +215,7 @@ void samples_processing(_Q15 input_sample, _Q15* out_sample_L, _Q15* out_sample_
             runner_set_param(&runners[i], 0, effects_parameter_vals_in_chain_positions[i]);
             runner_sbs_process(&runners[i], &sample, &sample);
         }
-	
+
         *out_sample_L = sample;
         *out_sample_R = sample;
     }

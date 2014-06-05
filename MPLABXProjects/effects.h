@@ -134,7 +134,7 @@ declare_algo_funcs(flange)
 
 typedef struct _tremolo
 {
-    unsigned  int freq;
+    unsigned int freq;
     _Q15 tremolo_counter;
 } tremolo;
 declare_algo_funcs(tremolo)

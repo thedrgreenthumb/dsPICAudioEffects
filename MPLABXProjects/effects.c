@@ -543,11 +543,14 @@ error_t flange_process(void* dat, p_buffer_t in, p_buffer_t out)
 
     _Q15 sample = *in;
 
-    sample = _Q15add(Q15mpy(_Q15add(sample, fl->fb_point), fl->in_coef),
-                Q15mpy(fl->ff_coef, li_delay_line(sample, fl->op_buf, 
-            &fl->counter,fl->depth, fl->wt_data_int[fl->wt_counter1], 
-            fl->wt_data_fract[fl->wt_counter1])));
-   
+    _Q15 p0 = _Q15add(sample, fl->fb_point);
+    _Q15 p1 = Q15mpy(p0, fl->in_coef);
+    _Q15 p2 = Q15mpy(fl->ff_coef, li_delay_line(sample, fl->op_buf,
+            &fl->counter,fl->depth, fl->wt_data_int[fl->wt_counter1],
+            fl->wt_data_fract[fl->wt_counter1]));
+    
+    sample = _Q15add(p1,p2);
+
     fl->fb_point = Q15mpy(fl->fb_coef, 
             delay_line_tap(fl->depth/2, &fl->op_buf[0], fl->counter, fl->depth));
 
@@ -588,14 +591,15 @@ error_t tremolo_process(void* dat, p_buffer_t in, p_buffer_t out)
 
     _Q15 sample = *in;
 
-    sample = Q15mpy(sample, Q15mpy(_Q15ftoi(0.5), _Q15sinPI(tr->tremolo_counter)));
+    _Q15 lfo = _Q15sinPI(tr->tremolo_counter);
+    sample = Q15mpy(sample, lfo);
 
     tr->tremolo_counter += 2*(tr->freq + 1);
     if (tr->tremolo_counter >= 32767)
         tr->tremolo_counter = -32767;
 
     *out = sample;
-
+    
     return ERROR_OK;
 }
 
