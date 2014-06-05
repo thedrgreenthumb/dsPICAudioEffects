@@ -2,16 +2,16 @@
 * FileName:        main.c
 * FileVersion      1.01
 * Processor:       dsPIC33FJ128GP802
-* Compiler:        X16 v1.20
+* Compiler:        MPLAB C30 v3.31
+*
+* License:         MIT
 *
 * Design in:       SAL
 * Design by:
 * Feedback:
 *
-* License:         MIT
-*
 * Project:         dsPIC33 Audio Effects Pedal project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
 
 #include <p33FJ128GP802.h>

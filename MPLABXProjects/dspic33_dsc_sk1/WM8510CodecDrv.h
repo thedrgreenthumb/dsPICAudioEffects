@@ -10,7 +10,7 @@
 * Feedback:
 *
 * Project:         dsPIC DSC Starter Kit 1 audio effects project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
 
 #define WM8510DRV_DCI_INTERRUPT_PRIORITY                        4

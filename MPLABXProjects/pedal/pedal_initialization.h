@@ -9,7 +9,7 @@
 * Feedback:
 *
 * Project:         dsPIC33 Audio Effects Pedal project.
-* Project version: 1.01 
+* Project version: 0.01 
 **********************************************************************/
 
 void adc_init(void);

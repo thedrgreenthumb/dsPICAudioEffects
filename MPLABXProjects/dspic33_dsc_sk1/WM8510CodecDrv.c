@@ -10,7 +10,7 @@
 * Feedback:
 *
 * Project:         dsPIC DSC Starter Kit 1 audio effects project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
 #include "sk1_Initializtion.h"
 #include "WM8510CodecDrv.h"

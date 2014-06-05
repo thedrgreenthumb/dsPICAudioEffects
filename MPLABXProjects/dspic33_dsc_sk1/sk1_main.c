@@ -10,7 +10,7 @@
 * Feedback:
 *
 * Project:         dsPIC DSC Starter Kit 1 Audio Effects Project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
 
 /*Simplified structure of main.c*****************************************

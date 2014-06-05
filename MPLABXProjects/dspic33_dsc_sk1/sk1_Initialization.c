@@ -1,16 +1,18 @@
 /**********************************************************************
-* FileName:        Initialization.c
-* FileVersion      1.01
+* FileName:        sk1_Initialization.c
+* FileVersion      0.01
 * Dependencies:    Initialization.h
 * Processor:       dsPIC33FJ256GP506
 * Compiler:        C30 v3.21
+*
+* License:         MIT
 *
 * Design in:       SAL
 * Design by:
 * Feedback:
 *
 * Project:         dsPIC DSC Starter Kit 1 Audio Effects Project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
 #include "./sk1_Initializtion.h"
 
@@ -108,33 +110,38 @@ delay del;
 echo ech;
 reverb rev;
 
-int EffectsInit(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps)
+int effects_init(_Q15* algorithms_buffer, unsigned int sub_bufs_size)
 {
     error_t err = ERROR_OK;
 
-    err = bypass_init(&bp, algorithms_buffer);
-    err = runner_add_effect(&runner, &bp, bypass_set_params, bypass_process);
+    err += bypass_init(&bp, NULL);
+    err += runner_add_effect(&runner, &bp, bypass_set_params, bypass_process);
 
-    err = hard_clipping_init(&hc, algorithms_buffer);
-    err = runner_add_effect(&runner, &hc, hard_clipping_set_params, hard_clipping_process);
+    err += hard_clipping_init(&hc, NULL);
+    err += runner_add_effect(&runner, &hc, hard_clipping_set_params, hard_clipping_process);
 
-    err = bp_filter_init(&bpf, algorithms_buffer);
-    err = runner_add_effect(&runner, &bpf, bp_filter_set_params, bp_filter_process);
+    err += bp_filter_init(&bpf, NULL);
+    err += runner_add_effect(&runner, &bpf, bp_filter_set_params, bp_filter_process);
 
-    err = flange_init(&fl, algorithms_buffer);
-    err = runner_add_effect(&runner, &fl, flange_set_params, flange_process);
+    err += flange_init(&fl, algorithms_buffer);
+    err += runner_add_effect(&runner, &fl, flange_set_params, flange_process);
 
-    err = tremolo_init(&tr, algorithms_buffer);
-    err = runner_add_effect(&runner, &tr, tremolo_set_params, tremolo_process);
+    err += tremolo_init(&tr, NULL);
+    err += runner_add_effect(&runner, &tr, tremolo_set_params, tremolo_process);
 
-    err = delay_init(&del, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runner, &del, delay_set_params, delay_process);
+    //Pasbuffer size thru first element
+    algorithms_buffer[0] = sub_bufs_size;
 
-    err = echo_init(&ech, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runner, &ech, echo_set_params, echo_process);
+    err += delay_init(&del, algorithms_buffer);
+    err += runner_add_effect(&runner, &del, delay_set_params, delay_process);
 
-    err = reverb_init(&rev, &algorithms_buffer[sub_bufs_sizes[0]]);
-    err = runner_add_effect(&runner, &rev, reverb_set_params, reverb_process);
+    err += echo_init(&ech, algorithms_buffer);
+    err += runner_add_effect(&runner, &ech, echo_set_params, echo_process);
+
+    err += reverb_init(&rev, algorithms_buffer);
+    err += runner_add_effect(&runner, &rev, reverb_set_params, reverb_process);
+
+     algorithms_buffer[0] = 0;
 
     return err;
 }

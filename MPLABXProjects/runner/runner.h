@@ -4,7 +4,7 @@
 #include "../global_def.h"
 #include "runner_errors.h"
 
-#define MAX_NUMBER_OF_ALGOS (4)
+#define MAX_NUMBER_OF_ALGOS (8)
 
 typedef struct _algo_t
 {

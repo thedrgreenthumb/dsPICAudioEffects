@@ -1,5 +1,5 @@
 /**********************************************************************
-* FileName:        Initialization.h
+* FileName:        sk1_Initialization.h
 * FileVersion      1.01
 * Dependencies:
 * Processor:       dsPIC33FJ256GP506
@@ -10,16 +10,11 @@
 * Feedback:
 *
 * Project:         dsPIC DSC Starter Kit 1 Audio Effects Project.
-* ProjectVersion:  1.01
+* ProjectVersion:  0.01
 **********************************************************************/
-//The compilation for 128GP706 was needed
-//#define CUSTOM_DSC_MODEL
 
-#ifdef CUSTOM_DSC_MODEL
-    #include <p33FJ128GP706.h>
-#else
-    #include <p33FJ256GP506.h>
-#endif
+#include <p33FJ128GP706.h>
+//#include <p33FJ256GP506.h>
 
 #include <libq.h>
 
@@ -29,4 +24,4 @@ void LM4811PinsInit(void);
 void LM4811SetVolUP(int VolVal);
 void LM4811SetVolDOWN(int VolVal);
 
-int EffectsInit(_Q15* algorithms_buffer, unsigned int* sub_bufs_sizes, unsigned int number_of_gaps);
+int effects_init(_Q15* algorithms_buffer, unsigned int sub_bufs_size);

@@ -2,7 +2,7 @@
 * FileName:        foundation.c
 * FileVersion      1.01
 * Processor:       dsPIC33FJ128GP802
-* Compiler:        X16 v1.20
+* Compiler:        MPLAB C30 v3.31
 *
 * License:         MIT
 *
@@ -11,7 +11,7 @@
 * Feedback:
 *
 * Project:         dsPIC33 Audio Effects Pedal project.
-* Project version: 1.01
+* Project version: 0.01
 **********************************************************************/
 
 #include <libq.h>
