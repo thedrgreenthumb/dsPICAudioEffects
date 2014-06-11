@@ -62,7 +62,7 @@ void audio_dac_init(void){
     DAC1STATbits.LITYPE = 0; //Left Channel Interrupt if FIFO is not Full
     DAC1STATbits.RITYPE = 0; //Right Channel Interrupt if FIFO is not Full
     DAC1CONbits.AMPON = 0;   // Amplifier Disabled During Sleep and Idle Modes
-    DAC1CONbits.DACFDIV = 1; // Divide Clock by 2 (Assumes Clock is 9903,5 kHz)
+    DAC1CONbits.DACFDIV = 0; // Divide Clock by 2 (Assumes Clock is 9903,5 kHz)
     DAC1CONbits.FORM = 1;    // Data Format is Signed int
     DAC1DFLT = 0x0000;       // Default value set to Midpoint when FORM = 0
     IFS4bits.DAC1RIF = 0;    // Clear Right Channel Interrupt Flag

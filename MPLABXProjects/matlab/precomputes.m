@@ -16,7 +16,7 @@
 clear all;
 close all;
 
-Fs = 20000;
+Fs = 10000;
 
 len = 1000;
 x(len) = 0;
