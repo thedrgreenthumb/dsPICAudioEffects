@@ -270,7 +270,7 @@ error_t lp_filter_set_params(void* dat, unsigned int num, unsigned int val)
     if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
-    lp->freq = val;
+    lp->freq = 9 - val;//Temporary hack
 
     return ERROR_OK;
 }
@@ -321,7 +321,7 @@ error_t bp_filter_set_params(void* dat, unsigned int num, unsigned int val)
     if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
-    bp->freq = val;
+    bp->freq = 9 - val;//Temporary hack
 
     return ERROR_OK;
 }
@@ -366,7 +366,7 @@ error_t hp_filter_set_params(void* dat, unsigned int num, unsigned int val)
     if(val > MAX_PARAMETER_VAL)
         return PARAMS_SET_ERROR;
 
-    hp->freq = val;
+    hp->freq = 9 - val;//Temporary hack
 
     return ERROR_OK;
 }
