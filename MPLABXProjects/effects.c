@@ -48,15 +48,19 @@ error_t bypass_process(void* dat, p_buffer_t in, p_buffer_t out)
 const _Q16 hard_clipping_gain_coefs[] = {
 #include "./precomputes/hc_gain_coefs.dat"
 };
-const _Q16 hard_clipping_filter_coefs[] = {
-#include "./precomputes/hc_filter_coefs.dat"
+const _Q16 hard_clipping_pre_filter_coefs[] = {
+#include "./precomputes/hc_pre_filter_coefs.dat"
+};
+const _Q16 hard_clipping_post_filter_coefs[] = {
+#include "./precomputes/hc_post_filter_coefs.dat"
 };
 error_t hard_clipping_init(hard_clipping *hc, p_buffer_t buf)
 {
     hc->gain = 0;
 
     fsaver_result fsr = no_error;
-    hc->filter_coefs = iir_get__Q16(hard_clipping_filter_coefs, 0, &fsr);
+    hc->pre_filter_coefs = iir_get__Q16(hard_clipping_pre_filter_coefs, 0, &fsr);
+    hc->post_filter_coefs = iir_get__Q16(hard_clipping_post_filter_coefs, 0, &fsr);
     if(fsr)
         return ALGORITHM_INITIALIZATION_ERROR;
 
@@ -88,19 +92,32 @@ error_t hard_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
 
     _Q16 sample = Q15toQ16(*in);
 
+	//Pre-filter
+	sample = DF2SOStructure(sample,
+            &hc->pre_filter_coefs[0], &hc->pre_filter_coefs[3],
+            hc->pre_filter_buf, &hc->pre_filter_buf[2]);
+
+	//Remove LSB fluctuations depending of gain
+	if(hc->gain >= _Q16ftoi(10) && hc->gain < _Q16ftoi(100))
+		sample = sample&(~0b1);
+	else if(hc->gain >= _Q16ftoi(100) && hc->gain < _Q16ftoi(200))
+		sample = sample&(~0b11);
+	else if(hc->gain >= _Q16ftoi(200))
+		sample = sample&(~0b111);
+
     //Apply gain
     sample = Q16mpy(sample, hc->gain);
 
     //Clip
-    if(sample >= _Q16ftoi(0.15))
-        sample = _Q16ftoi(0.15);
-    if(sample < _Q16ftoi(-0.15))
-        sample =  _Q16ftoi(-0.15);
+    if(sample >= _Q16ftoi(0.12))
+        sample = _Q16ftoi(0.12);
+    if(sample < _Q16ftoi(-0.12))
+        sample =  _Q16ftoi(-0.12);
 
     //Post-filter
     sample = DF2SOStructure(sample,
-            &hc->filter_coefs[0], &hc->filter_coefs[3],
-            hc->filter_buf, &hc->filter_buf[2]);
+            &hc->post_filter_coefs[0], &hc->post_filter_coefs[3],
+            hc->post_filter_buf, &hc->post_filter_buf[2]);
 
     *out = Q16toQ15(sample);
 
