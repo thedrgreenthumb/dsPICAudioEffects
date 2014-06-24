@@ -1,15 +1,45 @@
-!!!Currently the state of stuff from this repository is not valid.
+General description:
+	Here my results of experiments with dsPIC33 controllers directed to audio effects implementation.
+	Described how to build own guitar pedal based dsPIC33FJ128GP802 IC.
+	Also, part of effects was ported and run using MPLAB dsPIC Starter Kit 1
+	(http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM330011).
+
+Photo and video galery:
+	http://southaudiolab.com/dspic_page.htm
+	
+Device specification:
+	Effect types : 12
+	Effects applying max : 4 simultaneous effects
+	Sampling frequency : ~20 kHz
+	A/D converter : 12 bit
+	D/A converter : 16 bit
+	Signal processing : 32-16 bit
+	Frequency response : 20 Hz – 10 kHz 
+	Display : 1-digit 7-segment LED indicator
+	Input : Standard mono phone jack
+	Input impedance : 1 megaohm
+	Output : Standard stereo phone jack
+	
+	Power requirements:
+	AC adapter 9 V DC, 300 mA (center minus plug)  
 
 Building configuration:
 	Win XP, MPLAB X 2.10, MPLAB C30 v3.31.
 
-Building notes:
+Building dependencies:
 	The libq-coff.a library from C30 compiller needed.
 
 Projects description:
-	foundation_test.X - foundation library testing project. Compile and run simulator. See UART1 output.
+	foundation_test.X - foundation library testing project. Compile and run simulator. 
+		See UART1 output or set breakpoints in appropriate places.
 	pedal_selftest.X - hardware testing project. Tests indicator, buttons, ADC - DAC loop.
 	pedal.X - main DSPIC Guitar Pedal project.
+	dspic33_dsc_sk1.X - effects library porting to dsPIC MPLAB Starter Kit 1.
+	dspic33_dsc_sk1_selftest.X - hardware test, same as for pedal project.
+
+Programming without building:
+	See hex folder.
 
 Notes:
-	The problem with audio DAC channel was found, describe deeply!!!
+	When I investigated ADC -> DAC loop I met a problem, that right channel of audio DAC worked better then left. 
+	The hissing noise had appear in it in some cases. Seems like, it my IC's specific.

@@ -1,10 +1,5 @@
-TODO:
+The sound quality could be increased if the external audio codec IC will be added, same as at starter kit.
+In current state the output noise have unacceptably high value.
+Seems like, it is a best direction for improvement.
 
-- Change effects chain controlling based some structures, like in AlgosRunner, move it in ideal.
-- Swap MATLAB data including to use last MDSPTK.
-
-- Convert manual to pdf in microsoft office.
-
-- DO not forget clean-up all projects befor final revision.
-
-020414.
+240614.
