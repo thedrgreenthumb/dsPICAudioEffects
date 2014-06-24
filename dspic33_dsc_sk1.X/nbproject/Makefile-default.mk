@@ -74,8 +74,8 @@ FIXDEPS=fixDeps
 .build-conf:  ${BUILD_SUBPROJECTS}
 	${MAKE} ${MAKE_OPTIONS} -f nbproject/Makefile-default.mk dist/${CND_CONF}/${IMAGE_TYPE}/dspic33_dsc_sk1.X.${IMAGE_TYPE}.${OUTPUT_SUFFIX}
 
-MP_PROCESSOR_OPTION=33FJ128GP706
-MP_LINKER_FILE_OPTION=,-Tp33FJ128GP706.gld
+MP_PROCESSOR_OPTION=33FJ256GP506
+MP_LINKER_FILE_OPTION=,-Tp33FJ256GP506.gld
 # ------------------------------------------------------------------------------------
 # Rules for buildStep: assemble
 ifeq ($(TYPE_IMAGE), DEBUG_RUN)

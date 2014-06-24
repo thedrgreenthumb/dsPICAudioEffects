@@ -41,6 +41,7 @@
 #include "WM8510CodecDrv.h"
 
 #include "../runner/runner.h"
+#include "../effects.h"
 
 //Configuration bits
 _FGS(GWRP_OFF & GCP_OFF);
@@ -97,7 +98,7 @@ void __attribute__((__interrupt__,no_auto_psv)) _DCIInterrupt(void)
 _Q15 delays_buffer[DELAYS_MEMORY_SIZE];
 
 
-void delay(unsigned long int d)
+void simple_delay(unsigned long int d)
 {
     volatile long int i = 0;
     for(i = 0; i < d; i++)
@@ -135,25 +136,16 @@ int main(void)
     LM4811SetVolDOWN(32); //Set Volume of LM4811 to min value
     InitLEDsAndBUTs();
     
-    if(effects_init(delays_buffer, DELAYS_MEMORY_SIZE))
+    //Main loop
+    int i = 0;
+    while(1)
     {
-        int disp = 7;
-        //Indicate initialization error
-        LATC = (~disp) << 13;
-        return 1;
-    }
-    else
-    {
-        //Main loop
-        int i = 0;
-        while(1)
-        {
-            //Indicate counting
-            i++;
-            if(i > 7)
-                i = 0;
-            LATC = (~i) << 13;
-            delay(1000000);
-        }
+        //Indicate counting
+        i++;
+        if(i > 7)
+            i = 0;
+        LATC = (~i) << 13;
+        simple_delay(1000000);
     }
 }
+    

@@ -13,8 +13,7 @@
 * ProjectVersion:  0.01
 **********************************************************************/
 
-#include <p33FJ128GP706.h>
-//#include <p33FJ256GP506.h>
+#include <p33FJ256GP506.h>
 
 #include <libq.h>
 

@@ -15,7 +15,7 @@
 #include <libq.h>
 
 //Matlab
-#include "matlab/@fsaver/fsaver.h"
+#include "matlab/MDSPTK/@fsaver/fsaver.h"
 //Declare fsaver functions for Q formats
 fsaver_plane_data_declare(_Q15)
 fsaver_plane_data_declare(_Q16)
@@ -306,15 +306,11 @@ error_t lp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
 const _Q16 band_pass_filter_coefs[] = {
 #include "./precomputes/bp_filter_coefs.dat"
 };
-const _Q16 band_pass_gain_coefs[] = {
-#include "./precomputes/bp_filter_gain_coefs.dat"
-};
 error_t bp_filter_init(bp_filter *bp, p_buffer_t buf)
 {
     bp->freq = 0;
 
     fsaver_result fsr = no_error;
-    bp->gain_coef = *plane_data_get__Q16(band_pass_gain_coefs, 0, &fsr);
     if(fsr)
         return ALGORITHM_INITIALIZATION_ERROR;
 
