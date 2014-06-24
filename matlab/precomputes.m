@@ -16,6 +16,8 @@
 clear all;
 close all;
 
+addpath('./MDSPTK');
+
 Fs = 10000;
 
 number_of_steps = 10;
@@ -30,30 +32,23 @@ a0(3) = 0;
 b(3,10) = 0;
 a(3,10) = 0;
 
-fa = fanalizer(Fs);
+fa = fanalyzer(Fs);
 
 %Precomputes for chain position = 0%%%
 
 %Hard Clipping (hc)
-hc_gain_coefs = [1;5;10;20;50;100;150;200;250;300];
+hc_gain_coefs = [10;20;30;40;50;70;100;150;170;200];
 for n=1:length(hc_gain_coefs) hc_gain_coefs(n) = toDspicQ16(hc_gain_coefs(n)); end;
 hc_gain_coefs_sz =  size(hc_gain_coefs);
 fsaver.savePlaneData('../precomputes/hc_gain_coefs.dat', hc_gain_coefs, hc_gain_coefs_sz(1),'hard clipping gain coefs');
-hc_pre_filter_mid_freq = 380;
-hc_pre_filter_q =0.25;
-[b0, a0] = second_order_BP(hc_pre_filter_mid_freq, Fs, hc_pre_filter_q);
-fsaver.saveIIR('../precomputes/hc_pre_filter_coefs.dat', toDspicQ16(b0), toDspicQ16(a0), 2, 1, 'hard clipping filter coefs');
-fa.freqRespCoefs(b0,a0,'log','hard clipping post filter');%Figure 1
 hc_post_filter_mid_freq = 350;
 hc_post_filter_q = 1.44;
 [ b0,a0 ] = second_order_BP(hc_post_filter_mid_freq, Fs, hc_post_filter_q);
 fsaver.saveIIR('../precomputes/hc_post_filter_coefs.dat', toDspicQ16(b0), toDspicQ16(a0), 2, 1, 'HC post filter coefs');
-fa.freqRespCoefs(b0,a0, 'log','HC post filter');%Figure 2
-
-break;
+fa.freqRespCoefs(b0,a0, 'log','HC post filter');%Figure 1
 
 %Soft Clipping
-sc_gain_coefs = [1;3;5;10;20;30;50;70;85;100];
+sc_gain_coefs = [1;5;10;20;30;40;50;70;85;100];
 for n=1:length(sc_gain_coefs) sc_gain_coefs(n) = toDspicQ16(sc_gain_coefs(n)); end;
 sc_gain_coefs_sz =  size(sc_gain_coefs);
 fsaver.savePlaneData('../precomputes/sc_gain_coefs.dat',sc_gain_coefs, sc_gain_coefs_sz(1),'soft clipping gain coefs');
