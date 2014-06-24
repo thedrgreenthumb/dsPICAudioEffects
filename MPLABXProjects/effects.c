@@ -59,7 +59,6 @@ error_t hard_clipping_init(hard_clipping *hc, p_buffer_t buf)
     hc->gain = 0;
 
     fsaver_result fsr = no_error;
-    hc->pre_filter_coefs = iir_get__Q16(hard_clipping_pre_filter_coefs, 0, &fsr);
     hc->post_filter_coefs = iir_get__Q16(hard_clipping_post_filter_coefs, 0, &fsr);
     if(fsr)
         return ALGORITHM_INITIALIZATION_ERROR;
@@ -67,8 +66,9 @@ error_t hard_clipping_init(hard_clipping *hc, p_buffer_t buf)
     //Clean up filters buffer
     unsigned int i = 0;
     for(i = 0; i < 4; i++)
-        hc->filter_buf[i] = 0;
-
+    {
+        hc->post_filter_buf[i] = 0;
+    }
     return ERROR_OK;
 }
 error_t hard_clipping_set_params(void* dat, unsigned int num, unsigned int val)
@@ -92,18 +92,8 @@ error_t hard_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
 
     _Q16 sample = Q15toQ16(*in);
 
-	//Pre-filter
-	sample = DF2SOStructure(sample,
-            &hc->pre_filter_coefs[0], &hc->pre_filter_coefs[3],
-            hc->pre_filter_buf, &hc->pre_filter_buf[2]);
-
-	//Remove LSB fluctuations depending of gain
-	if(hc->gain >= _Q16ftoi(10) && hc->gain < _Q16ftoi(100))
-		sample = sample&(~0b1);
-	else if(hc->gain >= _Q16ftoi(100) && hc->gain < _Q16ftoi(200))
-		sample = sample&(~0b11);
-	else if(hc->gain >= _Q16ftoi(200))
-		sample = sample&(~0b111);
+    //Pre-filter
+    sample = one_pole_filter(sample, _Q16ftoi(0.27), &hc->pre_filter_buf);
 
     //Apply gain
     sample = Q16mpy(sample, hc->gain);
@@ -115,7 +105,7 @@ error_t hard_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
         sample =  _Q16ftoi(-0.12);
 
     //Post-filter
-    sample = DF2SOStructure(sample,
+    sample = DF1SOStructure(sample,
             &hc->post_filter_coefs[0], &hc->post_filter_coefs[3],
             hc->post_filter_buf, &hc->post_filter_buf[2]);
 
@@ -166,7 +156,10 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
 
     _Q16 sample = Q15toQ16(*in);
 
-    //Applay gain
+    //Pre-filter
+    sample = one_pole_filter(sample, _Q16ftoi(0.57), &sc->pre_filter_buf);
+
+    //Apply gain
     sample = Q16mpy(sample, sc->gain);
 
     //Try logarithmic clipping
@@ -196,7 +189,7 @@ error_t soft_clipping_process(void *dat, p_buffer_t in, p_buffer_t out)
     sample = Q16mpy(sample,_Q16ftoi(0.15));
     
     //Post-filter
-    sample = DF2SOStructure(sample,
+    sample = DF1SOStructure(sample,
             (_Q16*)&sc->filter_coefs[0], (_Q16*)&sc->filter_coefs[3],
             sc->filter_buf, &sc->filter_buf[2]);
 
@@ -302,7 +295,7 @@ error_t lp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
     if(fsr)
         return PARAMS_SET_ERROR;
 
-    sample = DF2SOStructure(sample, coefs, &coefs[3],
+    sample = DF1SOStructure(sample, coefs, &coefs[3],
             lp->filter_buf, &lp->filter_buf[2]);
 
     *out = Q16toQ15(sample);
@@ -353,7 +346,7 @@ error_t bp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
     if(fsr)
         return PARAMS_SET_ERROR;
 
-    sample = DF2SOStructure(sample, coefs, &coefs[3],
+    sample = DF1SOStructure(sample, coefs, &coefs[3],
             bp->filter_buf, &bp->filter_buf[2]);
 
     //sample = Q16mpy(sample, bp->gain_coef);
@@ -398,7 +391,7 @@ error_t hp_filter_process(void *dat, p_buffer_t in, p_buffer_t out)
     if(fsr)
         return PARAMS_SET_ERROR;
 
-    sample = DF2SOStructure(sample, coefs, &coefs[3],
+    sample = DF1SOStructure(sample, coefs, &coefs[3],
             hp->filter_buf, &hp->filter_buf[2]);
 
     *out = Q16toQ15(sample);
@@ -436,9 +429,9 @@ error_t chorus_init(chorus *ch, p_buffer_t buf)
     for(i = 0; i < 6; i++)
         ch->counters[i] = 0;
     
-    ch->in_coefs[0] = Q15ftoi(0.3); ch->in_coefs[1] = Q15ftoi(0.3);
-    ch->fb_coefs[0] = Q15ftoi(0.5); ch->fb_coefs[1] = Q15ftoi(0.5);
-    ch->ff_coefs[0] = Q15ftoi(0.3); ch->ff_coefs[0] = Q15ftoi(0.3);
+    ch->in_coefs[0] = Q15ftoi(0.5); ch->in_coefs[1] = Q15ftoi(0.5);
+    ch->fb_coefs[0] = Q15ftoi(0.7); ch->fb_coefs[1] = Q15ftoi(0.7);
+    ch->ff_coefs[0] = Q15ftoi(0.5); ch->ff_coefs[0] = Q15ftoi(0.5);
 
     ch->tap_szs[0] = ch->dl1_buf_sz/2;
     ch->tap_szs[1] = ch->dl2_buf_sz/3;

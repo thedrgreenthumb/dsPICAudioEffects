@@ -217,7 +217,21 @@ _Q15 all_pass(_Q15 sample, _Q15 coef, _Q15 *buf, unsigned int *count, unsigned i
     return(out);
 }
 
-_Q16 DF2SOStructure(_Q16 in, const _Q16 *numPtr, const _Q16 *denumPtr, _Q16 *xh, _Q16 *yh)
+_Q16 one_pole_filter(_Q16 in, _Q16 coef, _Q16* buf)
+{
+    _Q16 out = 0;
+
+    if(coef >= 0)
+        out = Q16mpy(in, coef) + Q16mpy(*buf, 1 - coef);
+    else
+        out = Q16mpy(in, 1 + coef) + Q16mpy(*buf, coef);
+
+    *buf = out;
+
+    return out;
+}
+
+_Q16 DF1SOStructure(_Q16 in, const _Q16 *numPtr, const _Q16 *denumPtr, _Q16 *xh, _Q16 *yh)
 {
     _Q16 out = 0;
 

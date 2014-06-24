@@ -20,7 +20,7 @@
 #ifndef _GLOBALMACRO_H
 #define _GLOBALMACRO_H
 
-#define ALGOS_LIB_VERSION ("dsPIC:X16:0.01")
+#define ALGOS_LIB_VERSION ("dsPIC:С30:0.01")
 
 //Microchip fractional library
 #include <libq.h>

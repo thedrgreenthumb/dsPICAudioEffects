@@ -54,6 +54,7 @@ void __attribute__((interrupt, no_auto_psv))_DAC1LInterrupt(void)
 void __attribute__((interrupt, no_auto_psv))_DAC1RInterrupt(void)
 {
     DAC1RDAT=out_sample_R;
+    //DAC1RDAT=sample;
 
     IFS4bits.DAC1RIF = 0; // Clear Right Channel Interrupt Flag
 }

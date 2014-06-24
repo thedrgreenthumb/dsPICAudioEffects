@@ -34,9 +34,8 @@ declare_algo_funcs(bypass)
 typedef struct _hard_clipping
 {
     _Q16 gain;
-    
-    const _Q16* pre_filter_coefs;
-    _Q16 pre_filter_buf[4];
+   
+    _Q16 pre_filter_buf;
     
     const _Q16* post_filter_coefs;
     _Q16 post_filter_buf[4];
@@ -47,6 +46,9 @@ declare_algo_funcs(hard_clipping)
 typedef struct _soft_clipping
 {
     _Q16 gain;
+
+    _Q16 pre_filter_buf;
+
     const _Q16* filter_coefs;
     _Q16 filter_buf[4];
 
