@@ -1,8 +1,8 @@
 General description:
-	Here my results of experiments with dsPIC33 controllers 
+	Here are my results of experiments with dsPIC33 controllers 
 	directed to audio effects implementation.
 	Described how to build own guitar pedal based dsPIC33FJ128GP802 IC.
-	Also, part of effects was ported and run using 
+	Also, part of effects had ported and ran using 
 	MPLAB dsPIC Starter Kit 1:
 	http://www.microchip.com/Developmenttools/ProductDetails.aspx?PartNO=DM330011
 
