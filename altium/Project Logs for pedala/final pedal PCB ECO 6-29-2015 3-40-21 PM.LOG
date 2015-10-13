@@ -1,0 +1,10 @@
+Added Component: Designator=R23(R0.25-300)
+Added Component: Designator=R24(R0.25-300)
+Added Pin To Net: NetName=VCC DIGI Pin=R23-2
+Added Pin To Net: NetName=GND Pin=R24-2
+Added Pin To Net: NetName=NetR23_1 Pin=R23-1
+Added Pin To Net: NetName=NetR23_1 Pin=R24-1
+Added Net: Name=NetR23_1
+Added Member To Class: ClassName=pedala Member=Component R23 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R24 Thick Film
+Added Room: Name=pedala

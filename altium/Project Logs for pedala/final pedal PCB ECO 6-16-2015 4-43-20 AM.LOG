@@ -1,0 +1,37 @@
+Removed Pin From Net: NetName=AUDIO IN LEFT Pin=C6-1
+Removed Pin From Net: NetName=AGND Pin=C7-1
+Removed Pin From Net: NetName=AGND Pin=C8-1
+Removed Pin From Net: NetName=LEFT BUFFER Pin=C8-2
+Removed Pin From Net: NetName=OUT2 Pin=C9-1
+Removed Pin From Net: NetName=LEFT BUFFER Pin=L2-2
+Removed Pin From Net: NetName=NetC10_2 Pin=R10-2
+Removed Pin From Net: NetName=VCC ANA Pin=R11-1
+Removed Pin From Net: NetName=NetC10_2 Pin=R11-2
+Removed Pin From Net: NetName=NetC4_1 Pin=R12-1
+Removed Pin From Net: NetName=DAC1B Pin=R13-1
+Removed Pin From Net: NetName=DAC1A Pin=R15-1
+Removed Pin From Net: NetName=AGND Pin=R18-2
+Removed Pin From Net: NetName=NetC3_2 Pin=U3-1
+Removed Pin From Net: NetName=NetR5_2 Pin=U3-2
+Removed Pin From Net: NetName=NetR2_2 Pin=U3-3
+Removed Pin From Net: NetName=AGND Pin=U3-4
+Removed Pin From Net: NetName=VCC ANA Pin=U3-8
+Removed Member From Class: ClassName=pedala Member=C6
+Removed Member From Class: ClassName=pedala Member=C7
+Removed Member From Class: ClassName=pedala Member=C8
+Removed Member From Class: ClassName=pedala Member=C9
+Removed Member From Class: ClassName=pedala Member=L2
+Removed Member From Class: ClassName=pedala Member=R7
+Removed Member From Class: ClassName=pedala Member=R10
+Removed Member From Class: ClassName=pedala Member=R11
+Removed Member From Class: ClassName=pedala Member=R12
+Removed Member From Class: ClassName=pedala Member=R13
+Removed Member From Class: ClassName=pedala Member=R15
+Removed Member From Class: ClassName=pedala Member=R18
+Removed Member From Class: ClassName=pedala Member=R19
+Removed Member From Class: ClassName=pedala Member=U3
+Added Pin To Net: NetName=NetC3_2 Pin=U1-1
+Added Pin To Net: NetName=NetR5_2 Pin=U1-2
+Added Pin To Net: NetName=NetR2_2 Pin=U1-3
+Added Member To Class: ClassName=pedala Member=Component P2 Header 9
+Added Room: Name=pedala

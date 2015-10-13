@@ -1,0 +1,75 @@
+Change Component Footprint: Designator=R1 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R2 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R3 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R4 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R5 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R6 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R7 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R8 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R9 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R10 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R11 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R12 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R13 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R14 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R15 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R16 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R17 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R18 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R19 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R20 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R21 Old Footprint=R1206-1% New Footprint=R0.25-300
+Change Component Footprint: Designator=R22 Old Footprint=R1206-1% New Footprint=R0.25-300
+Added Component: Designator=C2(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C4(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C7(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C8(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C9(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C10(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C11(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C12(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C13(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C14(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C16(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=C17(Cap-Disk-D5.5-R2.54)
+Added Component: Designator=U3(TO220-RB-650)
+Added Pin To Net: NetName=GND Pin=C2-1
+Added Pin To Net: NetName=NetC2_2 Pin=C2-2
+Added Pin To Net: NetName=AGND Pin=C4-1
+Added Pin To Net: NetName=VCC ANA Pin=C4-2
+Added Pin To Net: NetName=AGND Pin=C7-1
+Added Pin To Net: NetName=NetC7_2 Pin=C7-2
+Added Pin To Net: NetName=AGND Pin=C8-1
+Added Pin To Net: NetName=RIGHT BUFFER Pin=C8-2
+Added Pin To Net: NetName=GND Pin=C9-1
+Added Pin To Net: NetName=BUT1 Pin=C9-2
+Added Pin To Net: NetName=GND Pin=C10-1
+Added Pin To Net: NetName=BUT2 Pin=C10-2
+Added Pin To Net: NetName=GND Pin=C11-1
+Added Pin To Net: NetName=BUT3 Pin=C11-2
+Added Pin To Net: NetName=GND Pin=C12-1
+Added Pin To Net: NetName=BUT4 Pin=C12-2
+Added Pin To Net: NetName=AGND Pin=C13-1
+Added Pin To Net: NetName=VCC ANA Pin=C13-2
+Added Pin To Net: NetName=GND Pin=C14-1
+Added Pin To Net: NetName=VCC DIGI Pin=C14-2
+Added Pin To Net: NetName=GND Pin=C16-1
+Added Pin To Net: NetName=VCC Pin=C16-2
+Added Pin To Net: NetName=GND Pin=C17-1
+Added Pin To Net: NetName=VCC DIGI Pin=C17-2
+Added Pin To Net: NetName=GND Pin=U3-1
+Added Pin To Net: NetName=VCC DIGI Pin=U3-2
+Added Pin To Net: NetName=VCC Pin=U3-3
+Added Member To Class: ClassName=pedala Member=Component C2 100n
+Added Member To Class: ClassName=pedala Member=Component C4 100n
+Added Member To Class: ClassName=pedala Member=Component C7 100n
+Added Member To Class: ClassName=pedala Member=Component C8 100n
+Added Member To Class: ClassName=pedala Member=Component C9 100n
+Added Member To Class: ClassName=pedala Member=Component C10 100n
+Added Member To Class: ClassName=pedala Member=Component C11 100n
+Added Member To Class: ClassName=pedala Member=Component C12 100n
+Added Member To Class: ClassName=pedala Member=Component C13 100n
+Added Member To Class: ClassName=pedala Member=Component C14 100n
+Added Member To Class: ClassName=pedala Member=Component C16 100n
+Added Member To Class: ClassName=pedala Member=Component C17 100n
+Added Member To Class: ClassName=pedala Member=Component U3 LM117 3v3

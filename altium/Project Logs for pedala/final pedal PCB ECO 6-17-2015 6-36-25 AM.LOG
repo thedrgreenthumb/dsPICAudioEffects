@@ -1,0 +1,193 @@
+Added Component: Designator=C1(CAPAE250P680X1220_VERT)
+Added Component: Designator=C3(CAPAE250P680X1220_VERT)
+Added Component: Designator=C5(CAPAE250P680X1220_VERT)
+Added Component: Designator=C6(CAPAE250P680X1220_VERT)
+Added Component: Designator=C15(R1206-1%)
+Added Component: Designator=H1(HDR_1X2X276)
+Added Component: Designator=L1(Dr-CW8A)
+Added Component: Designator=L2(Dr-CW8A)
+Added Component: Designator=L3(Dr-CW8A)
+Added Component: Designator=P1(HDR1X5_2.54MMP)
+Added Component: Designator=P2(HDR1X8)
+Added Component: Designator=P3(HDR1X9)
+Added Component: Designator=R1(R1206-1%)
+Added Component: Designator=R2(R1206-1%)
+Added Component: Designator=R3(R1206-1%)
+Added Component: Designator=R4(R1206-1%)
+Added Component: Designator=R5(R1206-1%)
+Added Component: Designator=R6(R1206-1%)
+Added Component: Designator=R7(R1206-1%)
+Added Component: Designator=R8(R1206-1%)
+Added Component: Designator=R9(R1206-1%)
+Added Component: Designator=R10(R1206-1%)
+Added Component: Designator=R11(R1206-1%)
+Added Component: Designator=R12(R1206-1%)
+Added Component: Designator=R13(R1206-1%)
+Added Component: Designator=R14(R1206-1%)
+Added Component: Designator=R15(R1206-1%)
+Added Component: Designator=R16(R1206-1%)
+Added Component: Designator=R17(R1206-1%)
+Added Component: Designator=R18(R1206-1%)
+Added Component: Designator=R19(R1206-1%)
+Added Component: Designator=R20(R1206-1%)
+Added Component: Designator=R21(R1206-1%)
+Added Component: Designator=R22(R1206-1%)
+Added Component: Designator=U1(DIP28-300)
+Added Component: Designator=U2(DIL8-300a)
+Added Pin To Net: NetName=OUT1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_2 Pin=C1-2
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=AGND Pin=C3-2
+Added Pin To Net: NetName=AGND Pin=C5-1
+Added Pin To Net: NetName=NetC5_2 Pin=C5-2
+Added Pin To Net: NetName=AUDIO IN RIGHT Pin=C6-1
+Added Pin To Net: NetName=NetC6_2 Pin=C6-2
+Added Pin To Net: NetName=VCC DIGI Pin=C15-1
+Added Pin To Net: NetName=GND Pin=C15-2
+Added Pin To Net: NetName=VCC Pin=H1-1
+Added Pin To Net: NetName=GND Pin=H1-2
+Added Pin To Net: NetName=NetC7_2 Pin=L1-1
+Added Pin To Net: NetName=RIGHT BUFFER Pin=L1-2
+Added Pin To Net: NetName=VCC ANA Pin=L2-1
+Added Pin To Net: NetName=VCC DIGI Pin=L2-2
+Added Pin To Net: NetName=AGND Pin=L3-1
+Added Pin To Net: NetName=GND Pin=L3-2
+Added Pin To Net: NetName=MCLR Pin=P1-1
+Added Pin To Net: NetName=PGED Pin=P1-2
+Added Pin To Net: NetName=PGEC Pin=P1-3
+Added Pin To Net: NetName=VCC DIGI Pin=P1-4
+Added Pin To Net: NetName=GND Pin=P1-5
+Added Pin To Net: NetName=NetP2_1 Pin=P2-1
+Added Pin To Net: NetName=NetP2_2 Pin=P2-2
+Added Pin To Net: NetName=NetP2_3 Pin=P2-3
+Added Pin To Net: NetName=NetP2_4 Pin=P2-4
+Added Pin To Net: NetName=NetP2_5 Pin=P2-5
+Added Pin To Net: NetName=GND Pin=P2-6
+Added Pin To Net: NetName=NetP2_7 Pin=P2-7
+Added Pin To Net: NetName=NetP2_8 Pin=P2-8
+Added Pin To Net: NetName=RX Pin=P3-1
+Added Pin To Net: NetName=TX Pin=P3-2
+Added Pin To Net: NetName=GND Pin=P3-3
+Added Pin To Net: NetName=VCC Pin=P3-4
+Added Pin To Net: NetName=BUT1 Pin=P3-5
+Added Pin To Net: NetName=BUT2 Pin=P3-6
+Added Pin To Net: NetName=BUT3 Pin=P3-7
+Added Pin To Net: NetName=BUT4 Pin=P3-8
+Added Pin To Net: NetName=VCC DIGI Pin=P3-9
+Added Pin To Net: NetName=MCLR Pin=R1-1
+Added Pin To Net: NetName=VCC DIGI Pin=R1-2
+Added Pin To Net: NetName=NetR2_1 Pin=R2-1
+Added Pin To Net: NetName=DAC2B Pin=R2-2
+Added Pin To Net: NetName=NetC3_1 Pin=R3-1
+Added Pin To Net: NetName=NetR2_1 Pin=R3-2
+Added Pin To Net: NetName=NetC1_2 Pin=R4-1
+Added Pin To Net: NetName=AGND Pin=R4-2
+Added Pin To Net: NetName=NetR5_1 Pin=R5-1
+Added Pin To Net: NetName=DAC2A Pin=R5-2
+Added Pin To Net: NetName=NetC1_2 Pin=R6-1
+Added Pin To Net: NetName=NetR5_1 Pin=R6-2
+Added Pin To Net: NetName=NetC3_1 Pin=R7-1
+Added Pin To Net: NetName=AGND Pin=R7-2
+Added Pin To Net: NetName=VCC ANA Pin=R8-1
+Added Pin To Net: NetName=NetC3_1 Pin=R8-2
+Added Pin To Net: NetName=D1 Pin=R9-1
+Added Pin To Net: NetName=NetP2_1 Pin=R9-2
+Added Pin To Net: NetName=D2 Pin=R10-1
+Added Pin To Net: NetName=NetP2_2 Pin=R10-2
+Added Pin To Net: NetName=D3 Pin=R11-1
+Added Pin To Net: NetName=NetP2_3 Pin=R11-2
+Added Pin To Net: NetName=D4 Pin=R12-1
+Added Pin To Net: NetName=NetP2_4 Pin=R12-2
+Added Pin To Net: NetName=D5 Pin=R13-1
+Added Pin To Net: NetName=NetP2_5 Pin=R13-2
+Added Pin To Net: NetName=D6 Pin=R14-1
+Added Pin To Net: NetName=NetP2_7 Pin=R14-2
+Added Pin To Net: NetName=D7 Pin=R15-1
+Added Pin To Net: NetName=NetP2_8 Pin=R15-2
+Added Pin To Net: NetName=NetC5_2 Pin=R16-1
+Added Pin To Net: NetName=AGND Pin=R16-2
+Added Pin To Net: NetName=BUT1 Pin=R17-1
+Added Pin To Net: NetName=VCC DIGI Pin=R17-2
+Added Pin To Net: NetName=BUT3 Pin=R18-1
+Added Pin To Net: NetName=VCC DIGI Pin=R18-2
+Added Pin To Net: NetName=NetC5_2 Pin=R19-1
+Added Pin To Net: NetName=NetC6_2 Pin=R19-2
+Added Pin To Net: NetName=BUT2 Pin=R20-1
+Added Pin To Net: NetName=VCC DIGI Pin=R20-2
+Added Pin To Net: NetName=BUT4 Pin=R21-1
+Added Pin To Net: NetName=VCC DIGI Pin=R21-2
+Added Pin To Net: NetName=NetR22_1 Pin=R22-1
+Added Pin To Net: NetName=NetC7_2 Pin=R22-2
+Added Pin To Net: NetName=MCLR Pin=U1-1
+Added Pin To Net: NetName=LEFT BUFFER Pin=U1-2
+Added Pin To Net: NetName=RIGHT BUFFER Pin=U1-3
+Added Pin To Net: NetName=PGED Pin=U1-4
+Added Pin To Net: NetName=PGEC Pin=U1-5
+Added Pin To Net: NetName=RX Pin=U1-6
+Added Pin To Net: NetName=TX Pin=U1-7
+Added Pin To Net: NetName=GND Pin=U1-8
+Added Pin To Net: NetName=BUT1 Pin=U1-9
+Added Pin To Net: NetName=BUT2 Pin=U1-10
+Added Pin To Net: NetName=BUT3 Pin=U1-11
+Added Pin To Net: NetName=BUT4 Pin=U1-12
+Added Pin To Net: NetName=VCC DIGI Pin=U1-13
+Added Pin To Net: NetName=D1 Pin=U1-14
+Added Pin To Net: NetName=D2 Pin=U1-15
+Added Pin To Net: NetName=D3 Pin=U1-16
+Added Pin To Net: NetName=D4 Pin=U1-17
+Added Pin To Net: NetName=D5 Pin=U1-18
+Added Pin To Net: NetName=GND Pin=U1-19
+Added Pin To Net: NetName=NetC2_2 Pin=U1-20
+Added Pin To Net: NetName=D6 Pin=U1-21
+Added Pin To Net: NetName=D7 Pin=U1-22
+Added Pin To Net: NetName=DAC1A Pin=U1-23
+Added Pin To Net: NetName=DAC1B Pin=U1-24
+Added Pin To Net: NetName=DAC2A Pin=U1-25
+Added Pin To Net: NetName=DAC2B Pin=U1-26
+Added Pin To Net: NetName=AGND Pin=U1-27
+Added Pin To Net: NetName=VCC ANA Pin=U1-28
+Added Pin To Net: NetName=NetC1_2 Pin=U2-1
+Added Pin To Net: NetName=NetR5_1 Pin=U2-2
+Added Pin To Net: NetName=NetR2_1 Pin=U2-3
+Added Pin To Net: NetName=AGND Pin=U2-4
+Added Pin To Net: NetName=NetC6_2 Pin=U2-5
+Added Pin To Net: NetName=NetR22_1 Pin=U2-6
+Added Pin To Net: NetName=NetR22_1 Pin=U2-7
+Added Pin To Net: NetName=VCC ANA Pin=U2-8
+Added Member To Class: ClassName=pedala Member=Component C1 10µ
+Added Member To Class: ClassName=pedala Member=Component C3 10µ
+Added Member To Class: ClassName=pedala Member=Component C5 10µ
+Added Member To Class: ClassName=pedala Member=Component C6 10µ
+Added Member To Class: ClassName=pedala Member=Component C15 10µ
+Added Member To Class: ClassName=pedala Member=Component H1 BATTERY
+Added Member To Class: ClassName=pedala Member=Component L1 INDC_180u_Toroid
+Added Member To Class: ClassName=pedala Member=Component L2 INDC_180u_Toroid
+Added Member To Class: ClassName=pedala Member=Component L3 INDC_180u_Toroid
+Added Member To Class: ClassName=pedala Member=Component P1 Programmer
+Added Member To Class: ClassName=pedala Member=Component P2 Header 8
+Added Member To Class: ClassName=pedala Member=Component P3 Header 9
+Added Member To Class: ClassName=pedala Member=Component R1 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R2 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R3 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R4 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R5 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R6 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R7 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R8 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R9 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R10 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R11 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R12 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R13 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R14 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R15 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R16 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R17 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R18 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R19 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R20 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R21 Thick Film
+Added Member To Class: ClassName=pedala Member=Component R22 Thick Film
+Added Member To Class: ClassName=pedala Member=Component U1 DSPIC33FJ128GP802-I/SP
+Added Member To Class: ClassName=pedala Member=Component U2 OPA2350
+Added Room: Name=pedala

@@ -1,0 +1,3 @@
+Removed Pin From Net: NetName=GND Pin=U?-1
+Added Pin To Net: NetName=NetR23_1 Pin=U?-1
+Added Room: Name=pedala

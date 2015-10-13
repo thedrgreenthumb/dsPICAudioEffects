@@ -1,0 +1,11 @@
+Added Component: Designator=J1(PHONE-JACK STEREO SW 6.3MM)
+Added Component: Designator=J2(PHONE-JACK STEREO SW 6.3MM)
+Added Pin To Net: NetName=AUDIO IN RIGHT Pin=J1-2
+Added Pin To Net: NetName=AGND Pin=J1-3
+Added Pin To Net: NetName=AGND Pin=J1-4
+Added Pin To Net: NetName=OUT1 Pin=J2-2
+Added Pin To Net: NetName=AGND Pin=J2-3
+Added Pin To Net: NetName=AGND Pin=J2-4
+Added Member To Class: ClassName=pedala Member=Component J1 Phone-Jack 6.3mm Stereo SW
+Added Member To Class: ClassName=pedala Member=Component J2 Phone-Jack 6.3mm Stereo SW
+Added Room: Name=pedala

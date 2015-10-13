@@ -1,0 +1,6 @@
+Removed Pin From Net: NetName=MCLR Pin=P1-1
+Removed Pin From Net: NetName=PGED Pin=P1-2
+Removed Pin From Net: NetName=PGEC Pin=P1-3
+Removed Pin From Net: NetName=VCC DIGI Pin=P1-4
+Removed Pin From Net: NetName=GND Pin=P1-5
+Removed Member From Class: ClassName=pedala Member=P1

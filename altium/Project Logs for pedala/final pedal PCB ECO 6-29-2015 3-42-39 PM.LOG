@@ -1,0 +1,9 @@
+Removed Pin From Net: NetName=GND Pin=U3-1
+Removed Pin From Net: NetName=VCC DIGI Pin=U3-2
+Removed Pin From Net: NetName=VCC Pin=U3-3
+Removed Member From Class: ClassName=pedala Member=U3
+Added Component: Designator=U?(KC03)
+Added Pin To Net: NetName=GND Pin=U?-1
+Added Pin To Net: NetName=VCC DIGI Pin=U?-2
+Added Pin To Net: NetName=VCC Pin=U?-3
+Added Member To Class: ClassName=pedala Member=Component U? LM317KC

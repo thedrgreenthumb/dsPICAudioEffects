@@ -1,0 +1,4 @@
+Added Component: Designator=J2(PHONE-JACK STEREO SW 6.3MM)
+Added Pin To Net: NetName=OUT1 Pin=J2-2
+Added Pin To Net: NetName=AGND Pin=J2-3
+Added Pin To Net: NetName=AGND Pin=J2-4

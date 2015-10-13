@@ -1,0 +1,21 @@
+Added Component: Designator=C1(CAPAE250P680X1220_VERT)
+Added Component: Designator=C3(CAPAE250P680X1220_VERT)
+Added Component: Designator=C5(CAPAE250P680X1220_VERT)
+Added Component: Designator=C6(CAPAE250P680X1220_VERT)
+Added Component: Designator=C15(CAPAE250P680X1220_VERT)
+Added Pin To Net: NetName=OUT1 Pin=C1-1
+Added Pin To Net: NetName=NetC1_2 Pin=C1-2
+Added Pin To Net: NetName=NetC3_1 Pin=C3-1
+Added Pin To Net: NetName=AGND Pin=C3-2
+Added Pin To Net: NetName=AGND Pin=C5-1
+Added Pin To Net: NetName=NetC5_2 Pin=C5-2
+Added Pin To Net: NetName=AUDIO IN RIGHT Pin=C6-1
+Added Pin To Net: NetName=NetC6_2 Pin=C6-2
+Added Pin To Net: NetName=VCC DIGI Pin=C15-1
+Added Pin To Net: NetName=GND Pin=C15-2
+Added Member To Class: ClassName=pedala Member=Component C1 10µ
+Added Member To Class: ClassName=pedala Member=Component C3 10µ
+Added Member To Class: ClassName=pedala Member=Component C5 10µ
+Added Member To Class: ClassName=pedala Member=Component C6 10µ
+Added Member To Class: ClassName=pedala Member=Component C15 10µ
+Added Room: Name=pedala
